@@ -1,0 +1,12 @@
+<div class="container">
+  <h2 class="title">NEWSLETTER</h2>
+  <h3>Get Timely Updates About Your Favourite Products.</h3>
+  <form (ngSubmit)="newsLetterSubscribe(emailInput,newLetterForm)" #newLetterForm="ngForm" >
+    <input type="email" #emailInput = "ngModel" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required minlength="8"  [(ngModel)]="email" placeholder="Enter Your Email....." id="email">
+    <button class="btn">
+      <span class="material-icons">
+        send
+        </span>
+    </button>
+  </form>
+</div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Screens/home/home.component';
@@ -13,6 +13,9 @@ import { GroupComponent } from './Components/group/group.component';
 import { GroupItemComponent } from './Components/group-item/group-item.component';
 import { ProductsComponent } from './Components/products/products.component';
 import { ProductItemComponent } from './Components/product-item/product-item.component';
+import { DeferLoadDirective } from './Directives/defer-load.directive';
+import { NewsLetterComponent } from './Components/news-letter/news-letter.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,11 +29,15 @@ import { ProductItemComponent } from './Components/product-item/product-item.com
     GroupItemComponent,
     ProductsComponent,
     ProductItemComponent,
+    DeferLoadDirective,
+    NewsLetterComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
 
   ],
   providers: [],

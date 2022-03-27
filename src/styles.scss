@@ -20,3 +20,12 @@ body::-webkit-scrollbar-thumb {
 
 
 }
+::selection {
+  background: rgb(3, 2, 2);
+   /* WebKit/Blink Browsers */
+   color: #fff;
+}
+::-moz-selection {
+  background: rgb(10, 8, 8); /* Gecko Browsers */
+  color: #fff;
+}

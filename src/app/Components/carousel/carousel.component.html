@@ -1,0 +1,18 @@
+<div class="container">
+  <span class="material-icons"  (click)="slideLeft()">
+    arrow_left
+    </span>
+    <div  class="slide-container">
+      <app-carousel-item
+      *ngFor="let content of images;index as idx"
+      [content]="content"
+       [ngStyle]="{'transform':currentImageIdx===idx?'translateX('+currentImageIdx*-100+'vw)':
+                  'translateX('+currentImageIdx*-100+'vw)','transition':'transform 500ms 100ms cubic-bezier(0,.97,1,.64)'}"
+   >  </app-carousel-item>
+
+    </div>
+  <span   (click)="slideRight()" class="material-icons">
+  arrow_right
+    </span>
+
+</div>

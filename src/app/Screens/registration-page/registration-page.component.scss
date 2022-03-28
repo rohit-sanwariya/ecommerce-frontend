@@ -5,9 +5,10 @@
   align-items: center;
   background-image: url("../../../assets/img//RegistrationBacground.jpg");
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: cover;
   .card {
     max-width: 800px;
+    font-weight: 700;
     margin: 2rem;
     display: flex;
     flex-direction: column;
@@ -15,13 +16,14 @@
     box-shadow: 1px 1px 8px 5px teal;
     padding: 1rem;
     // background-color: #333;
+    background-color: transparent;
     color: #fff;
     height: 80%;
     width: 80%;
     header {
       h2,
       h3 {
-        font-weight: 500;
+
         text-align: center;
       }
       .brand {

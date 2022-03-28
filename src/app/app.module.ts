@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './Shared/shared/shared.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Screens/home/home.component';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { AnnouncementComponent } from './Components/announcement/announcement.component';
 import { CarouselComponent } from './Components/carousel/carousel.component';
 import { CarouselItemComponent } from './Components/carousel-item/carousel-item.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -15,7 +14,7 @@ import { ProductsComponent } from './Components/products/products.component';
 import { ProductItemComponent } from './Components/product-item/product-item.component';
 import { DeferLoadDirective } from './Directives/defer-load.directive';
 import { NewsLetterComponent } from './Components/news-letter/news-letter.component';
-import { FooterComponent } from './Components/footer/footer.component';
+
 import { ProductPageComponent } from './Screens/product-page/product-page.component';
 import { FilterComponent } from './Components/filter/filter.component';
 import { ProductDetailComponent } from './Screens/product-detail/product-detail.component';
@@ -26,8 +25,6 @@ import { RegistrationModule } from './Screens/registration-page/registration.mod
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent,
-    AnnouncementComponent,
     CarouselComponent,
     CarouselItemComponent,
     GroupComponent,
@@ -36,13 +33,10 @@ import { RegistrationModule } from './Screens/registration-page/registration.mod
     ProductItemComponent,
     DeferLoadDirective,
     NewsLetterComponent,
-    FooterComponent,
     ProductPageComponent,
     FilterComponent,
     ProductDetailComponent,
     ProductDescriptionComponent,
-
-
   ],
   imports: [
     BrowserModule,
@@ -51,7 +45,7 @@ import { RegistrationModule } from './Screens/registration-page/registration.mod
     FormsModule,
     RegistrationModule,
     LoginModule,
-
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

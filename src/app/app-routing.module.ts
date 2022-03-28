@@ -16,7 +16,7 @@ const routes: Routes = [
     path:'products',component:ProductPageComponent
   },
   {
-    path:'registration',loadChildren:()=>
+    path:'register',loadChildren:()=>
       import('./Screens/registration-page/registration.module')
       .then(module=>
         module.RegistrationModule)

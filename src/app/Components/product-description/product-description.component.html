@@ -1,0 +1,24 @@
+ <section class="product-container">
+<div class="img-container">
+  <img [src]="product.img" alt="product-img">
+</div>
+<div class="product-description">
+  <div class="product-description-header">
+    <h3 class="product-name">{{product.title}}</h3>
+  <p class="product-description-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore sint eveniet iste vero. Vitae voluptatum inventore nostrum officiis repudiandae facilis accusamus, voluptatem ipsa? Suscipit ducimus quibusdam qui deserunt odit. Unde.</p>
+  <h3 class="product-price">$20</h3>
+  </div>
+
+<div class="filter-container">
+  <app-filter class="filter" [options]="colors"></app-filter>
+  <app-filter class="filter" [options]="size"></app-filter>
+</div>
+<div class="cart-container">
+  <button class="btn no-border">-</button>
+  <span class="cart-number">1</span>
+  <button class="btn no-border">+</button>
+  <button class="btn btn-text" >Add To Cart</button>
+</div>
+
+</div>
+ </section>

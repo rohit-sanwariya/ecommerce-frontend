@@ -16,7 +16,12 @@ import { ProductItemComponent } from './Components/product-item/product-item.com
 import { DeferLoadDirective } from './Directives/defer-load.directive';
 import { NewsLetterComponent } from './Components/news-letter/news-letter.component';
 import { FooterComponent } from './Components/footer/footer.component';
-
+import { ProductPageComponent } from './Screens/product-page/product-page.component';
+import { FilterComponent } from './Components/filter/filter.component';
+import { ProductDetailComponent } from './Screens/product-detail/product-detail.component';
+import { ProductDescriptionComponent } from './Components/product-description/product-description.component';
+import { LoginModule } from './Screens/login-page/login.module';
+import { RegistrationModule } from './Screens/registration-page/registration.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,12 +37,20 @@ import { FooterComponent } from './Components/footer/footer.component';
     DeferLoadDirective,
     NewsLetterComponent,
     FooterComponent,
+    ProductPageComponent,
+    FilterComponent,
+    ProductDetailComponent,
+    ProductDescriptionComponent,
+
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    RegistrationModule,
+    LoginModule,
 
   ],
   providers: [],

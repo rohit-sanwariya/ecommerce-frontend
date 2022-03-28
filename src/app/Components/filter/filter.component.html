@@ -1,0 +1,6 @@
+<select *ngIf="options.type !== 'color'" name="" id="">
+  <option class="select-option" *ngFor="let option of options.data" value="option">{{option}}</option>
+</select>
+<div *ngIf="options.type === 'color'">
+  <div *ngFor="let option of options.data" [ngStyle]="{'background-color':option}"   class="circle"></div>
+</div>

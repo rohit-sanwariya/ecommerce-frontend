@@ -3,9 +3,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../../../assets/img//RegistrationBacground.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: hsla(40, 63%, 85%, 1);
+
+background: linear-gradient(90deg, hsla(40, 63%, 85%, 1) 0%, hsla(22, 94%, 79%, 1) 100%);
+
+background: -moz-linear-gradient(90deg, hsla(40, 63%, 85%, 1) 0%, hsla(22, 94%, 79%, 1) 100%);
+
+background: -webkit-linear-gradient(90deg, hsla(40, 63%, 85%, 1) 0%, hsla(22, 94%, 79%, 1) 100%);
+
+
+
+  // background-image: url("../../../assets/img//RegistrationBacground.jpg");
+  // background-repeat: no-repeat;
+  // background-size: cover;
   .card {
     max-width: 800px;
     font-weight: 700;
@@ -23,7 +33,6 @@
     header {
       h2,
       h3 {
-
         text-align: center;
       }
       .brand {

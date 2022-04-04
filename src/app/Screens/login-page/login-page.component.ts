@@ -21,11 +21,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginUser(){
-    console.log(this.loginForm.controls['tac'].value);
+    const user = this.loginForm.value;
 
-    if(this.loginForm.valid && this.loginForm.controls['tac'].value){
-      console.log('you won baby');
-
+    if(this.loginForm.valid){
+          this.loginService.loginUser(user)
     }
 
   }

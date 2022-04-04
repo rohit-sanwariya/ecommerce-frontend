@@ -3,11 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../../../assets/img//RegistrationBacground.jpg")  ;
+  background-image: url("../../../assets/img//RegistrationBacground.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-
-
 
   .card {
     max-width: 800px;
@@ -45,10 +43,10 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-      align-content: center;
+        align-content: center;
         .form-input-group {
           display: grid;
-          grid-template-columns: 1fr ;
+          grid-template-columns: 1fr;
           gap: 1rem;
           align-items: center;
           justify-content: center;
@@ -63,29 +61,25 @@
             &:focus {
               outline: none;
             }
-            &.alert{
+            &.alert {
               // border-bottom: 3px solid red;
               box-shadow: 0 1px 1px 1px red;
             }
           }
         }
-        .remember-forgot-container{
+        .remember-forgot-container {
           display: flex;
           margin: 1rem 0;
           font-size: 1.2rem;
-          div.remember{
-
-              input{
-                margin: 0 .5rem;
-              }
+          div.remember {
+            input {
+              margin: 0 0.5rem;
+            }
 
             font-weight: 500;
-
           }
-          div.forgot{
-
-            a{
-
+          div.forgot {
+            a {
               color: #fff;
               font-weight: 700;
             }

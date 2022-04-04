@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, take } from 'rxjs';
 import { LoginUser } from '../Interfaces/login-user';
 
 @Injectable({
@@ -17,6 +18,9 @@ export class LoginService {
    }
 
    loginUser(user:LoginUser){
-     this.http.post(this.loginURL,user,this.httpOptions)
+     this.http.post<LoginUser>(this.loginURL,user,this.httpOptions).subscribe((token)=>{
+       console.log(token);
+
+     })
    }
 }

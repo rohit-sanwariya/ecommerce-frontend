@@ -26,7 +26,7 @@ export class RegistrationPageComponent implements OnInit {
 
   registerUser(){
     const  user = this.registerForm.value
-     
+
      if(this.registerForm.valid && user.confirmpassword === user.password){
 
 
@@ -41,7 +41,7 @@ export class RegistrationPageComponent implements OnInit {
        }
        console.log(newUser);
 
-      //  this.registerService.onUserRegister(newUser)
+       this.registerService.onUserRegister(newUser)
      }
 
   }

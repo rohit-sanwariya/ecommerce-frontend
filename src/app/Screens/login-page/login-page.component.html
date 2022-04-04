@@ -14,7 +14,8 @@
           <input placeholder="Password"  [ngClass]="{'alert':loginForm.controls['password'].invalid && loginForm.controls['password'].touched}" type="password" name="password" id="password" formControlName="password">
         </div>
           <div class="remember-forgot-container">
-            <div class="remember"><input type="checkbox" name="tac" id="tac" formControlName="tac">Remember Me</div>
+            <div class="remember"><input type="checkbox" name="tac"
+               id="tac" formControlName="tac">Remember Me</div>
             <div class="forgot"><a routerLink="">Forgot Password</a></div>
           </div>
         <div>

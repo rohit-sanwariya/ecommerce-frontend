@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FilterSchema } from 'src/app/Interfaces/filter-schema';
-import { popularProducts, ProductSchema } from 'src/assets/Images';
+import { ProductSchema } from 'src/app/Interfaces/product-schema';
+
 
 @Component({
   selector: 'app-product-description',

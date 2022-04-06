@@ -1,4 +1,4 @@
-<!-- <app-home></app-home> -->
-<!-- <app-product-page></app-product-page> -->
-<!-- <app-product-detail></app-product-detail> -->
+<div *ngIf="(show|async)?.show" class="toast">
+  <p class="message">{{(show|async)?.message}}</p> <button (click)="close()">x</button>
+</div>
 <router-outlet></router-outlet>

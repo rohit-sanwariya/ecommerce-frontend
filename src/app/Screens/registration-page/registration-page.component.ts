@@ -18,8 +18,8 @@ export class RegistrationPageComponent implements OnInit {
       lastname:['',[Validators.required,Validators.minLength(3)]],
       username:['',[Validators.required,Validators.minLength(3)]],
       email:['',[Validators.required,Validators.email,Validators.minLength(9)]],
-      password:['',[Validators.required,Validators.minLength(7)]],
-      confirmpassword:['',[Validators.required,Validators.minLength(7)]],
+      password:['',[Validators.required,Validators.minLength(3)]],
+      confirmpassword:['',[Validators.required,Validators.minLength(3)]],
       tac:[false,Validators.required]
     })
   }

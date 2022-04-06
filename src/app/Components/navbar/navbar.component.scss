@@ -79,7 +79,7 @@ header {
         justify-content: center;
       }
       &.right{
-        justify-content: space-around;
+        justify-content: space-evenly;
         li{
           a{
             &:hover{

@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  userLoggedIn!:boolean
 
-  constructor() { }
+  constructor() {
+    this.userLoggedIn = !!sessionStorage.getItem('accessToken')
+    console.log(this.userLoggedIn);
+
+   }
 
   ngOnInit(): void {
   }

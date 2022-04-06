@@ -1,0 +1,136 @@
+<div class="container">
+  <header [ngClass]="{'expand':!showSidebar}">
+    <nav>
+      <ul>
+        <li (click)="toggleSidebar()">
+          <span class="material-icons toggle">
+            menu
+          </span>
+
+        </li>
+
+      </ul>
+      <ul class="right">
+        <li>
+          <a href="">
+            <span class="material-icons">
+              notifications
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="material-icons">
+              settings
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="material-icons">
+              language
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <aside class="sidebar" [ngClass]="{'hide':!showSidebar}">
+    <div class="top">
+      <a routerLink="" class="logo">Mantra Admin</a>
+    </div>
+    <section class="sidebar-menu">
+      <div class="sidebar-dashboard">
+        Dashboard
+        <ul class="sidebar-menu-list">
+          <li>
+            <a>
+              <span class="material-icons">
+                home
+              </span>
+              <span class="menu-list-text">Home</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="material-icons">
+                trending_up
+              </span>
+              <span class="menu-list-text">Analytics</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="material-icons">
+                point_of_sale
+              </span>
+              <span class="menu-list-text">Sales</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-quick-menu">
+        Quick Links
+        <ul class="sidebar-menu-list">
+          <li>
+            <a>
+              <span class="material-icons">
+                person
+              </span>
+              <span class="menu-list-text">Users</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['products']">
+              <span class="material-icons">
+                store
+              </span>
+              <span class="menu-list-text">Products</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="material-icons">
+                receipt_long
+              </span>
+              <span class="menu-list-text">Transaction</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-notification">
+        Quick Links
+        <ul class="sidebar-menu-list">
+          <li>
+            <a>
+              <span class="material-icons">
+                email
+              </span>
+              <span class="menu-list-text">Email</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="material-icons">
+                feedback
+              </span>
+              <span class="menu-list-text">Feedback</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="material-icons">
+                message
+              </span>
+              <span class="menu-list-text">Message</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+  </aside>
+  <main [ngClass]="{'expand':!showSidebar}">
+    <router-outlet></router-outlet>
+  </main>
+</div>

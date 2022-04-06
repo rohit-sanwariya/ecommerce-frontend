@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './Shared/shared/shared.module';
 import { AppComponent } from './app.component';
@@ -15,13 +14,17 @@ import { ProductsComponent } from './Components/products/products.component';
 import { ProductItemComponent } from './Components/product-item/product-item.component';
 import { DeferLoadDirective } from './Directives/defer-load.directive';
 import { NewsLetterComponent } from './Components/news-letter/news-letter.component';
-
 import { ProductPageComponent } from './Screens/product-page/product-page.component';
 import { FilterComponent } from './Components/filter/filter.component';
 import { ProductDetailComponent } from './Screens/product-detail/product-detail.component';
 import { ProductDescriptionComponent } from './Components/product-description/product-description.component';
 import { LoginModule } from './Screens/login-page/login.module';
 import { RegistrationModule } from './Screens/registration-page/registration.module';
+import { PaymentModule } from './Components/payment/payment.module';
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,16 +41,19 @@ import { RegistrationModule } from './Screens/registration-page/registration.mod
     FilterComponent,
     ProductDetailComponent,
     ProductDescriptionComponent,
+
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    
     RegistrationModule,
+    PaymentModule,
     LoginModule,
-    SharedModule
+    SharedModule,
+     
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { popularProducts, ProductSchema } from 'src/assets/Images';
+import { ProductSchema } from 'src/app/Interfaces/product-schema';
+import { FetchService } from 'src/app/Services/Backend/fetch.service';
+
 
 @Component({
   selector: 'app-products',
@@ -7,10 +9,13 @@ import { popularProducts, ProductSchema } from 'src/assets/Images';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  products:ProductSchema[] = popularProducts
-  constructor() { }
+  products!:ProductSchema[]
+  constructor(private productService:FetchService) { }
 
   ngOnInit(): void {
+        this.productService.getProducts().subscribe((products)=>{
+          this.products = products
+        });
   }
 
 }

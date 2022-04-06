@@ -24,11 +24,18 @@
       </li>
     </ul>
     <ul class="right">
-      <li>
+      <li *ngIf="!userLoggedIn">
         <a routerLink="/register">Register</a>
       </li>
-      <li>
-        <a routerLink="/login">Sign in</a>
+      <li *ngIf="!userLoggedIn">
+        <a routerLink="/login">{{'Sign in'}}</a>
+      </li>
+      <li *ngIf="userLoggedIn">
+        <a routerLink="">
+          <span class="material-icons">
+            person
+            </span>
+        </a>
       </li>
       <li>
         <a class="shoping-cart-link" routerLink="/cart">

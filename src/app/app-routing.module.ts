@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductsComponent } from './Components/products/products.component';
+import { PaymentComponent } from './Components/payment/payment.component';
+
 import { HomeComponent } from './Screens/home/home.component';
 import { ProductDetailComponent } from './Screens/product-detail/product-detail.component';
 import { ProductPageComponent } from './Screens/product-page/product-page.component';
@@ -10,7 +11,7 @@ const routes: Routes = [
     path:'',component:HomeComponent
   },
   {
-    path:'product-detail',component:ProductDetailComponent
+    path:'product-detail/:id',component:ProductDetailComponent
   },
   {
     path:'products',component:ProductPageComponent
@@ -33,6 +34,14 @@ const routes: Routes = [
       .then(module=>
         module.LoginModule)
   },
+  {
+    path:'payment',
+    component:PaymentComponent
+  },
+  {
+    path:'admin',
+    loadChildren:()=>import('./dashboard/dashboard.module').then(module=>module.DashboardModule)
+  }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductSchema } from 'src/assets/Images';
+import { ProductSchema } from '../../Interfaces/product-schema';
 
 @Component({
   selector: 'app-product-item',
@@ -7,10 +7,14 @@ import { ProductSchema } from 'src/assets/Images';
   styleUrls: ['./product-item.component.scss']
 })
 export class ProductItemComponent implements OnInit {
-  @Input() product!:ProductSchema
+  @Input() product!:ProductSchema;
+  ngOnInit(): void {
+    console.log(this.product);
+
+  }
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+
 
 }

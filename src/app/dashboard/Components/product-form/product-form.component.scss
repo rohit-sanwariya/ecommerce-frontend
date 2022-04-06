@@ -1,0 +1,80 @@
+.container{
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  form{
+    margin: 0 1rem;
+    display: grid;
+  width: 100%;
+    h2{
+      text-align: center;
+      font-weight: 500;
+
+      margin: 1rem;
+    }
+
+   .input-group{
+    display: grid;
+    width: 100%;
+    .row{
+      margin: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      input{
+        padding: .5rem 1rem;
+        margin: .25rem 1rem;
+        border: none;
+        border-bottom: 3px solid teal;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        &:focus{
+          outline: none;
+        }
+      }
+      select{
+        padding: .5rem 1rem;
+        margin: .25rem 1rem;
+        border: none;
+        border-bottom: 3px solid teal;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        &:focus{
+          outline: none;
+        }
+      }
+      textarea{
+        padding: 1rem 1rem;
+        margin:  1rem;
+        border: none;
+        border-bottom: 3px solid teal;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        &:focus{
+          outline: none;
+        }
+      }
+
+    }
+    .row.desc{
+
+        grid-template-columns: 1fr;
+
+    }
+
+   }
+   button.btn{
+     background-color: teal;
+     color: #fff;
+     border: 1px solid #fff;
+     padding: .5rem 0;
+     margin: 1rem 3rem;
+     font-size: 1.1rem;
+     font-weight: 500;
+     letter-spacing: 2px;
+   }
+
+  }
+}

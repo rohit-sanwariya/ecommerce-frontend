@@ -1,0 +1,38 @@
+<div class="container">
+
+  <form [formGroup]="productUpdateForm" (ngSubmit)="updateProduct()">
+    <h2 class="form-heading">Product Update Form</h2>
+    <div class="input-group">
+      <div class="row">
+        <input type="text" formControlName="title" placeholder="title" name="title" id="title" [value]="(proudctToBeUpdated|async)?.title">
+        <input type="text" formControlName="img" placeholder="img" name="img" id="img" [value]="(proudctToBeUpdated|async)?.img">
+      </div>
+
+      <!-- <div class="row">
+        <input type="text" formControlName="categories" placeholder="categories" name="categories" id="categories">
+        <input type="text" formControlName="size" placeholder="size" name="size" id="size">
+      </div> -->
+      <div class="row">
+        <select  type="text" formControlName="categories"   name="categories" id="categories">
+                <option disabled value="">Select Categories</option>
+                <option *ngFor="let category of categories"   [value]="category">{{category}}</option>
+        </select>
+        <input type="text" formControlName="size" placeholder="size" name="size" [value]="(proudctToBeUpdated|async)?.size" id="size">
+      </div>
+      <div class="row">
+        <input type="text" formControlName="color" [value]="(proudctToBeUpdated|async)?.color" placeholder="color" name="color" id="color">
+        <input type="text" formControlName="price" placeholder="price" name="price" id="price" [value]="(proudctToBeUpdated|async)?.price" >
+      </div>
+
+      <div class="row desc">
+        <textarea type="text" formControlName="desc" [value]="(proudctToBeUpdated|async)?.desc"   name="desc"  id="desc">
+
+        </textarea>
+      </div>
+    </div>
+    <button class="btn">
+      Update Product
+    </button>
+  </form>
+</div>
+

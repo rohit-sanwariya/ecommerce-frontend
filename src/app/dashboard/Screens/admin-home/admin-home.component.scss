@@ -3,10 +3,12 @@
   display: grid;
   width: 100vw;
   height: 100%;
-  background-color: #f4f4f4;
   grid-template-columns: repeat(12,1fr);
   grid-template-rows: repeat(12,1fr);
   font-family: 'Nunito', sans-serif;
+  position: relative;
+  overflow-y: hidden;
+
   header{
 
     background-color: #f4f4f4;
@@ -84,8 +86,7 @@
         }
       }
     }
-    .sidebar-menu{
-
+    section{
       grid-row: 3/13;
       display: flex;
       margin: 0 1rem;
@@ -112,6 +113,8 @@
             a{
               display: flex;
               align-items: center;
+              color: #fff;
+              text-decoration: none;
               span{
                 margin: 0 3px;
               }

@@ -1,7 +1,7 @@
 export interface ProductSchema {
   _id:string;
   title: string;
-  description: string;
+  desc: string;
   img: string;
   categories: string[];
   size: string;

@@ -12,7 +12,7 @@ import { FetchService } from 'src/app/Services/Backend/fetch.service';
 export class ProductDetailComponent implements OnInit {
   products!:ProductSchema[]
   product!:ProductSchema
-  constructor(private productService:FetchService,private route:ActivatedRoute) { }
+  constructor(private productService:FetchService,private route:ActivatedRoute,private router:Router) { }
 
   ngOnInit(): void {
      this.route.params.subscribe((val)=>{
@@ -26,11 +26,7 @@ export class ProductDetailComponent implements OnInit {
 
     })
 
-        // this.productService.getProducts().subscribe((products)=>{
-        //   this.products = products
-        //   this.product = products[0]
-        // })
-
+    
   }
 
 }

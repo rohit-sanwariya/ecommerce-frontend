@@ -9,7 +9,7 @@ import { ProductSchema } from '../../Interfaces/product-schema';
 export class ProductItemComponent implements OnInit {
   @Input() product!:ProductSchema;
   ngOnInit(): void {
-    console.log(this.product);
+    
 
   }
 

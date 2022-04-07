@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FilterSchema } from 'src/app/Interfaces/filter-schema';
 import { ProductSchema } from 'src/app/Interfaces/product-schema';
 
@@ -15,6 +16,7 @@ export class ProductDescriptionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

@@ -1,4 +1,19 @@
 <div *ngIf="(show|async)?.show" class="toast">
   <p class="message">{{(show|async)?.message}}</p> <button (click)="close()">x</button>
 </div>
+<div *ngIf="(show|async)?.show"  class="prompt">
+
+  <p class="message">{{(show|async)?.message}}</p>
+
+  <div class="button-group">
+    <button class="confirm" (click)="confirm()"><span class="material-icons">
+      done
+      </span></button>
+    <button class="deny" (click)="deny()">
+      <span class="material-icons">
+      close
+      </span>
+    </button>
+  </div>
+</div>
 <router-outlet></router-outlet>

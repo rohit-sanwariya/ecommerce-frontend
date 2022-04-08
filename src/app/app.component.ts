@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
- 
+
 import { Observable, Subject } from 'rxjs';
 import { ToastService } from './Services/toast.service';
 
@@ -10,14 +10,22 @@ import { ToastService } from './Services/toast.service';
 })
 export class AppComponent implements OnInit {
   title = 'ecommerce-frontend';
-  show!:Observable<{show:boolean,message:string}>;
-  constructor(private toastService:ToastService){}
+  show!: Observable<{ show: boolean, message: string }>;
+  constructor(private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.show =   this.toastService.getSubject()
+    this.show = this.toastService.getSubject()
 
   }
-  close(){
+  close() {
+    this.toastService.hide()
+  }
+  confirm() {
+    this.toastService.setConfirmSubject(true)
+    this.toastService.hide()
+  }
+  deny() {
+    this.toastService.setConfirmSubject(false)
     this.toastService.hide()
   }
 

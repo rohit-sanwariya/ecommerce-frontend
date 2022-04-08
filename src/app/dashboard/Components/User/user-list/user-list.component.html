@@ -1,0 +1,20 @@
+<div class="container">
+  <div *ngFor="let user of users" class="product-item">
+        <div  class="card">
+            <header>
+             <div>
+              <h3 [routerLink]="['update',user._id]">
+                {{user.username}}
+
+              </h3>
+              <span *ngIf="user.isAdmin" class="material-icons ">
+                admin_panel_settings
+                </span>
+             </div>
+              <span  (click)="deleteUser(user)" class="material-icons delete">
+                delete
+                </span>
+            </header>
+        </div>
+  </div>
+</div>

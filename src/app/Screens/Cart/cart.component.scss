@@ -2,6 +2,7 @@
 
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-columns: repeat(12,1fr);
   grid-template-rows: repeat(12,1fr);
   .cart-title{
@@ -131,6 +132,7 @@
         box-shadow: 1px 1px 1px 1px #333;
           grid-column: 9/12;
           height: 300px;
+          
           width: 100%;
           display: flex;
           flex-direction: column;

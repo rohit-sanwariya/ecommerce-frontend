@@ -53,12 +53,36 @@ background: -webkit-linear-gradient(90deg, hsla(40, 63%, 85%, 1) 0%, hsla(22, 94
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1rem;
+          div{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            box-shadow: 1px 1px 3px 1px teal;
+            input{
+              box-shadow: none;
+              width: 100%;
+              &.alert {
+                box-shadow: 0 1px 1px 1px red;
+              }
+            }
+            span{
+              background-color: #fff;
+              color: #333;
+              cursor: pointer;
+              padding: 11px 5px;
+
+            }
+          }
           input {
             padding: 1rem;
             box-shadow: 1px 1px 3px 1px teal;
             border: none;
             &:focus {
               outline: none;
+            }
+            &.alert {
+              box-shadow: 0 1px 1px 1px red;
             }
           }
         }

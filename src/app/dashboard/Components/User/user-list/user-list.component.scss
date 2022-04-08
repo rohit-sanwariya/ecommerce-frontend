@@ -1,0 +1,64 @@
+.container {
+  display: grid;
+
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+  grid-template-rows: repeat(auto-fit,minmax(1fr,200px));
+  .product-item {
+    margin: 2rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    .card {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 5rem;
+      flex-direction: column;
+      background-color: #fff;
+      box-shadow: 1px 1px 13px 1px #333;
+      width: 300px;
+      header {
+        width: 100%;
+        height: 100%;
+        margin: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        div{
+          width: 100%;
+          height: 100%;
+          margin-left: 1rem;
+          display: flex;
+          align-items: center;
+          span{
+            color: teal;
+          }
+          h3{
+            font-weight: 500;
+            text-transform: capitalize;
+            margin: 0 1rem;
+            cursor: pointer;
+            &:hover{
+              border-bottom: 2px solid teal;
+            }
+
+        }
+        }
+        span.delete{
+          color: rgb(206, 27, 27);
+          cursor: pointer;
+          margin: 0 1rem;
+        }
+      }
+
+    }
+  }
+}

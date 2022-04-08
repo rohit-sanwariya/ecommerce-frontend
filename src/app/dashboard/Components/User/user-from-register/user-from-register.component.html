@@ -1,1 +1,31 @@
-<p>user-from-register works!</p>
+<div class="card-body">
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+
+    <div class="form-input-group">
+      <input placeholder="First Name" type="text" name="firstname" id="firstname" formControlName="firstname">
+      <input placeholder="Last Name" type="text" name="lastname" id="lastname" formControlName="lastname">
+      <input placeholder="Username" type="text" name="username" id="username" formControlName="username">
+      <input placeholder="Email" type="email" name="email" id="email" formControlName="email">
+      <div class="password">
+        <input #password  placeholder="Password" type="password" name="password" id="password" formControlName="password">
+        <span (click)="togglePassword(password)" class="material-icons">
+          {{!showHidePasword?'visibility':'visibility_off'}}
+        </span>
+      </div>
+      <div class="password">
+        <input #confirmpassword placeholder="Confirm Password" type="password" name="confirmpassword" id="confirmpassword"
+          formControlName="confirmpassword">
+        <span (click)="togglePassword(confirmpassword)" class="material-icons">
+          {{!showHideConfirmPasword?'visibility':'visibility_off'}}
+        </span>
+      </div>
+
+    </div>
+    <div class="terms-condition">
+      <input type="checkbox" name="tac" id="tac" formControlName="tac"> Give Admin Rights
+    </div>
+    <div>
+      <button class="btn">Regsiter User</button>
+    </div>
+  </form>
+</div>

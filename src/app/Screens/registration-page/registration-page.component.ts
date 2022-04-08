@@ -8,6 +8,8 @@ import { RegisterService } from 'src/app/Services/register.service';
   styleUrls: ['./registration-page.component.scss']
 })
 export class RegistrationPageComponent implements OnInit {
+  showHidePasword: boolean = false
+  showHideConfirmPasword: boolean = false
   registerForm!:FormGroup
 
   constructor(private formBuilder:FormBuilder,private registerService:RegisterService) { }
@@ -44,6 +46,14 @@ export class RegistrationPageComponent implements OnInit {
        this.registerService.onUserRegister(newUser)
      }
 
+  }
+
+  togglePassword(event: HTMLInputElement) {
+    event.type == 'password' ? event.type = 'text' : event.type = 'password'
+    console.log(event.name);
+
+    event.name === 'password'?this.showHidePasword = !this.showHidePasword: this.showHidePasword = this.showHidePasword
+    event.name === 'confirmpassword'?this.showHideConfirmPasword = !this.showHideConfirmPasword: this.showHideConfirmPasword = this.showHideConfirmPasword
   }
 
 }

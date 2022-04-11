@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginUser } from 'src/app/Interfaces/login-user';
 import { LoginService } from 'src/app/Services/login.service';
+import { RegisterService } from 'src/app/Services/register.service';
 import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { ToastService } from 'src/app/Services/toast.service';
 export class AdminLoginComponent implements OnInit {
   adminLoginForm!:FormGroup
   isAdmin!:boolean
-  constructor(private formBuilder:FormBuilder,private toastService:ToastService, private service:LoginService,private router:Router) { }
+  constructor(private formBuilder:FormBuilder,private toastService:ToastService, private service:RegisterService,private router:Router) { }
 
   ngOnInit(): void {
     this.adminLoginForm = this.formBuilder.group({

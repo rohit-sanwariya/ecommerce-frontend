@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RegisterService } from 'src/app/Services/register.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
   userLoggedIn!:boolean
 
-  constructor() {
+  constructor(private registerService:RegisterService) {
     this.userLoggedIn = !!sessionStorage.getItem('accessToken')
     console.log(this.userLoggedIn);
 
    }
 
   ngOnInit(): void {
+  }
+  handleCart(){
+      this.registerService.getCartDetails()
   }
 
 }

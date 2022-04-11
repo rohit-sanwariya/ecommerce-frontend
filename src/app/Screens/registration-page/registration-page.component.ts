@@ -19,7 +19,7 @@ export class RegistrationPageComponent implements OnInit {
       firstname:['',[Validators.required,Validators.minLength(3)]],
       lastname:['',[Validators.required,Validators.minLength(3)]],
       username:['',[Validators.required,Validators.minLength(3)]],
-      email:['',[Validators.required,Validators.email,Validators.minLength(9)]],
+      email:['',[Validators.required,Validators.email,Validators.minLength(3)]],
       password:['',[Validators.required,Validators.minLength(3)]],
       confirmpassword:['',[Validators.required,Validators.minLength(3)]],
       tac:[false,Validators.required]
@@ -27,11 +27,11 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   registerUser(){
+    console.log('reg');
+
     const  user = this.registerForm.value
 
      if(this.registerForm.valid && user.confirmpassword === user.password){
-
-
       const tac = this.registerForm.controls['tac'].value
       console.log(tac);
 
@@ -44,6 +44,10 @@ export class RegistrationPageComponent implements OnInit {
        console.log(newUser);
 
        this.registerService.onUserRegister(newUser)
+     }
+     else{
+       console.log(this.registerForm.errors);
+
      }
 
   }

@@ -31,17 +31,17 @@ export class AdminService {
   }
   deleteUser(id:string){
     this.http.delete<UserSchema[]>(`${this.baseURL}/api/users/${id}`,this.httpOptions).subscribe((user:any)=>{
-       console.log(user);
+
        window.location.reload()
 
     })
 
   }
   registerProduct(product:ProductSchema){
-    console.log(product,this.baseURL+`/api/products`);
+
 
       this.http.post<ProductSchema>(`${this.baseURL}/api/products/`,product,this.httpOptions).subscribe((val)=>{
-        console.log(val);
+
 
       })
   }
@@ -53,11 +53,11 @@ export class AdminService {
     return this.getAllSubject.asObservable()
 }
 getProduct(id:string){
-  console.log(id);
+
 
   this.http.get<ProductSchema>(`${this.baseURL}/api/products/find/${id}`,this.httpOptions).subscribe((product:any)=>{
     this.getSubject.next(product)
-    console.log(product);
+
 
 
   })
@@ -67,7 +67,7 @@ updateProduct(product:ProductSchema,id:string){
 
 
   this.http.put<ProductSchema>(`${this.baseURL}/api/products/${id}`,product,this.httpOptions).subscribe((val)=>{
-    console.log(val);
+
 
   })
 

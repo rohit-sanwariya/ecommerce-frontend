@@ -1,7 +1,6 @@
 <div class="container">
   <app-navbar></app-navbar>
   <app-announcement></app-announcement>
-
   <section class="cart-container">
     <div class="cart-title">
       <h2>Your Bag.</h2>
@@ -14,7 +13,7 @@
         </button>
       </div>
       <div>
-        <a routerLink="">Shopping Bag(2)</a>
+        <a routerLink="">Shopping Bag({{(userCart$|async)?.products?.length}})</a>
         <a routerLink="">Your Wishlist(10)</a>
       </div>
       <div>
@@ -25,34 +24,40 @@
     </div>
 
     <section class="cart-details">
-      <div class="cart-item-list">
-        <div class="cart-item">
+
+      <div *ngFor="let product of products" class="cart-item-list">
+        <div   class="cart-item">
           <div class="img-container">
             <img
-              src="https://images.pexels.com/photos/10050106/pexels-photo-10050106.jpeg?auto=compress&cs=tinysrgb&h=350"
+              [src]="product.img"
               alt="">
           </div>
           <div class="item-detail-container">
             <div class="cart-detail">
               <div class="product-name">
                 <span class="bold">Product:</span>
-                <p>Reebok Shoes</p>
+                <p>{{product.title}}</p>
               </div>
               <div class="product-id">
                 <span class="bold">ID:</span>
-                <p>123456789</p>
+                <p>{{product._id}}</p>
               </div>
-              <div class="color"></div>
-              <div class="size">37.5</div>
+              <div class="color"><span class="bold">Color</span>
+              <p>{{product.color}}</p>
+              </div>
+              <div class="size">
+                <span class="bold">Price</span>
+                <p>₹{{product.price}}</p>
+              </div>
             </div>
             <div class="cart-item-detail">
               <div class="button-group">
-                <button class="btn plus">+</button>
-                <span class="bold">1</span>
-                <button class="btn minus">-</button>
+                <button (click)="incrmentProductInCart(product)" class="btn plus">+</button>
+                <span class="bold">{{product.quantity}}</span>
+                <button (click)="decrementProductInCart(product)" class="btn minus">-</button>
               </div>
               <div class="item-total">
-                $300
+                ₹{{product.productTotal}}
               </div>
             </div>
           </div>
@@ -67,12 +72,6 @@
         </h2>
         <div class="card-body">
           <div class="subtotal">
-            <div class="left">
-                Subtotal
-            </div>
-            <div class="right">
-              $80
-            </div>
           </div>
           <div class="esimated-shipping">
             <div class="left">
@@ -95,7 +94,7 @@
                 Total
             </div>
             <div class="right">
-              $80
+              ₹{{cartTotal}}
             </div>
           </div>
         </div>

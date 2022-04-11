@@ -30,7 +30,7 @@ export class UserFromRegisterComponent implements OnInit {
   registerUser() {
     const user = this.registerForm.value
     const tac = this.registerForm.controls['tac'].value
-    console.log(tac);
+
 
     if (this.registerForm.valid && user.confirmpassword === user.password) {
       const newUser: NewUser = {
@@ -45,7 +45,7 @@ export class UserFromRegisterComponent implements OnInit {
   }
   togglePassword(event: any) {
     event.type == 'password' ? event.type = 'text' : event.type = 'password'
-    console.log(event.name);
+
 
     event.name === 'password'?this.showHidePasword = !this.showHidePasword: this.showHidePasword = this.showHidePasword
     event.name === 'confirmpassword'?this.showHideConfirmPasword = !this.showHideConfirmPasword: this.showHideConfirmPasword = this.showHideConfirmPasword

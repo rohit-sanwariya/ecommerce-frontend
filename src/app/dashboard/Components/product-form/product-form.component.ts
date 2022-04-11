@@ -32,7 +32,7 @@ export class ProductFormComponent implements OnInit {
   registerProduct() {
       if(this.productRegisterForm.valid){
         var product :ProductSchema = this.productRegisterForm.value
-        console.log(product.categories);
+
         this.service.registerProduct(product)
         this.productRegisterForm.reset()
       }

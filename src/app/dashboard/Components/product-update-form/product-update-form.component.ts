@@ -45,7 +45,7 @@ export class ProductUpdateFormComponent implements OnInit {
   updateProduct() {
     const product :ProductSchema = this.productUpdateForm.value
       if(this.productUpdateForm.valid){
-        console.log(product);
+
         this.service.updateProduct(product,this.id)
       }
   }

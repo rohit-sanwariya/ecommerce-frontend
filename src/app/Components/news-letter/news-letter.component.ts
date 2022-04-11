@@ -14,7 +14,7 @@ export class NewsLetterComponent implements OnInit {
   }
   newsLetterSubscribe(input:any,newLetterForm:any ){
 
-    console.log(this.email,input.valid);
+
     newLetterForm.reset()
 
 

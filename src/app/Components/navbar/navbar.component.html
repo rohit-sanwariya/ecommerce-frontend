@@ -38,12 +38,12 @@
         </a>
       </li>
       <li>
-        <a class="shoping-cart-link" (click)="handleCart()" routerLink="/cart">
+        <a class="shoping-cart-link"   routerLink="/cart">
           <span class="material-icons">
           shopping_cart
           </span>
           <span class="badge">
-            3
+            {{(cart$|async)?.products?.length}}
           </span>
         </a>
       </li>

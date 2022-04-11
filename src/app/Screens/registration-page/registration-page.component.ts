@@ -27,13 +27,13 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   registerUser(){
-    console.log('reg');
+
 
     const  user = this.registerForm.value
 
      if(this.registerForm.valid && user.confirmpassword === user.password){
       const tac = this.registerForm.controls['tac'].value
-      console.log(tac);
+
 
        const newUser:NewUser = {
          username:user.username,
@@ -41,12 +41,12 @@ export class RegistrationPageComponent implements OnInit {
          email:user.email,
          isAdmin:false
        }
-       console.log(newUser);
+
 
        this.registerService.onUserRegister(newUser)
      }
      else{
-       console.log(this.registerForm.errors);
+
 
      }
 
@@ -54,7 +54,7 @@ export class RegistrationPageComponent implements OnInit {
 
   togglePassword(event: HTMLInputElement) {
     event.type == 'password' ? event.type = 'text' : event.type = 'password'
-    console.log(event.name);
+
 
     event.name === 'password'?this.showHidePasword = !this.showHidePasword: this.showHidePasword = this.showHidePasword
     event.name === 'confirmpassword'?this.showHideConfirmPasword = !this.showHideConfirmPasword: this.showHideConfirmPasword = this.showHideConfirmPasword

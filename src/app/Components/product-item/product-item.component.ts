@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RegisterService } from 'src/app/Services/register.service';
 import { ProductSchema } from '../../Interfaces/product-schema';
 
 @Component({
@@ -9,11 +10,15 @@ import { ProductSchema } from '../../Interfaces/product-schema';
 export class ProductItemComponent implements OnInit {
   @Input() product!:ProductSchema;
   ngOnInit(): void {
-    
+
 
   }
 
-  constructor() { }
+  constructor(private register:RegisterService) { }
+
+  addToCart(){
+      this.register.addProductToCart(this.product,0,0)
+  }
 
 
 

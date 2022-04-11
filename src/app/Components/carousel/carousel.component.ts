@@ -32,7 +32,7 @@ export class CarouselComponent implements OnInit {
   ngOnInit(): void {
   }
   slideLeft() {
-    console.log(currentImageIdx);
+
     // 0 1 2
     if (this.currentImageIdx === 0) {
 
@@ -43,7 +43,7 @@ export class CarouselComponent implements OnInit {
       this.currentImageIdx--;
       currentImageIdx--;
     }
-    // console.log(this.currentImageIdx);
+    //
 
   }
   slideRight() {
@@ -54,6 +54,6 @@ export class CarouselComponent implements OnInit {
     else {
       this.currentImageIdx++;
     }
-    console.log(this.currentImageIdx);
+
   }
 }

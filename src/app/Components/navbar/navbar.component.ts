@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CartSchema } from 'src/app/Interfaces/cart-schema';
 import { RegisterService } from 'src/app/Services/register.service';
 
 @Component({
@@ -8,17 +10,17 @@ import { RegisterService } from 'src/app/Services/register.service';
 })
 export class NavbarComponent implements OnInit {
   userLoggedIn!:boolean
+  cart$!:Observable<CartSchema>
 
   constructor(private registerService:RegisterService) {
     this.userLoggedIn = !!sessionStorage.getItem('accessToken')
-    console.log(this.userLoggedIn);
+    this.cart$ = this.registerService.getCartDetails()
+
 
    }
 
   ngOnInit(): void {
   }
-  handleCart(){
-      this.registerService.getCartDetails()
-  }
+  
 
 }

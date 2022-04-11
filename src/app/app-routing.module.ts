@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PaymentComponent } from './Components/payment/payment.component';
+import { LoginGuard } from './Guards/login.guard';
 
 import { HomeComponent } from './Screens/home/home.component';
 import { ProductDetailComponent } from './Screens/product-detail/product-detail.component';
@@ -23,7 +24,7 @@ const routes: Routes = [
         module.RegistrationModule)
   },
   {
-    path:'cart',loadChildren:()=>
+    path:'cart', canActivate:[LoginGuard]  ,loadChildren:()=>
       import('./Screens/Cart/cart.module')
       .then(module=>
         module.CartModule)

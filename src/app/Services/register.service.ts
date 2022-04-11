@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
+import { CartSchema } from '../Interfaces/cart-schema';
 import { LoginUser } from '../Interfaces/login-user';
 import { NewUser } from '../Interfaces/new-user';
+import { ProductSchema } from '../Interfaces/product-schema';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +24,20 @@ export class RegisterService implements OnInit {
     headers: new HttpHeaders(
       {
         'Content-Type': 'application/json',
-
-
       }
     )
   }
+  newHTTPoptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
+    })
+  }
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+
+  }
 
 
 
@@ -51,19 +59,16 @@ export class RegisterService implements OnInit {
     return this.loginSubject.asObservable() as Observable<boolean>;
   }
   ngOnInit(): void {
-      this.getUserWithAccessTokenFromApi()
-  }
-
-
-  createNewCart(newHTTPoptions: any) {
-    console.log('called');
-
-    this.http.post(this.cartURL, newHTTPoptions).subscribe((cart) => {
-      console.log(cart);
-      console.log('hello');
-
+    this.getUserWithAccessTokenFromApi()
+    this.currentUserSubject.subscribe((user) => {
+      this.user = user
     })
+    this.getCartProducts()
   }
+
+
+
+
   getUserWithAccessTokenFromApi() {
     const token = sessionStorage.getItem('accessToken')
     const newHTTPoptions = {
@@ -80,51 +85,11 @@ export class RegisterService implements OnInit {
 
 
 
-  checkIfCartExistforUser() {
-    this.hasCart
-    try {
-      const token = sessionStorage.getItem('accessToken');
-      if (!token) {
-        throw Error
-      }
-      const newHTTPoptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${token}`
-        })
-      }
-      this.getUserWithAccessTokenFromApi()
-      this.currentUserSubject.subscribe((user: any) => {
 
-        console.log(typeof user);
 
-        if (!(user.id === undefined)) {
 
-          this.http.get(`${this.cartURL}/find/${user.id}`, newHTTPoptions).subscribe({
-            next: (val: any) => {
-              this.cartSubject.next(val)
-
-            },
-            error: (err) => {
-              if (err.error.userHasNoCart) {
-                this.hasCart.next({ before: false, after: false })
-                return
-              }
-
-            }
-          })
-        }
-      })
-    }
-    catch (error) {
-      this.router.navigate(['login'])
-    }
-
-    return this.hasCart
-
-  }
-  getCartDetails(){
-    const token  = sessionStorage.getItem('accessToken')
+  getCartDetails() {
+    const token = sessionStorage.getItem('accessToken')
     const newHTTPoptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -132,55 +97,65 @@ export class RegisterService implements OnInit {
       })
     }
     this.getUserWithAccessTokenFromApi()
-    this.currentUserSubject.subscribe((user:any)=>{
+    this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
       const id = user.id
-      console.log(id);
 
-    this.http.get(`${this.cartURL}/find/${id}`,newHTTPoptions).subscribe((cart)=>{
-      console.log(cart);
+      if (!!id) {
+        this.http.get<CartSchema>(`${this.cartURL}/find/${id}`, newHTTPoptions).subscribe((cart) => {
+          this.cartSubject.next(cart)
+        })
+      }
+    })
+    return this.cartSubject.asObservable() as Observable<CartSchema>
 
-    })
-    })
   }
 
-  // createNewCartForNewUser() {
-  //   if (this.checkIfCartExistforUser !== undefined) {
-  //     this.checkIfCartExistforUser().pipe(take(1)).subscribe((val) => {
-  //       if (!val.after) {
-  //         const token = sessionStorage.getItem('accessToken')
-  //         console.log(token);
+  addProductToCart(product: ProductSchema, quantity: number, incrment: number) {
+    this.getCartDetails()
+    this.cartSubject.pipe(take(1)).subscribe((cart: any) => {
+      if (Object.keys(cart).length !== 0) {
 
-  //         const newHTTPoptions = {
-  //           headers: new HttpHeaders({
-  //             'Content-Type': 'application/json',
-  //             'authorization': `Bearer ${token}`
-  //           })
-  //         }
-  //         console.log( `Bearer ${token}`,this.user);
+        const found = cart.products.findIndex((productincart: any) => {
+          if (productincart.productId === product._id) {
+            return productincart
+          }
+        })
+        if (found === -1) { cart.products.push({ productId: product._id, quantity: 1 }); }
+        else {
+          cart.products[found].quantity = quantity + incrment
+        }
+        this.http.put(`${this.cartURL}/${this.user.id}`, cart, this.newHTTPoptions).subscribe((updatedCart) => {
+          this.cartSubject.next(updatedCart)
+          window.location.reload()
+        })
+      }
 
+    })
+  }
+  deleteProductFromCart(product: any) {
+    this.cartSubject.pipe(take(2)).subscribe((cart: any) => {
+      if (Object.keys(cart).length > 0) {
+        const newCartProducts = cart.products.filter((cartProduct: any) => {
+          if (product._id !== cartProduct.productId)
+            return cartProduct
+        })
+        cart.products = newCartProducts
+        console.log(newCartProducts);
+        this.http.put(`${this.cartURL}/removeProduct/${this.user.id}`, cart, this.newHTTPoptions)
+        .subscribe((updatedCart) => {
+          console.log(updatedCart);
+          this.cartSubject.next(updatedCart)
+          window.location.reload()
+        })
+      }
+    })
 
-  //         this.http.post(`${this.cartURL}`,this.user,newHTTPoptions).subscribe((cart)=>{
-  //           console.log(cart);
-  //           this.cartSubject.next(cart)
-
-  //         })
-
-  //       }
-  //     })
-  //   }
-  //     this.cartSubject.subscribe((cart)=>{
-  //       console.log(cart);
-
-  //     })
-  // }
-
+  }
   onUserRegister(newUser: NewUser) {
     this.http.post<NewUser>(this.registerURL, newUser, this.httpOptions).subscribe((data: any) => {
       this.currentUserSubject.next(data)
       sessionStorage.setItem('accessToken', data.accessToken)
       const token = sessionStorage.getItem('accessToken')
-      console.log(token);
-
       const newHTTPoptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -189,14 +164,16 @@ export class RegisterService implements OnInit {
       }
       this.getUserWithAccessTokenFromApi()
       const id = data._id
-
-
-      this.http.post(`${this.cartURL}`,{id},newHTTPoptions).subscribe((cart)=>{
-        console.log(cart);
+      this.http.post(`${this.cartURL}`, { id }, newHTTPoptions).subscribe((cart) => {
         this.cartSubject.next(cart)
-
       })
       this.router.navigate([''])
+    })
+  }
+  getCartProducts(){
+    this.cartSubject.pipe(map((cart:any)=>cart.products)).subscribe((cart)=>{
+      console.log(cart);
+
     })
   }
 }

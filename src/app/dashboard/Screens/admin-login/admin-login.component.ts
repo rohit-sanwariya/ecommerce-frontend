@@ -30,7 +30,7 @@ export class AdminLoginComponent implements OnInit {
           const {tac,...user} =  this.adminLoginForm.value
           this.service.loginUser(user).subscribe((isAdmin:boolean)=>{
             this.isAdmin = isAdmin;
-            console.log(this.isAdmin);
+
 
             if(this.isAdmin){
               this.router.navigate(['admin','dashboard'])

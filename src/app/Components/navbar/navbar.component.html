@@ -42,7 +42,7 @@
           <span class="material-icons">
           shopping_cart
           </span>
-          <span class="badge">
+          <span  *ngIf="userLoggedIn && (cart$|async) && (cart$|async)?.products?.length !==0"  class="badge">
             {{(cart$|async)?.products?.length}}
           </span>
         </a>

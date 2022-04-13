@@ -1,0 +1,133 @@
+<div class="container">
+  <header>
+    <h1>Mantra.in</h1>
+    <nav>
+      <div class="line"></div>
+      <ul>
+        <li>
+          <a routerLink="/login">
+            Sign In
+
+          </a>
+        </li>
+        <li>
+          <span class="material-icons point">
+            shopping_cart
+            </span>
+          <a routerLink="/shipping-address">
+            Delivery & Payment
+          </a>
+        </li>
+        <li>
+          <a routerLink="/shipping-address">
+            Place Order
+          </a>
+        </li>
+        <li>
+          <a routerLink="/shipping-address">
+            Complete Payment
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main *ngIf="address.length===0 || showForm">
+  <div class="heading-container">
+    <h3 class="heading">
+      {{false?'Select a delivery address':'
+      Add a new address'}}
+    </h3>
+    <button (click)="showForm=false" class="btn gold">
+      Choose form Existing Address
+    </button>
+  </div>
+  <div class="address-form-container">
+    <form [formGroup]="addressForm" (ngSubmit)="addUserAddress()" >
+
+     <div class="form-control">
+      <div class="dropdown">
+        <label for="country">Country/Region</label>
+        <div class="menu-container"  dropdown (dropdownClickedOutside)="clickedOutside()"  >
+          <input type="text" [style]="{'display':'none'}" value="selectedCountry" formControlName="country" >
+          <div  class="menu-toggle"  (click)="toggleMenu()">{{selectedCountry}}</div>
+          <div *ngIf="showList"  class="menu">
+             <div (click)="selected($event)"
+             *ngIf="this.selectedCountry !=='India'"
+                class="menu-item">{{this.selectedCountry !=="India"?"India":''}}</div>
+             <div (click)="selected($event)"
+             *ngIf="this.selectedCountry !=='Nepal'"
+
+                class="menu-item">{{this.selectedCountry !=="Nepal"?"Nepal":''}}</div>
+             <div (click)="selected($event)"
+             *ngIf="this.selectedCountry !=='Bhutan'"
+                class="menu-item">{{this.selectedCountry !=="Bhutan"?"Bhutan":''}}</div>
+             <div (click)="selected($event)"
+             *ngIf="this.selectedCountry !=='Bangladesh'"
+               class="menu-item">{{this.selectedCountry !=="Bangladesh"?"Bangladesh":''}}</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-control">
+        <label for="fullname">Full Name</label>
+        <input type="text" name="fullname" id="fullname" formControlName="fullname">
+   </div>
+     </div>
+    <div class="form-input-group">
+
+   <div class="form-control">
+        <label for="street">Street</label>
+        <input type="text" name="street" id="street" formControlName="street">
+   </div>
+   <div class="form-control">
+        <label for="city">City</label>
+        <input type="text" name="city" id="city" formControlName="city">
+   </div>
+   <div class="form-control">
+        <label for="zip">Zip</label>
+        <input type="text" name="zip" id="zip" formControlName="zip">
+   </div>
+   <div class="form-control phone">
+        <label for="phone">Phone</label>
+        <input type="text" name="phone" id="phone" formControlName="phone">
+   </div>
+    </div>
+    <button>Add Addrress</button>
+    </form>
+  </div>
+</main>
+ <main class="address-container" *ngIf="address.length !==0 && showForm==false">
+<div class="heading">
+  <h3>Select a delivery address</h3>
+  <p class="message">Is the address you'd like to use displayed below? If so, click the corresponding "Deliver to this address" button. Or you can enter a new delivery address. </p>
+</div>
+<div class="card-container">
+  <div *ngFor="let add of address.addresses" class="address-card">
+
+    <h3 class="fullname">
+        {{add.fullname|uppercase}}
+    </h3>
+    <div class="card-body">
+      <p>{{add.street}}</p>
+      <p>{{add.city}}</p>
+      <p>{{add.zip}}</p>
+      <p>{{add.country}}</p>
+      <p>{{add.phone}}</p>
+      <button class="btn gold" [routerLink]="['','payment',add._id]">
+        Deliver to this address
+      </button>
+    </div>
+
+  </div>
+</div>
+<div class="show-form">
+  <button (click)="showForm=true" class="btn gold">
+    Add New Address
+  </button>
+</div>
+
+ </main>>
+
+
+</div>

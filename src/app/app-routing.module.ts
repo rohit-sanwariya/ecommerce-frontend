@@ -30,13 +30,19 @@ const routes: Routes = [
         module.CartModule)
   },
   {
+    path:'shipping-address', canActivate:[LoginGuard]  ,loadChildren:()=>
+      import('./Screens/user-address-list/useraddresslist.module')
+      .then(module=>
+        module.UseraddresslistModule)
+  },
+  {
     path:'login',loadChildren:()=>
       import('./Screens/login-page/login.module')
       .then(module=>
         module.LoginModule)
   },
   {
-    path:'payment',
+    path:'payment/:id',
     component:PaymentComponent
   },
   {

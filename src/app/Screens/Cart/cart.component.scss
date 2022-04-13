@@ -1,5 +1,5 @@
 .container{
-  
+
   .cart-container {
     display: grid;
     width: 100%;
@@ -40,7 +40,9 @@
           border: 2px solid teal;
           padding: 0.5rem 1rem;
           font-size: 1.1rem;
+
         }
+
       }
     }
     section.cart-details {
@@ -52,7 +54,10 @@
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       .cart-item-list {
+        margin: 1rem 0;
+        padding: 1rem;
         grid-column: 1/8;
+        box-shadow: 0 1px 13px 3px teal;
         .cart-item {
           display: grid;
           grid-template-columns: 1fr 2fr;
@@ -60,6 +65,7 @@
             width: 100%;
             height: 100%;
             max-height: 200px;
+            cursor: pointer;
             img {
               object-fit: contain;
               width: 100%;
@@ -67,6 +73,12 @@
             }
           }
           .item-detail-container {
+            .link{
+              cursor: pointer;
+             border-bottom: 1px solid teal;
+             font-size: .9rem;
+             font-weight: 800;
+            }
             margin: 0 1rem;
             .cart-detail {
               display: flex;
@@ -123,6 +135,7 @@
                   margin: 0 1rem;
                   font-weight: 600;
                   font-size: 1.2rem;
+                   cursor: pointer;
                 }
                 span.bold {
                   font-weight: 700;
@@ -138,12 +151,13 @@
         }
       }
       .order-summary.card {
+        position: sticky;
+        top: 15%;
         margin: 1rem;
-        box-shadow: 1px 1px 1px 1px #333;
+        box-shadow: 0 1px 13px 1px #333;
         grid-column: 9/12;
         grid-row: 1/13;
         height: 300px;
-
         width: 100%;
         display: flex;
         flex-direction: column;

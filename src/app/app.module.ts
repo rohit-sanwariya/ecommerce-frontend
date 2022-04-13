@@ -21,6 +21,9 @@ import { ProductDescriptionComponent } from './Components/product-description/pr
 import { LoginModule } from './Screens/login-page/login.module';
 import { RegistrationModule } from './Screens/registration-page/registration.module';
 import { PaymentModule } from './Components/payment/payment.module';
+import { StoreModule } from '@ngrx/store';
+import { PaymentSuccessComponent } from './Components/payment-success/payment-success.component';
+
 
 
 
@@ -41,8 +44,7 @@ import { PaymentModule } from './Components/payment/payment.module';
     FilterComponent,
     ProductDetailComponent,
     ProductDescriptionComponent,
-
-
+    PaymentSuccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { PaymentModule } from './Components/payment/payment.module';
     PaymentModule,
     LoginModule,
     SharedModule,
-     
+    StoreModule.forRoot({}, {}),
+
   ],
   providers: [],
   bootstrap: [AppComponent]

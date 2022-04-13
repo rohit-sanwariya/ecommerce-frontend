@@ -8,16 +8,16 @@
 
     <div class="cart-links">
       <div>
-        <button class="btn">
+        <button [routerLink]="['']" routerLinkActive="router-link-active"  class="btn">
           Continue Shopping
         </button>
       </div>
       <div>
-        <a routerLink="">Shopping Bag({{(userCart$|async)?.products?.length}})</a>
-        <a routerLink="">Your Wishlist(10)</a>
+        <a [routerLink]="">Shopping Bag({{(userCart$|async)?.products?.length}})</a>
+        <a [routerLink]="">Your Wishlist(10)</a>
       </div>
       <div>
-        <button class="btn">
+        <button [routerLink]="['','shipping-address']" class="btn">
           Checkout Now.
         </button>
       </div>
@@ -28,7 +28,7 @@
       <div *ngFor="let product of products" class="cart-item-list">
         <div   class="cart-item">
           <div class="img-container">
-            <img
+            <img class="link" [routerLink]="['','product-detail',product._id]"
               [src]="product.img"
               alt="">
           </div>
@@ -36,7 +36,7 @@
             <div class="cart-detail">
               <div class="product-name">
                 <span class="bold">Product:</span>
-                <p>{{product.title}}</p>
+                <p class="link" [routerLink]="['','product-detail',product._id]" >{{product.title|slice:0:20}}</p>
               </div>
               <div class="product-id">
                 <span class="bold">ID:</span>
@@ -94,7 +94,7 @@
                 Total
             </div>
             <div class="right">
-              ₹{{cartTotal}}
+              ₹{{cartTotal$|async| number: '1.0-0'}}
             </div>
           </div>
         </div>

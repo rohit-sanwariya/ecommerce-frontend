@@ -52,12 +52,12 @@ export class UserAddressListComponent implements OnInit {
       user.country = this.selectedCountry
     if(this.addressForm.valid && this.address.length == 0){
 
-      console.log(user);
+
       this.registerService.addUserAddress(user)
     }
     else{
    this.address.addresses.push(user)
-   console.log(this.address);
+
 
 
     this.registerService.appendNewAddress(this.address)

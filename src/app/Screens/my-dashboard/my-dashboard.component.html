@@ -1,0 +1,36 @@
+<div class="container">
+  <app-navbar class="nav"></app-navbar>
+  <aside>
+      <header>
+        <h3>Account</h3>
+        <h5>User Name</h5>
+      </header>
+      <main>
+            <div class="block overview ">
+                  <a [routerLink]="['','my']" class="block-heading active">
+                    overview
+                  </a>
+            </div>
+
+            <div [routerLink]="['','my','orders']" class="block orders">
+                  <a class="block-heading">
+                    orders
+                  </a>
+            </div>
+            <div class="block account">
+                  <a class="block-heading">
+                    account
+                  </a>
+            </div>
+            <div class="block legal">
+                  <a class="block-heading">
+                    legal
+                  </a>
+            </div>
+      </main>
+  </aside>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>
+

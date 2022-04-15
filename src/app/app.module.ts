@@ -23,6 +23,9 @@ import { RegistrationModule } from './Screens/registration-page/registration.mod
 import { PaymentModule } from './Components/payment/payment.module';
 import { StoreModule } from '@ngrx/store';
 import { PaymentSuccessComponent } from './Components/payment-success/payment-success.component';
+import { OrderPageComponent } from './Screens/order-page/order-page.component';
+import { MyDashboardComponent } from './Screens/my-dashboard/my-dashboard.component';
+import { OverviewComponent } from './Screens/MyDashboard/overview/overview.component';
 
 
 
@@ -45,6 +48,9 @@ import { PaymentSuccessComponent } from './Components/payment-success/payment-su
     ProductDetailComponent,
     ProductDescriptionComponent,
     PaymentSuccessComponent,
+    OrderPageComponent,
+    MyDashboardComponent,
+    OverviewComponent,
   ],
   imports: [
     BrowserModule,

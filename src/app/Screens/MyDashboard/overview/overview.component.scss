@@ -1,0 +1,86 @@
+.container{
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  grid-template-rows: repeat(12,1fr);
+  margin: 2rem;
+  margin-bottom: 0;
+  overflow: hidden;
+  .card{
+    overflow: hidden;
+    margin-right: 2rem;
+    grid-column: 1/12;
+    grid-row: 1/5;
+    display: flex;
+    background-color: #f2f2f2;
+    .card-img{
+      width: 200px;
+      height: 100%;
+      background-color: grey;
+      display: flex;
+      position: relative;
+      .circle{
+        position: absolute;
+        top: 20%;
+        left: 30%;
+          width: 75px;
+          height: 75px;
+         background-color: #f2f2f2;
+          border-radius: 100%;
+          border: 1px solid black;
+      }
+      .semi-circle{
+        position: absolute;
+        bottom: -28%;
+        left: 20%;
+          width: 125px;
+          height: 100px;
+         background-color: #f2f2f2;
+          border-radius: 100%;
+          border: 1px solid black;
+      }
+    }
+    .email{
+      width: 33%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    button{
+      background-color:  #14cda8;;
+      border: 3px solid #fff;
+      box-shadow: 5px 5px 13px 15px #fff;
+      padding: .75rem 2rem;
+      color: #fff;
+    }
+
+  }
+
+  .cards{
+
+    margin: 0;
+    grid-column: 1/13;
+    width: 100%;
+    grid-row: 4/13;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    .block{
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: 200px;
+        width: 200px;
+        display: flex;
+        box-shadow: 5px 1px 13px 5px #f1f1f1;
+
+    }
+  }
+
+}

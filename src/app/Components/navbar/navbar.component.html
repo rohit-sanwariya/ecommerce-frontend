@@ -11,7 +11,7 @@
           </span>
         </a>
       </li>
-      <li   class="search-item">
+      <li *ngIf="showSearch"  class="search-item">
         <span  class="material-icons search-icon">
           search
           </span>
@@ -20,7 +20,7 @@
     </ul>
     <ul class="center">
       <li class="logo">
-        <a class="logo-link" routerLink="">Mantra</a>
+        <a class="logo-link" routerLink="">Mantra.in</a>
       </li>
     </ul>
     <ul class="right">
@@ -30,12 +30,28 @@
       <li *ngIf="!userLoggedIn">
         <a routerLink="/login">{{'Sign in'}}</a>
       </li>
-      <li *ngIf="userLoggedIn">
+      <li class="user-profile" *ngIf="userLoggedIn">
         <a routerLink="">
           <span class="material-icons">
             person
             </span>
         </a>
+        <div class="user-details">
+         <div class="tile-container">
+          <div class="tile"></div>
+         </div >
+          <div class="user-container">
+              <h3 class="user-name">{{(user$|async)?.username}}</h3>
+              <h4 class="user-phone">{{(user$|async)?.email}}</h4>
+              <div class="hr"></div>
+             <div class="links">
+
+                <a [routerLink]="['','my']">Profile</a>
+                <a [routerLink]="['','my','orders']">Your Orders</a>
+              <a (click)="logout()">Logout</a></div>
+
+          </div>
+          </div>
       </li>
       <li>
         <a class="shoping-cart-link"   routerLink="/cart">
@@ -50,3 +66,4 @@
     </ul>
   </nav>
 </header>
+

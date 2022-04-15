@@ -55,7 +55,8 @@ export class AdminService {
   }
   getProductsByIds(idArray: string[]) {
     const ids = idArray.join(",")
-    console.log(ids);
+    
+
 
     this.http.get<ProductSchema>(`${this.baseURL}/api/products/findbyIds/${ids}`, this.httpOptions).subscribe((product: any) => {
       this.getProductsByIdsSubject.next(product)

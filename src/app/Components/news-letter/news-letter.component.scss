@@ -1,5 +1,5 @@
 .container{
-  background-color:teal;
+  background-color: #14cda8;;
   color: #fff;
   width: 100%;
   height: 50vh;
@@ -26,15 +26,15 @@
         flex: 8;
         &:focus{
           outline: none;
-         
+
           letter-spacing: 2px;
-          color: teal;
+          color:  #14cda8;;
         }
     }
     button.btn{
       flex: 1;
       background-color: #fff;
-      color: teal;
+      color:  #14cda8;;
       outline: none;
       border: none;
       padding: .125rem .25rem;

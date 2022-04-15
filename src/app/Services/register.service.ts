@@ -57,7 +57,7 @@ export class RegisterService implements OnInit {
 
 
   getCartProductIds(){
-    console.log('called');
+
       // this.getCartDetails()
   this.cartSubject.pipe(take(2)).subscribe((cart:any)=>{
 
@@ -67,7 +67,7 @@ export class RegisterService implements OnInit {
       cart.products.map((product:any)=>{
               return product.productId
       })
-      console.log(ids);
+
 
      this.cartProductsIds.next(ids)
       }
@@ -78,12 +78,16 @@ export class RegisterService implements OnInit {
   getCartProducts(){
     this.getCartProductIds()
     this.cartProductsIds.pipe(take(1)).subscribe((ids)=>{
-       this.ProductService.getProductsByIds(ids).subscribe(products=>{
-        if(products.length>0){
-          this.cartProducts.next(products)
-        }
+            console.log();
+            if(ids.length >0){
+              this.ProductService.getProductsByIds(ids).subscribe(products=>{
+                if(products.length>0){
+                  this.cartProducts.next(products)
+                }
 
-       })
+               })
+            }
+
 
       })
       return this.cartProducts.asObservable()
@@ -97,7 +101,7 @@ export class RegisterService implements OnInit {
 
         this.cartProducts.pipe(take(2)).subscribe((products:any)=>{
           const productsWithPrice = products
-         if(productsWithPrice.length>0){
+         if(productsWithPrice.length>0 && productsWithoutPrice.length>0){
            let cartTotal = 0
           productsWithPrice.forEach((withPrice: any)=>{
             const found = productsWithoutPrice.find((p:any)=>p.productId === withPrice._id)
@@ -117,11 +121,11 @@ export class RegisterService implements OnInit {
     this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
       if (Object.keys(user).length > 0) {
         const body = {
-          id: user.id,
+          id: user._id,
           addresses: [userForm]
         }
         this.http.post(`${this.baseURL}/api/address/${body.id}`, body, this.newHTTPoptions).subscribe((address: any) => {
-          console.log(address);
+
         })
         return
       }
@@ -133,7 +137,7 @@ export class RegisterService implements OnInit {
       if (Object.keys(user).length > 0) {
 
         this.http.put(`${this.baseURL}/api/address/${userForm.id}`, userForm, this.newHTTPoptions).subscribe((address: any) => {
-          console.log(address);
+
         })
         return
       }
@@ -143,11 +147,35 @@ export class RegisterService implements OnInit {
     this.getUserWithAccessTokenFromApi()
     this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
       if (Object.keys(user).length > 0) {
-        this.http.get(`${this.baseURL}/api/address/${user.id}`, this.newHTTPoptions).subscribe((address: any) => {
-          this.addressSubject.next(address)
-          console.log(address);
-        })
-        return
+        console.log(user);
+
+        this.http.get(`${this.baseURL}/api/address/${user._id}`, this.newHTTPoptions)
+        .subscribe(
+          {
+            next:(address: any) => {
+              console.log(address);
+
+              try {
+                  if(address==null){
+                    throw Error
+                  }
+                  else{
+                  this.addressSubject.next(address)
+                  }
+              } catch (error) {
+                // console.log(error);
+                // this.router.navigate([''])
+              }
+
+            },
+            error:(error)=>{
+              console.log(error);
+              this.router.navigate([''])
+
+            }
+          }
+        )
+
       }
     })
     return this.addressSubject.asObservable()
@@ -203,10 +231,12 @@ export class RegisterService implements OnInit {
     }
     this.getUserWithAccessTokenFromApi()
     this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
-      const id = user.id
+      const id = user._id
+
 
       if (!!id) {
         this.http.get<CartSchema>(`${this.cartURL}/find/${id}`, newHTTPoptions).subscribe((cart) => {
+
           this.cartSubject.next(cart)
         })
       }
@@ -229,9 +259,10 @@ export class RegisterService implements OnInit {
         else {
           cart.products[found].quantity = quantity + incrment
         }
-        this.http.put(`${this.cartURL}/${this.user.id}`, cart, this.newHTTPoptions).subscribe((updatedCart) => {
+        this.http.put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions).subscribe((updatedCart) => {
           this.cartSubject.next(updatedCart)
           window.location.reload()
+
         })
       }
 
@@ -246,15 +277,18 @@ export class RegisterService implements OnInit {
         })
         cart.products = newCartProducts
 
-        this.http.put(`${this.cartURL}/removeProduct/${this.user.id}`, cart, this.newHTTPoptions)
+        this.http.put(`${this.cartURL}/removeProduct/${this.user._id}`, cart, this.newHTTPoptions)
           .subscribe((updatedCart) => {
 
             this.cartSubject.next(updatedCart)
-            window.location.reload()
+            // window.location.reload()
           })
       }
     })
 
+  }
+  getCurrentUser(){
+    return this.currentUserSubject.asObservable()
   }
   onUserRegister(newUser: NewUser) {
     this.http.post<NewUser>(this.registerURL, newUser, this.httpOptions).subscribe((data: any) => {

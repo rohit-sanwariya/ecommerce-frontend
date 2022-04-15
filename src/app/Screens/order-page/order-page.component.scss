@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 5fr 7fr;
+  .img-container {
+    display: flex;
+    width: 100%;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 20rem;
+      object-fit: contain;
+    }
+  }
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    h3,h4{
+      font-weight: 400;
+      margin: 0;
+      margin: 0.25rem;
+    }
+    h3{
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    button{
+      margin: 0.5rem;
+      background-color:  #14cda8;;
+      border: 3px solid #fff;
+      box-shadow: 5px 5px 13px 15px #fff;
+      padding: .75rem 2rem;
+      color: #fff;
+    }
+
+  }
+}

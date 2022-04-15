@@ -27,15 +27,13 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   registerUser(){
-
-
     const  user = this.registerForm.value
 
      if(this.registerForm.valid && user.confirmpassword === user.password){
-      const tac = this.registerForm.controls['tac'].value
-
-
+             const tac = this.registerForm.controls['tac'].value
        const newUser:NewUser = {
+         firstname:user.firstname,
+         lastname:user.lastname,
          username:user.username,
          password:user.password,
          email:user.email,
@@ -54,8 +52,6 @@ export class RegistrationPageComponent implements OnInit {
 
   togglePassword(event: HTMLInputElement) {
     event.type == 'password' ? event.type = 'text' : event.type = 'password'
-
-
     event.name === 'password'?this.showHidePasword = !this.showHidePasword: this.showHidePasword = this.showHidePasword
     event.name === 'confirmpassword'?this.showHideConfirmPasword = !this.showHideConfirmPasword: this.showHideConfirmPasword = this.showHideConfirmPasword
   }

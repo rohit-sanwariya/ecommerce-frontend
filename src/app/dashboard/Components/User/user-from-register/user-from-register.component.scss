@@ -18,7 +18,7 @@
       input {
         min-width: 300px;
         padding: 1rem;
-        box-shadow: 1px 1px 3px 1px teal;
+        box-shadow: 1px 1px 3px 1px  #14cda8;;
         border: none;
         &:focus {
           outline: none;
@@ -27,7 +27,7 @@
       .password{
         display: flex;
         align-items: center;
-        box-shadow: 1px 1px 3px 1px teal;
+        box-shadow: 1px 1px 3px 1px  #14cda8;;
         input{
           border: none;
           box-shadow: none;
@@ -45,7 +45,7 @@
     div {
       width: 100%;
       button.btn {
-        background-color: teal;
+        background-color:  #14cda8;;
         border: none;
         color: #fff;
         padding: 0.75rem 1.25rem;

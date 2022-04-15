@@ -28,16 +28,32 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.router.url === '/cart' && !!this.userCart === false) {
+    // if (this.router.url === '/cart' && !!this.userCart === false) {
       if (this.products.length === 0) {
         this.userCart$ = this.register.getCartDetails();
       }
-    }
+    // }
 
 
 
     this.userCart$.pipe(take(2)).subscribe((cart) => {
+      // if(Object.keys(this.userCart).length>0 && this.userCart.products.length>0){
+      //   this.register.getCartProductIds().pipe(take(1)).subscribe((ids)=>{
+      //     this.adminService.getProductsByIds(ids).pipe(take(2)).subscribe((productsWithPrice:any)=>{
+      //       if(productsWithPrice.length>0){
+      //       const mapper =  productsWithPrice.map((productsWithPrice: any)=>{
+      //           const cartproduct = this.userCart.products.find((p:any)=>productsWithPrice._id === p.productId)
+      //           productsWithPrice['quantity'] = cartproduct.quantity;
+      //         productsWithPrice['productTotal'] = Math.round(cartproduct.quantity * productsWithPrice.price);
+      //         return productsWithPrice
+      //         })
 
+      //         this.userCart.products = mapper
+      //         this.newproducts = mapper
+      //       }
+      //     })
+      //   })
+      //       }
 
       this.userCart = cart;
       this.products = [];
@@ -83,8 +99,7 @@ this.cartTotal$ = this.register.calCartTotal()
   }
   decrementProductInCart(product: any) {
     if (product.quantity <= 1) {
-
-
+    
       this.register.deleteProductFromCart(product);
 
     }

@@ -37,7 +37,7 @@
         }
         .btn {
           background-color: transparent;
-          border: 2px solid teal;
+          border: 2px solid  #14cda8;;
           padding: 0.5rem 1rem;
           font-size: 1.1rem;
 
@@ -57,7 +57,7 @@
         margin: 1rem 0;
         padding: 1rem;
         grid-column: 1/8;
-        box-shadow: 0 1px 13px 3px teal;
+        box-shadow: 0 1px 13px 3px  #14cda8;;
         .cart-item {
           display: grid;
           grid-template-columns: 1fr 2fr;
@@ -75,7 +75,7 @@
           .item-detail-container {
             .link{
               cursor: pointer;
-             border-bottom: 1px solid teal;
+             border-bottom: 1px solid  #14cda8;;
              font-size: .9rem;
              font-weight: 800;
             }
@@ -109,8 +109,8 @@
               div.color {
                 width: 1rem;
                 height: 1rem;
-                background-color: teal;
-                color: teal;
+                background-color:  #14cda8;;
+                color:  #14cda8;;
                 border-radius: 100%;
                 margin: 1rem 0;
               }
@@ -131,7 +131,7 @@
                 button.btn {
                   padding: 0.25rem 1rem;
                   background-color: transparent;
-                  border: 1px solid teal;
+                  border: 1px solid  #14cda8;;
                   margin: 0 1rem;
                   font-weight: 600;
                   font-size: 1.2rem;

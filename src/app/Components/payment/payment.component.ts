@@ -16,23 +16,22 @@ export class PaymentComponent implements OnInit {
     headers:new HttpHeaders(
       {
         'Content-Type':  'application/json',
-        'Authorization':'Bearer '
+        
       }
     )
   }
   constructor(
     private http:HttpClient,
-    private stripeService: StripeService,
-    private router:Router,
     private register:RegisterService
     ){
       this.register.getCartProducts().pipe(take(1)).subscribe((pro)=>{
 
         this.register.getCartDetails().pipe(take(1)).subscribe((cart)=>{
+            console.log(cart);
 
           const mapper = cart.products.map((cartP)=>{
            const  prodPrice:any = pro.find((p:any)=>cartP.productId==p._id)
-            console.log(prodPrice);
+
 
            return {
              productName:prodPrice?.title,
@@ -41,13 +40,15 @@ export class PaymentComponent implements OnInit {
            }
 
           })
-          console.log(mapper);
+
           this.http.post('http://localhost:5000/api/stripe/payments',{mapper},this.httpOptions)
           .subscribe((result:any) => {
           if (result.error) {
                 alert(result.error.message);
               }
               else{
+                console.log(result);
+
                 window.location.href = result.url;
               }
             });

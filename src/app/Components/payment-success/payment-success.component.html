@@ -1,1 +1,30 @@
-<p>payment-success works!</p>
+<div class="container">
+  <app-navbar></app-navbar>
+  <div class="card">
+    <header>
+      <h2>
+        <span class="material-icons">
+          verified
+          </span>
+      </h2>
+    </header>
+    <main>
+      <div class="card-heading">
+        Order Confirmed
+      </div>
+      <div class="card-body">
+        Your Order is confirmed. You will receive an order confirmation
+        SMS shortly with expected delivery date for your items.
+      </div>
+
+    </main>
+    <footer>
+      <button [routerLink]="['']" class="btn white">
+        Continue Shopping
+      </button>
+      <button [routerLink]="['orders']" class="btn  #14cda8;">
+        View Order
+      </button>
+    </footer>
+  </div>
+</div>

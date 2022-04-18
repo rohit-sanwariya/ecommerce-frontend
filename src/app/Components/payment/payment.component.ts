@@ -3,7 +3,7 @@ import { StripeService } from 'ngx-stripe';
 
 import { switchMap, take } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { RegisterService } from 'src/app/Services/register.service';
 @Component({
   selector: 'app-payment',
@@ -16,15 +16,19 @@ export class PaymentComponent implements OnInit {
     headers:new HttpHeaders(
       {
         'Content-Type':  'application/json',
-        
+
       }
     )
   }
   constructor(
     private http:HttpClient,
-    private register:RegisterService
+    private register:RegisterService,
+    private router:Router
     ){
       this.register.getCartProducts().pipe(take(1)).subscribe((pro)=>{
+       const paramsArray =    this.router.url.split('/')
+       const id = paramsArray[paramsArray.length-1]
+
 
         this.register.getCartDetails().pipe(take(1)).subscribe((cart)=>{
             console.log(cart);
@@ -41,7 +45,7 @@ export class PaymentComponent implements OnInit {
 
           })
 
-          this.http.post('http://localhost:5000/api/stripe/payments',{mapper},this.httpOptions)
+          this.http.post('http://localhost:5000/api/stripe/payments',{mapper,id:id},this.httpOptions)
           .subscribe((result:any) => {
           if (result.error) {
                 alert(result.error.message);

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RegisterService } from 'src/app/Services/register.service';
 
 @Component({
   selector: 'app-my-dashboard',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private registerService:RegisterService) { }
 
   ngOnInit(): void {
+    
   }
 
 }

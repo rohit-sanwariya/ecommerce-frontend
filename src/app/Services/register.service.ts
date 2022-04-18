@@ -13,6 +13,8 @@ import { AdminService } from './admin.service';
   providedIn: 'root'
 })
 export class RegisterService implements OnInit {
+
+  ordersSubject = new BehaviorSubject([])
   cartTotal = new BehaviorSubject(0)
   cartProductsIds = new BehaviorSubject([])
   cartProducts = new BehaviorSubject([])
@@ -25,7 +27,7 @@ export class RegisterService implements OnInit {
   currentUserSubject = new BehaviorSubject({});
   user!: any
   registerURL: string = "http://localhost:5000/api/auth/register"
-  addressSubject = new BehaviorSubject([])
+  addressSubject = new BehaviorSubject({})
   httpOptions = {
     headers: new HttpHeaders(
       {
@@ -33,6 +35,7 @@ export class RegisterService implements OnInit {
       }
     )
   }
+  selectUserAddressShipping = new BehaviorSubject({});
 
   constructor(
     private http: HttpClient,
@@ -75,6 +78,13 @@ export class RegisterService implements OnInit {
        return this.cartProductsIds.asObservable();
   }
 
+
+  setOrders(order:any){
+    this.ordersSubject.next(order)
+  }
+  getOrder(){
+    return this.ordersSubject.asObservable()
+  }
   getCartProducts(){
     this.getCartProductIds()
     this.cartProductsIds.pipe(take(1)).subscribe((ids)=>{
@@ -181,6 +191,27 @@ export class RegisterService implements OnInit {
     return this.addressSubject.asObservable()
   }
 
+  setUserAddress(address: any){
+
+  }
+  getSelectedUserAddressShipping(){
+    return this.selectUserAddressShipping.asObservable()
+  }
+  setSelectedUserAddressShipping(address: any){
+    this.selectUserAddressShipping.next(address)
+  }
+
+  clearCart(cart:any){
+    cart.products = []
+    this.http.put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
+          .subscribe((updatedCart) => {
+
+            this.cartSubject.next(updatedCart)
+            // window.location.reload()
+          })
+
+  }
+
   loginUser(user: LoginUser): Observable<boolean> {
 
     this.http.post<LoginUser>(this.loginURL, user, this.httpOptions).subscribe((res: any) => {
@@ -204,16 +235,23 @@ export class RegisterService implements OnInit {
 
   getUserWithAccessTokenFromApi() {
     const token = sessionStorage.getItem('accessToken')
-    const newHTTPoptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`
+    console.log(token);
+    if(token){
+      console.log('hello',!!token);
+      const newHTTPoptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${token}`
+        })
+      }
+      this.http.get(`${this.baseURL}/api/users/single`, newHTTPoptions).subscribe((user: any) => {
+        this.currentUserSubject.next(user)
+        this.user = user
       })
+
     }
-    this.http.get(`${this.baseURL}/api/users/single`, newHTTPoptions).subscribe((user: any) => {
-      this.currentUserSubject.next(user)
-      this.user = user
-    })
+
+
   }
 
 
@@ -308,6 +346,27 @@ export class RegisterService implements OnInit {
       })
       this.router.navigate([''])
     })
+  }
+
+  getUserOrders(){
+    let user = {}
+   this.getCurrentUser().subscribe((user:any)=>{
+     if(Object.keys(user).length===0) return
+     
+        this.http.get(`${this.baseURL}/api/orders/findAll/${user._id}`,this.newHTTPoptions).subscribe((orders:any)=>{
+          console.log("HURAY",orders);
+
+          this.ordersSubject.next(orders)
+        })
+
+    })
+
+
+
+
+
+
+    return this.ordersSubject.asObservable()
   }
 
 

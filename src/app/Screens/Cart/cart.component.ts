@@ -16,6 +16,7 @@ export class CartComponent implements OnInit {
   userCart!: any;
   products: any[] = [];
   cartTotal: number = 0;
+  showCartSummary:boolean = false
 
   constructor(
     private router: Router,
@@ -63,6 +64,7 @@ export class CartComponent implements OnInit {
             .getProduct(cartproduct.productId)
             .pipe(take(cart.products.length + 1))
             .subscribe((product: any) => {
+              this.showCartSummary = true
               if (
                 Object.keys(product).length !== 0 &&
                 product._id === cartproduct.productId
@@ -99,7 +101,7 @@ this.cartTotal$ = this.register.calCartTotal()
   }
   decrementProductInCart(product: any) {
     if (product.quantity <= 1) {
-    
+
       this.register.deleteProductFromCart(product);
 
     }

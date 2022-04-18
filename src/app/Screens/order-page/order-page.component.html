@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="no-orders">
+  <div *ngIf="(orders$|async)?.length === 0" class="no-orders">
     <div class="img-container">
       <img src="../../../assets/img/NoOrder.png" alt="">
     </div>
@@ -9,4 +9,28 @@
       <button>Continue Shopping</button>
     </div>
   </div>
+  <main *ngIf="orderViewSubject" class="order-list">
+    <div *ngFor="let op of (orderViewSubject|async)" class="card">
+
+      <div class="product-img-container">
+
+        <img [src]="op.img" alt="">
+      </div>
+      <div class="product-info">
+        <h4 class="product-name">{{op.name|slice:0:55}}</h4>
+        <h5><span class="bold">{{op.quantity}}</span></h5>
+        <h5>You Paid <span class="bold">₹{{op.amountProduct}}</span></h5>
+      </div>
+      <div class="delivery-info">
+       <div class="placed-on">
+        <h4 class="light"> Ordered On <span class="bold">{{op.orderedOn}}</span></h4>
+
+       </div>
+       <div class="deliver-on">
+        <h4> Your Ordered Will Be Delivered by</h4>
+        <h5>15/04/2022</h5>
+       </div>
+      </div>
+    </div>
+  </main>
 </div>

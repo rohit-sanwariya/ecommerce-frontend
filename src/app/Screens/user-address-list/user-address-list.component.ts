@@ -35,6 +35,9 @@ export class UserAddressListComponent implements OnInit {
     })
   }
 
+  selectAddress(add: any){
+    this.registerService.setSelectedUserAddressShipping(add)
+  }
   toggleMenu(){
     this.showList = !this.showList
   }
@@ -50,16 +53,13 @@ export class UserAddressListComponent implements OnInit {
   addUserAddress(){
     const user = this.addressForm.value
       user.country = this.selectedCountry
-    if(this.addressForm.valid && this.address.length == 0){
+      console.log(this.address);
 
-
+    if(this.addressForm.valid && Object.keys(this.address).length == 0){
       this.registerService.addUserAddress(user)
     }
     else{
    this.address.addresses.push(user)
-
-
-
     this.registerService.appendNewAddress(this.address)
 
     }

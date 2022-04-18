@@ -114,7 +114,7 @@
       <p>{{add.zip}}</p>
       <p>{{add.country}}</p>
       <p>{{add.phone}}</p>
-      <button class="btn gold" [routerLink]="['','payment',add._id]">
+      <button class="btn gold" (click)="selectAddress(add)" [routerLink]="['','payment',add._id]">
         Deliver to this address
       </button>
     </div>

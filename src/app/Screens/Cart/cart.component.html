@@ -8,7 +8,7 @@
 
     <div class="cart-links">
       <div>
-        <button [routerLink]="['']" routerLinkActive="router-link-active"  class="btn">
+        <button [routerLink]="['']" routerLinkActive="router-link-active" class="btn">
           Continue Shopping
         </button>
       </div>
@@ -26,24 +26,22 @@
     <section class="cart-details">
 
       <div *ngFor="let product of products" class="cart-item-list">
-        <div   class="cart-item">
+        <div class="cart-item">
           <div class="img-container">
-            <img class="link" [routerLink]="['','product-detail',product._id]"
-              [src]="product.img"
-              alt="">
+            <img class="link" [routerLink]="['','product-detail',product._id]" [src]="product.img" alt="">
           </div>
           <div class="item-detail-container">
             <div class="cart-detail">
               <div class="product-name">
                 <span class="bold">Product:</span>
-                <p class="link" [routerLink]="['','product-detail',product._id]" >{{product.title|slice:0:20}}</p>
+                <p class="link" [routerLink]="['','product-detail',product._id]">{{product.title|slice:0:20}}</p>
               </div>
               <div class="product-id">
                 <span class="bold">ID:</span>
                 <p>{{product._id}}</p>
               </div>
               <div class="color"><span class="bold">Color</span>
-              <p>{{product.color}}</p>
+                <p>{{product.color}}</p>
               </div>
               <div class="size">
                 <span class="bold">Price</span>
@@ -66,7 +64,7 @@
 
 
       </div>
-      <div class="order-summary card">
+      <div *ngIf="showCartSummary" class="order-summary card">
         <h2 class="card-title">
           Order Summary
         </h2>
@@ -75,7 +73,7 @@
           </div>
           <div class="esimated-shipping">
             <div class="left">
-                Estimated Shipping
+              Estimated Shipping
             </div>
             <div class="right">
               $5
@@ -83,7 +81,7 @@
           </div>
           <div class="shipping-discount">
             <div class="left">
-                Shipping Discount
+              Shipping Discount
             </div>
             <div class="right">
               -$5
@@ -91,12 +89,21 @@
           </div>
           <div class="total">
             <div class="left">
-                Total
+              Total
             </div>
             <div class="right">
               ₹{{cartTotal$|async| number: '1.0-0'}}
             </div>
           </div>
+        </div>
+      </div>
+      <div *ngIf="!showCartSummary" class="order-summary-empty">
+        <div class="img-container">
+          <img src="../../../assets/img/emptybag.webp" alt="">
+        </div>
+        <div class="text-container">
+          <h3>Hey, it Feels so light! </h3>
+          <h5>There is nothing in your bag. Lets Add some items. </h5>
         </div>
       </div>
     </section>

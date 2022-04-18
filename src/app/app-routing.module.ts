@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LegalComponent } from './Components/legal/legal.component';
 import { PaymentSuccessComponent } from './Components/payment-success/payment-success.component';
 import { PaymentComponent } from './Components/payment/payment.component';
+import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-dasboard-form/user-update-my-dasboard-form.component';
+import { UserUpdateComponent } from './Components/user-update/user-update.component';
+import { UserUpdateFormComponent } from './dashboard/Components/User/user-update-form/user-update-form.component';
 import { LoginGuard } from './Guards/login.guard';
 
 import { HomeComponent } from './Screens/home/home.component';
@@ -55,6 +59,21 @@ const routes: Routes = [
     component:MyDashboardComponent,
     canActivate:[LoginGuard],
     children:[
+      {
+        path:'legal',
+        component:LegalComponent
+      },
+      {
+          path:'user',
+          component:UserUpdateComponent,
+          pathMatch:'full',
+
+      },
+      {
+        path:'user/edit',
+        component:UserUpdateMyDasboardFormComponent,
+        pathMatch:'full'
+      },
       {
         path:'',component:OverviewComponent,
       },

@@ -53,7 +53,7 @@ export class UserAddressListComponent implements OnInit {
   addUserAddress(){
     const user = this.addressForm.value
       user.country = this.selectedCountry
-      console.log(this.address);
+
 
     if(this.addressForm.valid && Object.keys(this.address).length == 0){
       this.registerService.addUserAddress(user)

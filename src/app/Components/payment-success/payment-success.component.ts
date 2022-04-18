@@ -50,21 +50,21 @@ export class PaymentSuccessComponent implements OnInit {
                   const userId = cart.id
                   const products = cart.products
 
-                  console.log(products);
+
 
                   const status = "Complete"
                   this.address$.subscribe((address)=>{
                   const   shippingAddress = address.addresses.find((add:any)=>add._id==addId)
                   if(products && products.length >0){
                     this.http.post(this.orderURL,{userId,products,status,address:shippingAddress,amount},this.httpOptions).subscribe((order:any)=>{
-                      console.log(order);
+
 
                       this.registerService.setOrders(order)
                       this.registerService.clearCart(cart)
                       })
                   }
                   else{
-                    
+
                   }
                   })
                 }
@@ -77,7 +77,7 @@ export class PaymentSuccessComponent implements OnInit {
       },
       error: (error) => {
         // this.router.navigate(['cart'])
-        console.log(error);
+
 
 
       }

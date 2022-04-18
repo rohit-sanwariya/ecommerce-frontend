@@ -1,0 +1,65 @@
+.container{
+
+  display: grid;
+  margin: 2rem;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  grid-template-rows: repeat(12,1fr);
+
+h3{
+  margin: 0;
+  padding: 0;
+  grid-row: 1/2;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+hr.hr{
+  background-color: #333;
+  height: .5px;
+  width: 80%;
+}
+
+  .card{
+    grid-row: 3/10;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    .row{
+      width: 100%;
+    height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .col{
+        width: 100%;
+    height: 100%;
+        margin: 0 2rem;
+        font-weight: 400;
+        display: flex;
+        &.right{
+          display: flex;
+          min-width: 10rem;
+          justify-content: flex-start;
+
+        }
+        &.left{
+          margin-left: 5rem;
+
+        }
+
+      }
+    }
+
+    button{
+      background-color: #ff3f6c;
+      border: none;
+      padding: .5rem ;
+      margin: 0.5rem 0;
+      color: #fff;
+      height: 2.5rem;
+    }
+  }
+}

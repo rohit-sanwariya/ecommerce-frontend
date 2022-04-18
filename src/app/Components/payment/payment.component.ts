@@ -31,7 +31,7 @@ export class PaymentComponent implements OnInit {
 
 
         this.register.getCartDetails().pipe(take(1)).subscribe((cart)=>{
-            console.log(cart);
+
 
           const mapper = cart.products.map((cartP)=>{
            const  prodPrice:any = pro.find((p:any)=>cartP.productId==p._id)
@@ -51,7 +51,7 @@ export class PaymentComponent implements OnInit {
                 alert(result.error.message);
               }
               else{
-                console.log(result);
+
 
                 window.location.href = result.url;
               }

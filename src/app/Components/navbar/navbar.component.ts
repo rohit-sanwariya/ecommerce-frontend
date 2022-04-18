@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CartSchema } from 'src/app/Interfaces/cart-schema';
- 
+
 import { RegisterService } from 'src/app/Services/register.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
     this.cart$ = this.registerService.getCartDetails()
     this.user$ = this.registerService.getCurrentUser()
     this.showSearch = !this.hideSearchOnURL.includes(this.router.url)
-    console.log(this.showSearch);
+
 
 
 

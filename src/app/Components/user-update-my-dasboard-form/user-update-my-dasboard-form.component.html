@@ -1,0 +1,26 @@
+<div class="container">
+  <form>
+    <div class="row">
+      <label for="username">User Name</label>
+      <input type="text"
+     id="username" [value]="(user|async)?.username">
+    </div>
+    <div class="row">
+      <label for="firstname">First Name</label>
+      <input type="text"
+     id="firstname" [value]="(user|async)?.firstname">
+    </div>
+    <div class="row">
+      <label for="lastname">Last Name</label>
+      <input type="text"
+     id="lastname" [value]="(user|async)?.lastname">
+    </div>
+    <div class="row">
+      <label for="email">Email</label>
+      <input type="text"
+     id="email" [value]="(user|async)?.email">
+    </div>
+
+     <button>Save</button>
+  </form>
+</div>

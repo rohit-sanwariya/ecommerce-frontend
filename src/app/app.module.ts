@@ -26,6 +26,9 @@ import { PaymentSuccessComponent } from './Components/payment-success/payment-su
 import { OrderPageComponent } from './Screens/order-page/order-page.component';
 import { MyDashboardComponent } from './Screens/my-dashboard/my-dashboard.component';
 import { OverviewComponent } from './Screens/MyDashboard/overview/overview.component';
+import { UserUpdateComponent } from './Components/user-update/user-update.component';
+import { LegalComponent } from './Components/legal/legal.component';
+import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-dasboard-form/user-update-my-dasboard-form.component';
 
 
 
@@ -51,6 +54,9 @@ import { OverviewComponent } from './Screens/MyDashboard/overview/overview.compo
     OrderPageComponent,
     MyDashboardComponent,
     OverviewComponent,
+    UserUpdateComponent,
+    LegalComponent,
+    UserUpdateMyDasboardFormComponent,
   ],
   imports: [
     BrowserModule,

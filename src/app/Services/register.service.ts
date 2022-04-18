@@ -88,7 +88,7 @@ export class RegisterService implements OnInit {
   getCartProducts(){
     this.getCartProductIds()
     this.cartProductsIds.pipe(take(1)).subscribe((ids)=>{
-            console.log();
+
             if(ids.length >0){
               this.ProductService.getProductsByIds(ids).subscribe(products=>{
                 if(products.length>0){
@@ -157,13 +157,13 @@ export class RegisterService implements OnInit {
     this.getUserWithAccessTokenFromApi()
     this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
       if (Object.keys(user).length > 0) {
-        console.log(user);
+
 
         this.http.get(`${this.baseURL}/api/address/${user._id}`, this.newHTTPoptions)
         .subscribe(
           {
             next:(address: any) => {
-              console.log(address);
+
 
               try {
                   if(address==null){
@@ -173,13 +173,13 @@ export class RegisterService implements OnInit {
                   this.addressSubject.next(address)
                   }
               } catch (error) {
-                // console.log(error);
+                //
                 // this.router.navigate([''])
               }
 
             },
             error:(error)=>{
-              console.log(error);
+
               this.router.navigate([''])
 
             }
@@ -235,9 +235,9 @@ export class RegisterService implements OnInit {
 
   getUserWithAccessTokenFromApi() {
     const token = sessionStorage.getItem('accessToken')
-    console.log(token);
+
     if(token){
-      console.log('hello',!!token);
+
       const newHTTPoptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -352,9 +352,9 @@ export class RegisterService implements OnInit {
     let user = {}
    this.getCurrentUser().subscribe((user:any)=>{
      if(Object.keys(user).length===0) return
-     
+
         this.http.get(`${this.baseURL}/api/orders/findAll/${user._id}`,this.newHTTPoptions).subscribe((orders:any)=>{
-          console.log("HURAY",orders);
+
 
           this.ordersSubject.next(orders)
         })

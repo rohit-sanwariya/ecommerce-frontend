@@ -4,13 +4,13 @@
       <div class="circle"></div>
       <div class="semi-circle"></div>
     </div>
-    <div class="email">test@gmail.com</div>
+    <div class="email">{{(user$|async).email}}</div>
     <div class="email">
-      <button>Edit Profile</button>
+      <button [routerLink]="['','my','user']" >Edit Profile</button>
     </div>
   </div>
   <div class="cards">
-    <div class="block" >
+    <div [routerLink]="['','my','orders']" class="block" >
       <h3 >
       Orders
     </h3>

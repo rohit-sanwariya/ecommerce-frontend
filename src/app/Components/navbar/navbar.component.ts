@@ -13,7 +13,11 @@ import { RegisterService } from 'src/app/Services/register.service';
 export class NavbarComponent implements OnInit {
   userLoggedIn!:boolean
   showSearch:boolean = true;
-  hideSearchOnURL = ['/cart','/my','/success','/my/orders']
+  hideSearchOnURL = [
+    '/cart','/my','/success','/my/orders',
+    '/my/user/address','/my/user/profile',
+    '/my/user/cash','/my/legal'
+  ]
   cart$!:Observable<CartSchema>
   user$!:Observable<any>
 

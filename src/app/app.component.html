@@ -1,7 +1,12 @@
-<div *ngIf="(show|async)?.show" class="toast">
-  <p class="message">{{(show|async)?.message}}</p> <button (click)="close()">x</button>
+<div *ngIf="(show|async)?.show" class="toast"
+[ngStyle]="{'color':(show|async)?.color,'background-color':(show|async)?.color!=='#fff'?'#fff':'teal','font-weight':(show|async)?.color!=='#fff'?700:400}"
+>
+  <p class="message">{{(show|async)?.message}}</p>
+  <button
+  [ngStyle]="{'color':(show|async)?.color,'background-color':(show|async)?.color!=='#fff'?'#fff':'teal','font-weight':(show|async)?.color!=='#fff'?700:400}"
+   (click)="close()">x</button>
 </div>
-<div *ngIf="(show|async)?.show"  class="prompt">
+<div *ngIf="(show|async)?.show && (show|async)?.confirm"  class="prompt">
 
   <p class="message">{{(show|async)?.message}}</p>
 

@@ -40,8 +40,8 @@
          <div class="tile-container">
           <div class="tile"></div>
          </div >
-          <div class="user-container">
-              <h3 class="user-name">{{(user$|async)?.username}}</h3>
+          <div  class="user-container">
+              <h3  [routerLink]="['','my','user']" class="user-name">{{(user$|async)?.username}}</h3>
               <h4 class="user-phone">{{(user$|async)?.email}}</h4>
               <div class="hr"></div>
              <div class="links">

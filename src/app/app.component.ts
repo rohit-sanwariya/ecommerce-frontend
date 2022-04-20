@@ -10,7 +10,7 @@ import { ToastService } from './Services/toast.service';
 })
 export class AppComponent implements OnInit {
   title = 'ecommerce-frontend';
-  show!: Observable<{ show: boolean, message: string }>;
+  show!: Observable<{ show: boolean, message: string,confirm:boolean,color:string }>;
   constructor(private toastService: ToastService) { }
 
   ngOnInit(): void {

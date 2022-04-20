@@ -21,6 +21,17 @@
         <a class="block-heading">
           account
         </a>
+        <menu >
+          <li>
+            <a [routerLink]="['','my','user']">Profile</a>
+          </li>
+          <li>
+            <a [routerLink]="['','my','user','cash']">Mantra Cash</a>
+          </li>
+          <li>
+            <a [routerLink]="['','my','user','address']" routerLink="">Address</a>
+          </li>
+        </menu>
       </div>
       <div class="block legal">
         <a class="block-heading" [ngClass]="{'active':activeRoute['orders']}"

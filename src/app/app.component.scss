@@ -9,12 +9,15 @@
   align-items: center;
   justify-content: space-around;
   color: #fff;
+  z-index: 99999;
+  box-shadow: 1px 2px 10px 1px gray;
   button {
     background-color: transparent;
     margin: 0 1rem;
     border: none;
     color: #fff;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
   }
 }
 

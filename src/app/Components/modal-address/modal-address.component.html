@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="card">
+    <div class="card-heading">
+      {{formType}} Address
+    </div>
+    <form [formGroup]="addressForm" >
+      <div class="row">
+        <label for="fullname">Name*</label>
+        <input type="text" id="fullname" formControlName="fullname">
+      </div>
+      <div class="row">
+        <label for="phone">Mobile*</label>
+        <input type="text" id="phone" formControlName="phone">
+      </div>
+      <div class="row">
+        <label for="fullname">Address(House No,Building,Street)</label>
+        <input type="text" id="fullname" formControlName="street">
+      </div>
+      <div class="row-col-2 row">
+       <div class="col">
+        <label for="zip">Pincode</label>
+        <input type="text" id="zip" formControlName="zip">
+       </div>
+       <div class="col">
+        <label for="state">State</label>
+        <input type="text" id="state" formControlName="state">
+       </div>
+      </div>
+      <div class="row-col-2 row">
+       <div class="col">
+        <label for="city">City</label>
+        <input type="text" id="city" formControlName="city">
+       </div>
+       <div class="col">
+        <label for="country">Country</label>
+        <input type="text" id="country" formControlName="country">
+       </div>
+      </div>
+      <div class="row default">
+        <label for="default">Make this your default Address</label>
+        <input type="checkbox" name="" id="" formControlName="isDefault">
+      </div>
+      <div class="row-col-2 row button-group">
+        <div class="col">
+
+         <button id="city" (click)="cancelModal()"  >Cancel</button>
+        </div>
+        <div class="col">
+
+         <button id="country" (click)="confirmAction()"  >{{formType}} Address</button>
+        </div>
+       </div>
+
+
+    </form>
+  </div>
+</div>

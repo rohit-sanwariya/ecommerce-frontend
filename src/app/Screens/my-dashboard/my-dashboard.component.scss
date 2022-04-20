@@ -55,12 +55,23 @@
         .block-heading{
           font-weight: 600;
           text-transform: capitalize;
+          font-size: 1.1rem;
         }
         a.active{
           color: #14cda8;
           font-weight: 700;
           font-size: 1.1rem;
 
+        }
+        menu{
+          margin: 0;
+          list-style: none;
+          padding: 0;
+          li{
+            a{
+              font-size: .9rem;
+            }
+          }
         }
       }
     }

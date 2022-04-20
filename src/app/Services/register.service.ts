@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject,   map,   Observable , take } from 'rxjs';
+import { threadId } from 'worker_threads';
 import { CartSchema } from '../Interfaces/cart-schema';
 import { LoginUser } from '../Interfaces/login-user';
 import { NewUser } from '../Interfaces/new-user';
@@ -128,30 +129,42 @@ export class RegisterService implements OnInit {
 
   addUserAddress(userForm: any) {
     this.getUserWithAccessTokenFromApi()
-    this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
+    this.currentUserSubject.pipe(take(1)).subscribe((user: any) => {
       if (Object.keys(user).length > 0) {
         const body = {
           id: user._id,
           addresses: [userForm]
         }
-        this.http.post(`${this.baseURL}/api/address/${body.id}`, body, this.newHTTPoptions).subscribe((address: any) => {
+        console.log('add called');
 
+        this.http.post(`${this.baseURL}/api/address/${body.id}`, body, this.newHTTPoptions)
+        .subscribe((address: any) => {
+            this.addressSubject.next(address)
         })
         return
       }
     })
+    return this.addressSubject.asObservable()
   }
   appendNewAddress(userForm: any) {
     this.getUserWithAccessTokenFromApi()
-    this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
+    this.currentUserSubject.pipe(take(1)).subscribe((user: any) => {
       if (Object.keys(user).length > 0) {
+        console.log(userForm);
 
         this.http.put(`${this.baseURL}/api/address/${userForm.id}`, userForm, this.newHTTPoptions).subscribe((address: any) => {
-
+            this.addressSubject.next(address)
         })
         return
       }
     })
+    return this.addressSubject.asObservable()
+  }
+  removeUserSelectedAddress(address:any){
+    this.http.put(`${this.baseURL}/api/address/${address.id}`, address, this.newHTTPoptions).subscribe((address: any) => {
+      this.addressSubject.next(address)
+  })
+    return this.addressSubject.asObservable()
   }
   getUserAddress() {
     this.getUserWithAccessTokenFromApi()
@@ -188,6 +201,8 @@ export class RegisterService implements OnInit {
 
       }
     })
+    console.log('called');
+
     return this.addressSubject.asObservable()
   }
 
@@ -328,6 +343,17 @@ export class RegisterService implements OnInit {
   getCurrentUser(){
     return this.currentUserSubject.asObservable()
   }
+
+  updateCurrentUser(user:any){
+    return this.http.put(`${this.baseURL}/api/users/${user._id}`,user,this.newHTTPoptions)
+
+
+  }
+
+
+
+
+
   onUserRegister(newUser: NewUser) {
     this.http.post<NewUser>(this.registerURL, newUser, this.httpOptions).subscribe((data: any) => {
       this.currentUserSubject.next(data)

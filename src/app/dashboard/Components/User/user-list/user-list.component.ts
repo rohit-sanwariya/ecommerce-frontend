@@ -22,7 +22,7 @@ export class UserListComponent implements OnInit {
 
   }
   deleteUser(user:UserSchema){
-    this.taost.show(`Are You Sure you want to delete ${user.username}?`)
+    this.taost.show(`Are You Sure you want to delete ${user.username}?`,true,"#fff")
     this.taost.getConfirmSubject().subscribe((val)=>{
       if(val){
         this.service.deleteUser(user._id)

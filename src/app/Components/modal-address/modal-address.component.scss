@@ -1,0 +1,109 @@
+.container {
+  display: grid;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 9rem);
+  justify-content: center;
+
+  .card {
+    padding: 1rem;
+
+    background-color: #fff;
+    min-width: 30rem;
+    width: 100%;
+    height: 80%;
+    box-shadow: 1px 2px 6px 1px var(--accent);
+    display: flex;
+    max-height: 75vh;
+    flex-direction: column;
+    .card-heading{
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+    form {
+      overflow-y: scroll;
+      margin: 1rem 0;
+      display: grid;
+      width: 100%;
+      height: 100%;
+      .row{
+        margin: 1rem 0;
+        width: 100%;
+        grid-column: 1fr 1fr;
+        grid-row: span 2;
+        display: flex;
+        flex-direction: column;
+        label{
+          font-weight: 600;
+
+        }
+        input{
+          margin: 3px 0;
+          padding: .25rem;
+          border: none;
+          font-size: 1.09rem;
+          border-bottom: 2px solid #f1f1f1;
+          &:focus{
+            outline: none;
+            background-color: #fff;
+          }
+        }
+
+      }
+      .row.default{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        input{
+          display: block;
+          margin:  0 1rem ;
+          width: 1.1rem;
+          height: 1.1rem;
+          color: var(--accent);
+            background-color: var(--accent);
+
+        }
+        input:checked{
+          color: var(--accent);
+          background-color: var(--accent);
+        }
+      }
+      .row-col-2{
+        margin: 1rem 0;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+
+
+        .col{
+          label{
+            max-width: 7rem;
+          }
+          input{
+            max-width: 10rem;
+          border-bottom: 1px solid rgb(117, 112, 112);
+          }
+        }
+
+      }
+      .row-col-2.button-group{
+        width: 100%;
+        margin-bottom: 0;
+        .col{
+          width: 100%;
+          button{
+            width: 100%;
+            background-color: var(--accent);
+            padding: .5rem;
+            color: #fff;
+            border: 2px solid #fff;
+            text-transform: capitalize;
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+  }
+}

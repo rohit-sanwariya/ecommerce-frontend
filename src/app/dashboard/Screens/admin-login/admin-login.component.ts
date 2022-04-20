@@ -42,7 +42,7 @@ export class AdminLoginComponent implements OnInit {
                 this.toastService.hide()
 
               },2000)
-              this.toastService.show("Admin Only Access")
+              this.toastService.show("Admin Only Access",false,"fff")
             }
           })
 

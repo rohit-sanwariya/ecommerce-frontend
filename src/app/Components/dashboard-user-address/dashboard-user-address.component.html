@@ -1,0 +1,51 @@
+<div *ngIf="(addresses|async)" class="container">
+  <div class="row">
+    <h3 class="left">Saved Address</h3>
+    <button class="btn right" (click)="addNewUserAddress()">+ Add New Address </button>
+  </div>
+
+
+  <div *ngFor="let add of (addresses|async)" class="card">
+    <div class="card-heading">{{add.fullname}}</div>
+    <div class="card-body">
+      <h5>{{add.street}}</h5>
+      <h5>{{add.city}}</h5>
+      <h5>{{add.zip}}</h5>
+      <h5>{{add.country}}</h5>
+      <h5>{{add.phone}}</h5>
+
+    </div>
+    <div class="card-footer">
+      <button class="btn edit" (click)="editUserAddress()">Edit</button>
+      <button (click)="removeSelectedAddress(add)" class="btn edit">Remove</button>
+    </div>
+  </div>
+  <div *ngIf="showModal" class="modal-container">
+    <app-modal-address [formType]="formType" (closeModalEvent)="closeModal()" [addressess]="addressDb|async"
+      [userId]="userId"></app-modal-address>
+  </div>
+</div>
+
+
+
+<div *ngIf="!(addresses|async)"  class="container address-not-found">
+  <div class="card"
+    [ngStyle]="{'box-shadow':showModal?'none':''}"
+
+  >
+    <div class="card-img">
+      <span class="material-icons">
+        wrong_location
+      </span>
+    </div>
+    <div class="card-body">
+     <h2> SAVE YOUR ADDRESSES NOW</h2>
+     <h4> Add your home and office addresses and enjoy faster checkout</h4>
+     <button class="btn right" (click)="setShowModal()">+ Add New Address </button>
+    </div>
+  </div>
+  <div *ngIf="showModal" class="modal-container">
+    <app-modal-address [formType]="formType" (closeModalEvent)="closeModal()" [addressess]="addressDb|async"
+      [userId]="userId"></app-modal-address>
+  </div>
+</div>

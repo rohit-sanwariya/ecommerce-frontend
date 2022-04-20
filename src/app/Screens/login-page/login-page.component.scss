@@ -69,6 +69,7 @@
         }
         .remember-forgot-container {
           display: flex;
+          justify-content: center;
           margin: 1rem 0;
           font-size: 1.2rem;
           div.remember {
@@ -77,6 +78,12 @@
             }
 
             font-weight: 500;
+          }
+          div.register-now{
+            font-weight: 700;
+            cursor: pointer;
+            font-size: .8rem;
+            color: red;
           }
           div.forgot {
             a {

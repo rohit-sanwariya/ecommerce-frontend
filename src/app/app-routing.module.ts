@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardUserAddressComponent } from './Components/dashboard-user-address/dashboard-user-address.component';
 import { LegalComponent } from './Components/legal/legal.component';
+import { MantraCashComponent } from './Components/mantra-cash/mantra-cash.component';
 import { PaymentSuccessComponent } from './Components/payment-success/payment-success.component';
 import { PaymentComponent } from './Components/payment/payment.component';
 import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-dasboard-form/user-update-my-dasboard-form.component';
@@ -72,6 +74,16 @@ const routes: Routes = [
       {
         path:'user/edit',
         component:UserUpdateMyDasboardFormComponent,
+        pathMatch:'full'
+      },
+      {
+        path:'user/address',
+        component:DashboardUserAddressComponent,
+        pathMatch:'full'
+      },
+      {
+        path:'user/cash',
+        component:MantraCashComponent,
         pathMatch:'full'
       },
       {

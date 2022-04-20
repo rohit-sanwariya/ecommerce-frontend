@@ -7,15 +7,17 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class ToastService {
   message:string = ''
   confirmSubject = new BehaviorSubject(false);
-  subject = new BehaviorSubject({show:false,message:''})
+  subject = new BehaviorSubject({show:false,message:'',confirm:false,color:'#fff'})
   constructor() {
 
    }
-   show(message:string){
-     this.subject.next({show:true,message});
+   show(message:string,confirm:boolean,color:string){
+     console.log(color);
+
+     this.subject.next({show:true,message,confirm,color});
    }
    hide(){
-     this.subject.next({show:false,message:''});
+     this.subject.next({show:false,message:'',confirm:false,color:'#fff'});
    }
    setConfirmSubject(confirmation:boolean){
      this.confirmSubject.next(confirmation)

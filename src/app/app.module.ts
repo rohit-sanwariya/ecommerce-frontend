@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './Shared/shared/shared.module';
 import { AppComponent } from './app.component';
@@ -29,6 +29,9 @@ import { OverviewComponent } from './Screens/MyDashboard/overview/overview.compo
 import { UserUpdateComponent } from './Components/user-update/user-update.component';
 import { LegalComponent } from './Components/legal/legal.component';
 import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-dasboard-form/user-update-my-dasboard-form.component';
+import { MantraCashComponent } from './Components/mantra-cash/mantra-cash.component';
+import { DashboardUserAddressComponent } from './Components/dashboard-user-address/dashboard-user-address.component';
+import { ModalAddressComponent } from './Components/modal-address/modal-address.component';
 
 
 
@@ -57,8 +60,12 @@ import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-d
     UserUpdateComponent,
     LegalComponent,
     UserUpdateMyDasboardFormComponent,
+    MantraCashComponent,
+    DashboardUserAddressComponent,
+    ModalAddressComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

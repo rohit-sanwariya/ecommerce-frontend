@@ -10,6 +10,8 @@ import { RegisterService } from 'src/app/Services/register.service';
   styleUrls: ['./dashboard-user-address.component.scss']
 })
 export class DashboardUserAddressComponent implements OnInit {
+  editUserAdd:boolean|any = false
+  loading:boolean = true
   addressDb!:Observable<any>
   showModal:boolean = false
   userId:string = ''
@@ -19,18 +21,21 @@ export class DashboardUserAddressComponent implements OnInit {
     private registerService:RegisterService,
     private location:Location,
     ) {
+
+
+   }
+
+  ngOnInit(): void {
     this.registerService.getUserAddress().subscribe((addresses:any)=>{
       console.log(addresses);
 
      if(Object.keys(addresses).length>0){
-      this.addresses = of(addresses.addresses)
-      this.addressDb = of(addresses)
-      this.userId = addresses.id
+      this.addresses = of(addresses.addresses);
+      this.addressDb = of(addresses);
+      this.loading = false;
+      this.userId = addresses.id;
      }
     })
-   }
-
-  ngOnInit(): void {
   }
   removeSelectedAddress(addressSelected:any){
 
@@ -41,13 +46,13 @@ export class DashboardUserAddressComponent implements OnInit {
           }
 
       )
-      this.registerService.removeUserSelectedAddress(address).subscribe((address:any)=>{
-       
+      // this.registerService.removeUserSelectedAddress(address).subscribe((address:any)=>{
 
-        this.addressDb = of(address)
-        this.addresses = of(address.addresses)
-        this.location.historyGo(0)
-      })
+
+      //   this.addressDb = of(address)
+      //   this.addresses = of(address.addresses)
+      //   this.location.historyGo(0)
+      // })
 
 
     })
@@ -59,10 +64,10 @@ export class DashboardUserAddressComponent implements OnInit {
       this.showModal = true
 
   }
-  editUserAddress(){
-    this.location.historyGo(0)
-    // this.formType = 'edit'
-    // this.showModal = true
+  editUserAddress(add: any){
+    this.formType='edit';
+    this.showModal = true
+    this.editUserAdd = add
   }
   closeModal(){
     console.log('called');

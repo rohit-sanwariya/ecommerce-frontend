@@ -1,4 +1,78 @@
-<div class="container">
+
+
+
+<div  class="container">
+  <div *ngIf="showModal && !showPasswordModal " class="modal">
+    <div class="modal-card">
+     <div class="card-heading">
+      <h4> Enter Verification Code Sent To Your Email</h4>
+
+     </div>
+    <form [formGroup]="modalForm" class="digit-container">
+   <div class="input-group">
+    <input id="d1" #input1   (input)="clearFocusNext($event,[input1,input2,input3,input4],0)"  type="number" class="circle" formControlName="d1" [maxLength]="1" >
+    <input id="d2" #input2 (input)="clearFocusNext($event,[input1,input2,input3,input4],1)"   type="number" class="circle" formControlName="d2" [maxLength]="1" >
+    <input id="d3" #input3 (input)="clearFocusNext($event,[input1,input2,input3,input4],2)"   type="number" class="circle" formControlName="d3" [maxLength]="1" >
+    <input id="d4" #input4  (input)="clearFocusNext($event,[input1,input2,input3,input4],3)"   type="number" class="circle" formControlName="d4" [maxLength]="1" >
+   </div>
+   <div class="resend">
+     If you didn't receive the code <span class="bold">Resend</span>
+   </div>
+    <div class="button-group">
+
+      <button (click)="closeModal()" class="btn cancel">cancel</button>
+      <button (click)="checkOTPPassword()" class="btn verfiy">
+        Verify
+      </button>
+    </div>
+  </form>
+
+    </div>
+  </div>
+<div *ngIf="showPasswordModal" class="modal-password">
+<div class="moda-card-password">
+<h3 class="card-heading">
+  Reset Your Passowrd
+</h3>
+<form [formGroup]="resetPasswordForm" class="reset" >
+ <!-- <div class="form-row">
+   <label for="oldPassword">Old Password</label>
+  <div class="input-col">
+    <input formControlName="oldPassword"  #oldPassword type="password" id="oldPassword" name="oldPassword">
+  <span (click)="togglePassword(oldPassword,$event)" class="material-icons">
+    visibility
+    visibility_off
+    </span>
+  </div>
+ </div> -->
+ <div class="form-row">
+   <label for="newPassword">Password</label>
+   <div class="input-col">
+  <input formControlName="newPassword"  #newPassword type="password" id="newPassword" name="newPassword">
+  <span (click)="togglePassword(newPassword,$event)" class="material-icons">
+    visibility
+    <!-- visibility_off -->
+    </span>
+  </div>
+ </div>
+ <div class="form-row">
+   <label for="confirmPassword">Confirm Password</label>
+  <div class="input-col">
+    <input formControlName="confirmPassword"  #confirmPassword type="password" id="confirmPassword" name="confirmPassword">
+  <span (click)="togglePassword(confirmPassword,$event)" class="material-icons">
+    visibility
+    <!-- visibility_off -->
+    </span></div>
+ </div>
+ <div class="form-buton">
+  <button (click)="closeModal()" class="btn">Cancel</button>
+
+   <button (click)="changePassword()" class="btn">Change Password</button>
+ </div>
+</form>
+</div>
+</div>
+
   <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
     <div class="row">
       <label for="username">User Name</label>
@@ -30,7 +104,11 @@
       formControlName="password"
      id="password" >
     </div>
+    <div class="row">
+     <a  (click)="showVerifyModal()"> Forgot Password</a>
+    </div>
 
      <button>Save</button>
   </form>
 </div>
+

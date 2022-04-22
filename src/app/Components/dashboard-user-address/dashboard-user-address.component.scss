@@ -1,4 +1,26 @@
+
+
+
 .container {
+  .loading{
+
+    background-color: #333;
+    position: relative;
+    .img-container{
+      background-color: #333;
+      position: absolute;
+      top: 25%;
+      left: 25%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img{
+        object-fit: cover;
+      }
+    }
+  }
   display: grid;
   align-items: center;
   width: 100%;

@@ -12,7 +12,6 @@ import { GroupComponent } from './Components/group/group.component';
 import { GroupItemComponent } from './Components/group-item/group-item.component';
 import { ProductsComponent } from './Components/products/products.component';
 import { ProductItemComponent } from './Components/product-item/product-item.component';
-import { DeferLoadDirective } from './Directives/defer-load.directive';
 import { NewsLetterComponent } from './Components/news-letter/news-letter.component';
 import { ProductPageComponent } from './Screens/product-page/product-page.component';
 import { FilterComponent } from './Components/filter/filter.component';
@@ -37,6 +36,9 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
 
 
 
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +49,7 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
     GroupItemComponent,
     ProductsComponent,
     ProductItemComponent,
-    DeferLoadDirective,
+  
     NewsLetterComponent,
     ProductPageComponent,
     FilterComponent,
@@ -63,6 +65,7 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
     MantraCashComponent,
     DashboardUserAddressComponent,
     ModalAddressComponent,
+
   ],
   imports: [
     ReactiveFormsModule,
@@ -75,6 +78,7 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
     LoginModule,
     SharedModule,
     StoreModule.forRoot({}, {}),
+
 
   ],
   providers: [],

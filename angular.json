@@ -46,7 +46,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumError": "8kb"
                 }
               ],
               "fileReplacements": [
@@ -102,6 +102,16 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ecommerce-frontend:build:production",
+            "firebaseProject": "mean-ecommerce-mantra",
+            "firebaseHostingSite": "mean-ecommerce-mantra"
           }
         }
       }

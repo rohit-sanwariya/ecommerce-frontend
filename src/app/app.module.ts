@@ -31,6 +31,9 @@ import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-d
 import { MantraCashComponent } from './Components/mantra-cash/mantra-cash.component';
 import { DashboardUserAddressComponent } from './Components/dashboard-user-address/dashboard-user-address.component';
 import { ModalAddressComponent } from './Components/modal-address/modal-address.component';
+import { PasswordAssitanceComponent } from './Components/password-assistance/password-assistance.component';
+import { ConfirmScreenComponent } from './Components/confirm-screen/confirm-screen.component';
+import { ReenterPasswordComponent } from './Components/reenter-password/reenter-password.component';
 
 
 
@@ -49,7 +52,7 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
     GroupItemComponent,
     ProductsComponent,
     ProductItemComponent,
-  
+
     NewsLetterComponent,
     ProductPageComponent,
     FilterComponent,
@@ -65,6 +68,9 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
     MantraCashComponent,
     DashboardUserAddressComponent,
     ModalAddressComponent,
+    PasswordAssitanceComponent,
+    ConfirmScreenComponent,
+    ReenterPasswordComponent,
 
   ],
   imports: [

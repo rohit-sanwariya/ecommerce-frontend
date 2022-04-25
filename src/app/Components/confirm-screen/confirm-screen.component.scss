@@ -1,0 +1,99 @@
+.container{
+  height: calc(100vh - 5rem);
+  width: 100vw;
+  background-color: lavenderblush;
+  display: grid;
+  place-content: center;
+ justify-content: center;
+.card{
+  width: 20rem;
+    height: 80vh;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    .card-heading{
+      margin:0 1rem;
+     h2,h4{
+       margin: 0;
+       font-weight: 100;
+       margin: 5px;
+     }
+     h2{
+       font-weight: 500;
+     }
+     h4{
+       font-size: .9rem;
+       font-weight: 400;
+     }
+    }
+  .card-body{
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+      .input-group {
+        input {
+          width: 30px;
+          height: 30px;
+          margin: 1rem 3px;
+          border-radius: 100%;
+          -webkit-appearance: none;
+          text-align: center;
+          border: 1px solid var(--accent);
+          cursor: pointer;
+          &:focus {
+            border: 1px solid var(--accent);
+            outline: none;
+          }
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+          }
+        }
+      }
+      .resend {
+        color: #333;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: 5px 0;
+        span.bold {
+          font-weight: 800;
+          color: #ff3f6c;
+          cursor: pointer;
+        }
+        span.accent{
+          color: var(--accent);
+
+        }
+      }
+      .button-group {
+        width: 100%;
+        display: flex;
+        margin: 3px 0;
+        justify-content: center;
+
+        button.btn {
+          background-color: #ff3f6c;
+          color: #fff;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 1.2rem;
+          margin: 0.5rem 1rem;
+          cursor: pointer;
+          font-weight: 500;
+        }
+        button.cancel {
+          margin-left: 1rem;
+          background-color: transparent;
+          border: 1px solid var(--accent);
+          color: #333;
+        }
+      }
+    }
+  }
+}
+}

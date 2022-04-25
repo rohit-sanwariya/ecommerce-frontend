@@ -16,7 +16,7 @@
           <div class="remember-forgot-container">
             <div class="remember"><input type="checkbox" name="tac"
                id="tac" formControlName="tac">Remember Me</div>
-            <div class="forgot"><a routerLink="">Forgot Password</a></div>
+            <div class="forgot"><a [routerLink]="['','forgotpassword']">Forgot Password</a></div>
           </div>
           <div [routerLink]="['','register']" class="register-now">Not a User Sign Up Now!</div>
         <div>

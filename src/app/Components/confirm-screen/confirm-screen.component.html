@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<div class="container">
+
+  <div class="card">
+    <div class="card-heading">
+      <h2>Enter the OTP sent to your registered email</h2>
+
+    </div>
+   <div class="card-body">
+    <form [formGroup]="otpForm" class="digit-container">
+      <div class="input-group">
+       <input id="d1" #input1   (input)="clearFocusNext($event,[input1,input2,input3,input4],0)"  type="number" class="circle" formControlName="d1" [maxLength]="1" >
+       <input id="d2" #input2 (input)="clearFocusNext($event,[input1,input2,input3,input4],1)"   type="number" class="circle" formControlName="d2" [maxLength]="1" >
+       <input id="d3" #input3 (input)="clearFocusNext($event,[input1,input2,input3,input4],2)"   type="number" class="circle" formControlName="d3" [maxLength]="1" >
+       <input id="d4" #input4  (input)="clearFocusNext($event,[input1,input2,input3,input4],3)"   type="number" class="circle" formControlName="d4" [maxLength]="1" >
+      </div>
+      <div class="resend">
+        <span>If you didn't receive the code.You can resend after</span> <br>
+         <span *ngIf="!resendShow" class="bold accent">{{timer}} </span>
+         <span *ngIf="resendShow" (click)="resendOTP()" class="bold">Resend</span>
+      </div>
+       <div class="button-group">
+
+         <button [routerLink]="['','login']"   class="btn cancel">cancel</button>
+         <button (click)="checkOTPPassword()" class="btn verfiy">
+           Verify
+         </button>
+       </div>
+     </form>
+   </div>
+  </div>
+</div>
+

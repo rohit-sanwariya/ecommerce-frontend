@@ -118,6 +118,7 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
       if (otpUserEntered === this.optApi) {
         this.showPasswordModal = true
         console.log(otpUserEntered);
+        this.modalForm.reset()
 
       }
     }
@@ -129,7 +130,7 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
       // const oldPassword = this.resetPasswordForm.controls['oldPassword'].value
       const confirmPassword = this.resetPasswordForm.controls['confirmPassword'].value
       if (confirmPassword === newPassword) {
-        this.registerService.changeUserPassword({ newPassword }).pipe(catchError((err:any,caught:any)=>{
+        this.registerService.changeUserPassword({ newPassword },this.currentUser,true).pipe(catchError((err:any,caught:any)=>{
           return of(err)
         })).subscribe((user) => {
 
@@ -137,6 +138,7 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
               this.toast.show("Your New PassWord Can not be same as Current Password!", false, "#fff")
               this.showPasswordModal = true;
               this.showModal = false;
+              this.resetPasswordForm.reset()
 
             }
             else if(user !== this.currentUser) {

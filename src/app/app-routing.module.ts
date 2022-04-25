@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConfirmScreenComponent } from './Components/confirm-screen/confirm-screen.component';
 import { DashboardUserAddressComponent } from './Components/dashboard-user-address/dashboard-user-address.component';
 import { LegalComponent } from './Components/legal/legal.component';
 import { MantraCashComponent } from './Components/mantra-cash/mantra-cash.component';
+import { PasswordAssitanceComponent } from './Components/password-assistance/password-assistance.component';
 import { PaymentSuccessComponent } from './Components/payment-success/payment-success.component';
 import { PaymentComponent } from './Components/payment/payment.component';
+import { ReenterPasswordComponent } from './Components/reenter-password/reenter-password.component';
 import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-dasboard-form/user-update-my-dasboard-form.component';
 import { UserUpdateComponent } from './Components/user-update/user-update.component';
 import { UserUpdateFormComponent } from './dashboard/Components/User/user-update-form/user-update-form.component';
+import { ConfirmScreenGuard } from './Guards/confirm-screen.guard';
 import { LoginGuard } from './Guards/login.guard';
 
 import { HomeComponent } from './Screens/home/home.component';
@@ -52,6 +56,19 @@ const routes: Routes = [
         module.LoginModule)
   },
   {
+    path:'forgotpassword',
+    component:PasswordAssitanceComponent
+  },
+  {
+    path:'reenter-password',
+    component:ReenterPasswordComponent
+  },
+  {
+    path:'confirmscreen',
+    component:ConfirmScreenComponent,
+    // canActivate:[ConfirmScreenGuard]
+  },
+  {
     path:'payment/:id',
     pathMatch:'full',
     component:PaymentComponent
@@ -65,6 +82,7 @@ const routes: Routes = [
         path:'legal',
         component:LegalComponent
       },
+
       {
           path:'user',
           component:UserUpdateComponent,

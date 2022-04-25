@@ -62,6 +62,8 @@ export class RegisterService implements OnInit,OnDestroy {
     this.subSink.add(
       this.currentUserSubject.subscribe((user) => {
         this.user = user;
+        console.log(user);
+
       })
     )
   }
@@ -111,17 +113,14 @@ export class RegisterService implements OnInit,OnDestroy {
     return this.cartProducts.asObservable();
   }
 
-  changeUserPassword(passwords: any) {
-    if(this.user._id===undefined){
-      console.log(this.user);
-      this.getUserWithAccessTokenFromApi()
-      return this.currentUserSubject.asObservable()
 
 
-    }
-   else{
-    const url = `http://localhost:5000/api/users/updatePassword/${this.user._id}`;
-    const body = { newPassword: passwords.newPassword, ...this.user };
+  changeUserPassword(passwords: any,user:any,hasToken:boolean) {
+    console.log(user);
+    const url = hasToken?`http://localhost:5000/api/users/updatePassword/${user._id}`: `http://localhost:5000/api/users/forgot/${user._id}`
+    if(user._id){
+
+    const body = { newPassword: passwords.newPassword, ...user };
     this.subSink.add(this.http
       .put(url, body, this.newHTTPoptions)
       .pipe(
@@ -131,15 +130,19 @@ export class RegisterService implements OnInit,OnDestroy {
       )
       .subscribe({
         next: (updatedUser) => {
-            this.user = updatedUser;
+
             this.tempUserSubject.next(updatedUser);
         },
         error: (err: Error) => {
           console.log(err);
         },
       }))
+    }
+    else{
+
+    }
       return this.tempUserSubject.asObservable();
-   }
+
 
   }
 
@@ -340,6 +343,8 @@ export class RegisterService implements OnInit,OnDestroy {
         this.http
         .get(`${this.baseURL}/api/users/single`, newHTTPoptions)
         .subscribe((user: any) => {
+          console.log(user);
+
           this.currentUserSubject.next(user);
           this.user = user;
         })

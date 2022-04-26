@@ -12,9 +12,9 @@ export class EmailService {
 
     emailjs.send('service_2ta5ozj',"template_if6dsfw", templateParams, 'bzJ7Z723pMcvFxyuy')
       .then((result: EmailJSResponseStatus) => {
-        console.log(result.text);
+
       }, (error) => {
-        console.log(error.text);
+
       });
   }
 }

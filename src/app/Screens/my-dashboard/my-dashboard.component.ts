@@ -37,11 +37,11 @@ export class MyDashboardComponent implements OnInit {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(event);
+
 
         const urlArr = event.url.split("/");
         const current = urlArr[urlArr.length - 1]
-        console.log(current);
+
 
         Object.keys(this.activeRoute).forEach((key: string) => {
           if (current === key) {

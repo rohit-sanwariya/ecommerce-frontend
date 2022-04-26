@@ -12,11 +12,11 @@ export class OnlyOneDirective implements OnInit {
    }
   ngOnInit(): void {
     this.circelArr.push(this.element.nativeElement);
-    console.log(this.circelArr);
+
 
 
      fromEvent(this.element.nativeElement,'input').subscribe((val:InputEvent|any)=>{
-       console.log(val.target.value);
+
 
      })
   }

@@ -10,6 +10,7 @@ import { PaymentComponent } from './Components/payment/payment.component';
 import { ReenterPasswordComponent } from './Components/reenter-password/reenter-password.component';
 import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-dasboard-form/user-update-my-dasboard-form.component';
 import { UserUpdateComponent } from './Components/user-update/user-update.component';
+import { WishlistComponent } from './Components/wishlist/wishlist.component';
 import { UserUpdateFormComponent } from './dashboard/Components/User/user-update-form/user-update-form.component';
 import { ConfirmScreenGuard } from './Guards/confirm-screen.guard';
 import { LoginGuard } from './Guards/login.guard';
@@ -72,6 +73,11 @@ const routes: Routes = [
     path:'payment/:id',
     pathMatch:'full',
     component:PaymentComponent
+  },
+  {
+    path:'wishlist',
+    pathMatch:'full',
+    component:WishlistComponent
   },
   {
     path:'my',

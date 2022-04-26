@@ -19,6 +19,10 @@ export class ProductItemComponent implements OnInit {
   addToCart(){
       this.register.addProductToCart(this.product,0,0)
   }
+  addToWishlist(){
+    this.register.addProductToWishlist(this.product._id)
+
+  }
 
 
 

@@ -27,7 +27,7 @@ export class DashboardUserAddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerService.getUserAddress().subscribe((addresses:any)=>{
-      console.log(addresses);
+
 
      if(Object.keys(addresses).length>0){
       this.addresses = of(addresses.addresses);
@@ -70,12 +70,12 @@ export class DashboardUserAddressComponent implements OnInit {
     this.editUserAdd = add
   }
   closeModal(){
-    console.log('called');
+
 
     this.showModal = false
   }
   setShowModal(){
-    console.log('hell');
+
     this.formType= 'new'
     this.showModal = true
   }

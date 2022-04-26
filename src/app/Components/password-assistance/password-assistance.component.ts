@@ -45,7 +45,7 @@ export class PasswordAssitanceComponent implements OnInit,OnDestroy {
                 throw exist
             }
             else{
-              console.log(exist);
+
               this.login.setConfirmScreenSubject(true)
               this.router.navigate(['','confirmscreen'],{state:exist})
             }

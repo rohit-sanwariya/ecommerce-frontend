@@ -34,7 +34,7 @@ export class ModalAddressComponent implements OnInit {
         isDefault: [false],
       });
     } else {
-      console.log(this.editUserAdd);
+
       const add = this.editUserAdd;
       this.addressForm = this.formBuilder.group({
         country: [add.country, [Validators.required]],
@@ -55,7 +55,7 @@ export class ModalAddressComponent implements OnInit {
   confirmAction() {
     if (this.addressForm.valid && this.userId !== undefined) {
       const form = this.addressForm.value;
-      console.log(this.addressForm.value);
+
 
       if (
         !!this.addressess &&
@@ -63,7 +63,7 @@ export class ModalAddressComponent implements OnInit {
         this.addressess.addresses.length > 0
       ) {
         this.addressess.addresses.push(form);
-        console.log(this.addressess.addresses);
+
         this.registerService
           .appendNewAddress(this.addressess)
           .subscribe((address) => {

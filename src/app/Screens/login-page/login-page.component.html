@@ -10,17 +10,30 @@
     <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
         <div class="form-input-group">
-          <input placeholder="Username or Email"  [ngClass]="{'alert':loginForm.controls['username'].invalid && loginForm.controls['username'].touched}" type="text" name="" id="" formControlName="username">
-          <input placeholder="Password"  [ngClass]="{'alert':loginForm.controls['password'].invalid && loginForm.controls['password'].touched}" type="password" name="password" id="password" formControlName="password">
+          <input placeholder="Username or Email"
+            [ngClass]="{'alert':loginForm.controls['username'].invalid && loginForm.controls['username'].touched}"
+            type="text" name="" id="" formControlName="username">
+          <input placeholder="Password"
+            [ngClass]="{'alert':loginForm.controls['password'].invalid && loginForm.controls['password'].touched}"
+            type="password" name="password" id="password" formControlName="password">
         </div>
-          <div class="remember-forgot-container">
-            <div class="remember"><input type="checkbox" name="tac"
-               id="tac" formControlName="tac">Remember Me</div>
-            <div class="forgot"><a [routerLink]="['','forgotpassword']">Forgot Password</a></div>
+        <div class="remember-forgot-container">
+          <div class="remember"><input type="checkbox" name="tac" id="tac" formControlName="tac">
+            Remember Me
           </div>
-          <div [routerLink]="['','register']" class="register-now">Not a User Sign Up Now!</div>
-        <div>
+          <div class="forgot">
+            <a [routerLink]="['','forgotpassword']">Forgot Password</a>
+          </div>
+        </div>
+        <div  class="register-now">
+
+        </div>
+        <div class="btn-group">
+          <button  [routerLink]="['','register']" class="btn">
+            Not A User Sign Up!
+           </button>
           <button class="btn">Login</button>
+
         </div>
       </form>
     </div>

@@ -1,20 +1,19 @@
-
 <header>
 
   <nav>
     <ul class="left">
       <li class="lang-search">
-        <span  class="language">En</span>
-        <a >
-          <span   class="material-icons">
-          expand_more
+        <span class="language">En</span>
+        <a>
+          <span class="material-icons">
+            expand_more
           </span>
         </a>
       </li>
-      <li *ngIf="showSearch"  class="search-item">
-        <span  class="material-icons search-icon">
+      <li *ngIf="showSearch" class="search-item">
+        <span class="material-icons search-icon">
           search
-          </span>
+        </span>
         <input placeholder="Search for Products" type="text">
       </li>
     </ul>
@@ -34,31 +33,33 @@
         <a routerLink="">
           <span class="material-icons">
             person
-            </span>
+          </span>
         </a>
         <div class="user-details">
-         <div class="tile-container">
-          <div class="tile"></div>
-         </div >
-          <div  class="user-container">
-              <h3  [routerLink]="['','my','user']" class="user-name">{{(user$|async)?.username}}</h3>
-              <h4 class="user-phone">{{(user$|async)?.email}}</h4>
-              <div class="hr"></div>
-             <div class="links">
+          <div class="tile-container">
+            <div class="tile"></div>
+          </div>
+          <div class="user-container">
+            <h3 [routerLink]="['','my','user']" class="user-name">{{(user$|async)?.username}}</h3>
+            <p class="user-email">{{(user$|async)?.email}}</p>
+            <div class="hr"></div>
+            <div class="links">
 
-                <a [routerLink]="['','my']">Profile</a>
-                <a [routerLink]="['','my','orders']">Your Orders</a>
-              <a (click)="logout()">Logout</a></div>
+              <a [routerLink]="['','my']">Profile</a>
+              <a [routerLink]="['','wishlist']">Wishlist</a>
+              <a [routerLink]="['','my','orders']">Your Orders</a>
+              <a (click)="logout()">Logout</a>
+            </div>
 
           </div>
-          </div>
+        </div>
       </li>
       <li>
-        <a class="shoping-cart-link"   routerLink="/cart">
+        <a class="shoping-cart-link" routerLink="/cart">
           <span class="material-icons">
-          shopping_cart
+            shopping_cart
           </span>
-          <span  *ngIf="userLoggedIn && (cart$|async) && (cart$|async)?.products?.length !==0"  class="badge">
+          <span *ngIf="userLoggedIn && (cart$|async) && (cart$|async)?.products?.length !==0" class="badge">
             {{(cart$|async)?.products?.length}}
           </span>
         </a>
@@ -66,4 +67,3 @@
     </ul>
   </nav>
 </header>
-

@@ -21,7 +21,7 @@ export class ReenterPasswordComponent implements OnInit {
     private router: Router
   ) {
     this.currentUser = this.router.getCurrentNavigation()?.extras.state
-    console.log(this.router.getCurrentNavigation()?.extras.state);
+
   }
 
   ngOnInit(): void {
@@ -33,8 +33,8 @@ export class ReenterPasswordComponent implements OnInit {
 
   }
   togglePassword(input: HTMLInputElement, event: any) {
-    console.log(input.type);
-    console.log(event.target.innerText);
+
+
     input.type === 'password' ?
       input.type = 'text' :
       input.type = 'password';

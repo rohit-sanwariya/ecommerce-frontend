@@ -30,7 +30,7 @@ export class MantraCashComponent implements OnInit {
    }
 
   ngOnInit(): void {
-      console.log(this.MantraCash);
+
 
   }
 

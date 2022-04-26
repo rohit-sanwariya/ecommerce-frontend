@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './Screens/home/home.component';
 import { CarouselComponent } from './Components/carousel/carousel.component';
 import { CarouselItemComponent } from './Components/carousel-item/carousel-item.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GroupComponent } from './Components/group/group.component';
 import { GroupItemComponent } from './Components/group-item/group-item.component';
 import { ProductsComponent } from './Components/products/products.component';
@@ -34,6 +34,12 @@ import { ModalAddressComponent } from './Components/modal-address/modal-address.
 import { PasswordAssitanceComponent } from './Components/password-assistance/password-assistance.component';
 import { ConfirmScreenComponent } from './Components/confirm-screen/confirm-screen.component';
 import { ReenterPasswordComponent } from './Components/reenter-password/reenter-password.component';
+import { WishlistComponent } from './Components/wishlist/wishlist.component';
+import { wishListReducer } from './Store/Wishlist/wishlist.reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { wishListEffect } from './Store/Wishlist/wishlist.effects';
 
 
 
@@ -71,6 +77,7 @@ import { ReenterPasswordComponent } from './Components/reenter-password/reenter-
     PasswordAssitanceComponent,
     ConfirmScreenComponent,
     ReenterPasswordComponent,
+    WishlistComponent,
 
   ],
   imports: [
@@ -83,7 +90,17 @@ import { ReenterPasswordComponent } from './Components/reenter-password/reenter-
     PaymentModule,
     LoginModule,
     SharedModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({
+      wishlist: wishListReducer
+    }, {}),
+    StoreDevtoolsModule.instrument(
+      {
+        maxAge: 25,
+        logOnly: environment.production
+      }
+    ),
+    EffectsModule.forRoot([wishListEffect]),
+    EffectsModule.forFeature([wishListEffect]),
 
 
   ],

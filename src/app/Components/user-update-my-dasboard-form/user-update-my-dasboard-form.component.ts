@@ -23,7 +23,7 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   currentUser: any;
   optApi!: number;
-  showPasswordModal: boolean = true;
+  showPasswordModal: boolean = false;
 
   constructor(
     private location: Location,
@@ -66,8 +66,8 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
     });
   }
   togglePassword(input: HTMLInputElement, event: any) {
-    console.log(input.type);
-    console.log(event.target.innerText);
+
+
     input.type === 'password' ?
       input.type = 'text' :
       input.type = 'password';
@@ -99,7 +99,7 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
     this.showModal = true;
     this.registerService.getOtpFromApi().subscribe((otp: any) => {
       this.optApi = Number(otp.otp);
-      console.log(this.optApi);
+
 
       const templateParams = {
         from_name: 'Mantra OTP Password Recovery',
@@ -107,17 +107,17 @@ export class UserUpdateMyDasboardFormComponent implements OnInit {
         message: `Your OTP is ${this.optApi}`,
         reply_to: this.currentUser.email,
       };
-      // this.emailService.sendEmail(templateParams)
+      this.emailService.sendEmail(templateParams)
     });
   }
 
   checkOTPPassword() {
     if (this.modalForm.valid) {
       const otpUserEntered = Number(Object.values(this.modalForm.value).join(''));
-      console.log(otpUserEntered);
+
       if (otpUserEntered === this.optApi) {
         this.showPasswordModal = true
-        console.log(otpUserEntered);
+
         this.modalForm.reset()
 
       }

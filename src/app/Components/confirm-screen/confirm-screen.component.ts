@@ -40,7 +40,7 @@ export class ConfirmScreenComponent implements OnInit {
        this.timeSubscitption =  timer.subscribe((val)=>{
           const seconds = Number(this.timer.split(":")[1])
           const current = `0${seconds-1}`
-          console.log(current);
+
           this.timer = `00:${current}`
           if(val===9){
             this.timeSubscitption.unsubscribe()
@@ -59,7 +59,7 @@ export class ConfirmScreenComponent implements OnInit {
     });
     this.registerService.getOtpFromApi().subscribe((otp: any) => {
       this.optApi = otp.otp;
-      console.log(this.optApi);
+
 
       if(this.currentUser){
         const templateParams = {
@@ -109,7 +109,7 @@ export class ConfirmScreenComponent implements OnInit {
     this.subSink.add(
       this.registerService.getOtpFromApi().subscribe((otp: any) => {
         this.optApi = otp.otp;
-        console.log(this.optApi);
+
 
         if(this.currentUser){
           const templateParams = {

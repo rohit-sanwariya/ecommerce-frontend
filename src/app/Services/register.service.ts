@@ -4,9 +4,13 @@ import {
 } from '@angular/common/http';
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { log } from 'console';
+
 import {
   BehaviorSubject,
   catchError,
+  EMPTY,
   map,
   Observable,
   of,
@@ -19,14 +23,20 @@ import { CartSchema } from '../Interfaces/cart-schema';
 import { LoginUser } from '../Interfaces/login-user';
 import { NewUser } from '../Interfaces/new-user';
 import { ProductSchema } from '../Interfaces/product-schema';
+import { UserSchema } from '../Interfaces/user-schema';
+import { addProduct, fetchWishlistApi, removeProduct } from '../Store/Wishlist/wishlist.actions';
+import { initialState, WishlistSchema } from '../Store/Wishlist/wishlist.reducers';
+
 import { AdminService } from './admin.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RegisterService implements OnInit,OnDestroy {
-  subSink = new Subscription()
-  tempUserSubject =  new BehaviorSubject([]);
+export class RegisterService implements OnInit, OnDestroy {
+  subSink = new Subscription();
+  wishlistSubject: BehaviorSubject<WishlistSchema> = new BehaviorSubject(initialState)
+  wishlist$!: Observable<WishlistSchema>;
+  tempUserSubject = new BehaviorSubject([]);
   otpURL: string = `http://localhost:5000/api/verifyEmail`;
   ordersSubject = new BehaviorSubject([]);
   cartTotal = new BehaviorSubject(0);
@@ -52,20 +62,25 @@ export class RegisterService implements OnInit,OnDestroy {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private ProductService: AdminService
-  ) {}
+    private ProductService: AdminService,
+    private store: Store<{ wishlist: WishlistSchema }>
+  ) {
+    this.wishlist$ = this.store.select('wishlist')
+
+  }
   ngOnDestroy(): void {
-     this.subSink.unsubscribe()
+    this.subSink.unsubscribe()
   }
   ngOnInit(): void {
-    this.getUserWithAccessTokenFromApi();
+
+    if (this.user === undefined) {
+      this.getUserWithAccessTokenFromApi();
+    }
     this.subSink.add(
       this.currentUserSubject.subscribe((user) => {
         this.user = user;
-        console.log(user);
-
       })
-    )
+    );
   }
   newHTTPoptions = {
     headers: new HttpHeaders({
@@ -115,33 +130,33 @@ export class RegisterService implements OnInit,OnDestroy {
 
 
 
-  changeUserPassword(passwords: any,user:any,hasToken:boolean) {
-    console.log(user);
-    const url = hasToken?`http://localhost:5000/api/users/updatePassword/${user._id}`: `http://localhost:5000/api/users/forgot/${user._id}`
-    if(user._id){
+  changeUserPassword(passwords: any, user: any, hasToken: boolean) {
 
-    const body = { newPassword: passwords.newPassword, ...user };
-    this.subSink.add(this.http
-      .put(url, body, this.newHTTPoptions)
-      .pipe(
-        catchError((err: any, caught: any) => {
-          return of(err);
-        })
-      )
-      .subscribe({
-        next: (updatedUser) => {
+    const url = hasToken ? `http://localhost:5000/api/users/updatePassword/${user._id}` : `http://localhost:5000/api/users/forgot/${user._id}`
+    if (user._id) {
+
+      const body = { newPassword: passwords.newPassword, ...user };
+      this.subSink.add(this.http
+        .put(url, body, this.newHTTPoptions)
+        .pipe(
+          catchError((err: any, caught: any) => {
+            return of(err);
+          })
+        )
+        .subscribe({
+          next: (updatedUser) => {
 
             this.tempUserSubject.next(updatedUser);
-        },
-        error: (err: Error) => {
-          console.log(err);
-        },
-      }))
+          },
+          error: (err: Error) => {
+
+          },
+        }))
     }
-    else{
+    else {
 
     }
-      return this.tempUserSubject.asObservable();
+    return this.tempUserSubject.asObservable();
 
 
   }
@@ -150,29 +165,29 @@ export class RegisterService implements OnInit,OnDestroy {
     this.getCartProducts();
     this.subSink.add(
       this.cartSubject
-      .pipe(
-        take(1),
-        map((cart: any) => cart.products)
-      )
-      .subscribe((cartProducts: any) => {
-        const productsWithoutPrice = cartProducts;
+        .pipe(
+          take(1),
+          map((cart: any) => cart.products)
+        )
+        .subscribe((cartProducts: any) => {
+          const productsWithoutPrice = cartProducts;
 
-        this.cartProducts.pipe(take(2)).subscribe((products: any) => {
-          const productsWithPrice = products;
-          if (productsWithPrice.length > 0 && productsWithoutPrice.length > 0) {
-            let cartTotal = 0;
-            productsWithPrice.forEach((withPrice: any) => {
-              const found = productsWithoutPrice.find(
-                (p: any) => p.productId === withPrice._id
-              );
-              const quantity = found.quantity;
-              const price = withPrice.price;
-              cartTotal += quantity * price;
-            });
-            this.cartTotal.next(cartTotal);
-          }
-        });
-      })
+          this.cartProducts.pipe(take(2)).subscribe((products: any) => {
+            const productsWithPrice = products;
+            if (productsWithPrice.length > 0 && productsWithoutPrice.length > 0) {
+              let cartTotal = 0;
+              productsWithPrice.forEach((withPrice: any) => {
+                const found = productsWithoutPrice.find(
+                  (p: any) => p.productId === withPrice._id
+                );
+                const quantity = found.quantity;
+                const price = withPrice.price;
+                cartTotal += quantity * price;
+              });
+              this.cartTotal.next(cartTotal);
+            }
+          });
+        })
     )
     return this.cartTotal.asObservable();
   }
@@ -186,18 +201,18 @@ export class RegisterService implements OnInit,OnDestroy {
             id: user._id,
             addresses: [userForm],
           };
-          console.log('add called');
+
 
           this.subSink.add(
             this.http
-            .post(
-              `${this.baseURL}/api/address/${body.id}`,
-              body,
-              this.newHTTPoptions
-            )
-            .subscribe((address: any) => {
-              this.addressSubject.next(address);
-            })
+              .post(
+                `${this.baseURL}/api/address/${body.id}`,
+                body,
+                this.newHTTPoptions
+              )
+              .subscribe((address: any) => {
+                this.addressSubject.next(address);
+              })
           )
           return;
         }
@@ -210,18 +225,18 @@ export class RegisterService implements OnInit,OnDestroy {
     this.subSink.add(
       this.currentUserSubject.pipe(take(1)).subscribe((user: any) => {
         if (Object.keys(user).length > 0) {
-          console.log(userForm);
+
 
           this.subSink.add(
             this.http
-            .put(
-              `${this.baseURL}/api/address/${userForm.id}`,
-              userForm,
-              this.newHTTPoptions
-            )
-            .subscribe((address: any) => {
-              this.addressSubject.next(address);
-            })
+              .put(
+                `${this.baseURL}/api/address/${userForm.id}`,
+                userForm,
+                this.newHTTPoptions
+              )
+              .subscribe((address: any) => {
+                this.addressSubject.next(address);
+              })
           )
           return;
         }
@@ -230,18 +245,18 @@ export class RegisterService implements OnInit,OnDestroy {
     return this.addressSubject.asObservable();
   }
   editUserAddress(userForm: any) {
-    console.log(userForm.id);
+
 
     this.subSink.add(
       this.http
-      .put(
-        `${this.baseURL}/api/address/${userForm.id}`,
-        userForm,
-        this.newHTTPoptions
-      )
-      .subscribe((address: any) => {
-        this.addressSubject.next(address);
-      })
+        .put(
+          `${this.baseURL}/api/address/${userForm.id}`,
+          userForm,
+          this.newHTTPoptions
+        )
+        .subscribe((address: any) => {
+          this.addressSubject.next(address);
+        })
     )
 
     return this.addressSubject.asObservable();
@@ -249,14 +264,14 @@ export class RegisterService implements OnInit,OnDestroy {
   removeUserSelectedAddress(address: any) {
     this.subSink.add(
       this.http
-      .put(
-        `${this.baseURL}/api/address/${address.id}`,
-        address,
-        this.newHTTPoptions
-      )
-      .subscribe((address: any) => {
-        this.addressSubject.next(address);
-      })
+        .put(
+          `${this.baseURL}/api/address/${address.id}`,
+          address,
+          this.newHTTPoptions
+        )
+        .subscribe((address: any) => {
+          this.addressSubject.next(address);
+        })
     )
     return this.addressSubject.asObservable();
   }
@@ -291,7 +306,7 @@ export class RegisterService implements OnInit,OnDestroy {
     return this.addressSubject.asObservable();
   }
 
-  setUserAddress(address: any) {}
+  setUserAddress(address: any) { }
   getSelectedUserAddressShipping() {
     return this.selectUserAddressShipping.asObservable();
   }
@@ -303,28 +318,28 @@ export class RegisterService implements OnInit,OnDestroy {
     cart.products = [];
     this.subSink.add(
       this.http
-      .put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
-      .subscribe((updatedCart) => {
-        this.cartSubject.next(updatedCart);
-        // window.location.reload()
-      })
+        .put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
+        .subscribe((updatedCart) => {
+          this.cartSubject.next(updatedCart);
+          // window.location.reload()
+        })
     )
   }
 
   loginUser(user: LoginUser): Observable<boolean> {
     this.subSink.add(
       this.http
-      .post<LoginUser>(this.loginURL, user, this.httpOptions)
-      .subscribe((res: any) => {
-        this.currentUserSubject.next(res);
-        this.loginSubject.next(res.isAdmin);
-        if (res.isAdmin) {
-          sessionStorage.setItem('accessToken', res.accessToken);
-        } else {
-          sessionStorage.setItem('accessToken', res.accessToken);
-        }
-        this.router.navigate(['']);
-      })
+        .post<LoginUser>(this.loginURL, user, this.httpOptions)
+        .subscribe((res: any) => {
+          this.currentUserSubject.next(res);
+          this.loginSubject.next(res.isAdmin);
+          if (res.isAdmin) {
+            sessionStorage.setItem('accessToken', res.accessToken);
+          } else {
+            sessionStorage.setItem('accessToken', res.accessToken);
+          }
+          this.router.navigate(['']);
+        })
     )
     return this.loginSubject.asObservable() as Observable<boolean>;
   }
@@ -341,13 +356,13 @@ export class RegisterService implements OnInit,OnDestroy {
       };
       this.subSink.add(
         this.http
-        .get(`${this.baseURL}/api/users/single`, newHTTPoptions)
-        .subscribe((user: any) => {
-          console.log(user);
+          .get(`${this.baseURL}/api/users/single`, newHTTPoptions)
+          .subscribe((user: any) => {
 
-          this.currentUserSubject.next(user);
-          this.user = user;
-        })
+
+            this.currentUserSubject.next(user);
+            this.user = user;
+          })
       )
     }
   }
@@ -363,14 +378,16 @@ export class RegisterService implements OnInit,OnDestroy {
     this.getUserWithAccessTokenFromApi();
     this.subSink.add(
       this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
+
+
         const id = user._id;
         if (!!id) {
           this.subSink.add(
             this.http
-            .get<CartSchema>(`${this.cartURL}/find/${id}`, newHTTPoptions)
-            .subscribe((cart) => {
-              this.cartSubject.next(cart);
-            })
+              .get<CartSchema>(`${this.cartURL}/find/${id}`, newHTTPoptions)
+              .subscribe((cart) => {
+                this.cartSubject.next(cart);
+              })
           )
         }
       })
@@ -395,11 +412,11 @@ export class RegisterService implements OnInit,OnDestroy {
           }
           this.subSink.add(
             this.http
-            .put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
-            .subscribe((updatedCart) => {
-              this.cartSubject.next(updatedCart);
-              window.location.reload();
-            })
+              .put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
+              .subscribe((updatedCart) => {
+                this.cartSubject.next(updatedCart);
+                window.location.reload();
+              })
           )
         }
       })
@@ -414,18 +431,18 @@ export class RegisterService implements OnInit,OnDestroy {
           });
           cart.products = newCartProducts;
 
-         this.subSink.add(
-          this.http
-          .put(
-            `${this.cartURL}/removeProduct/${this.user._id}`,
-            cart,
-            this.newHTTPoptions
+          this.subSink.add(
+            this.http
+              .put(
+                `${this.cartURL}/removeProduct/${this.user._id}`,
+                cart,
+                this.newHTTPoptions
+              )
+              .subscribe((updatedCart) => {
+                this.cartSubject.next(updatedCart);
+                // window.location.reload()
+              })
           )
-          .subscribe((updatedCart) => {
-            this.cartSubject.next(updatedCart);
-            // window.location.reload()
-          })
-         )
         }
       })
     )
@@ -434,7 +451,7 @@ export class RegisterService implements OnInit,OnDestroy {
     return this.currentUserSubject.asObservable();
   }
 
-  setCurrentUser(user:any){
+  setCurrentUser(user: any) {
     this.currentUserSubject.next(user)
   }
 
@@ -463,10 +480,13 @@ export class RegisterService implements OnInit,OnDestroy {
         const id = data._id;
         this.subSink.add(
           this.http
-          .post(`${this.cartURL}`, { id }, newHTTPoptions)
-          .subscribe((cart) => {
-            this.cartSubject.next(cart);
-          })
+            .post(`${this.cartURL}`, { id }, newHTTPoptions)
+            .subscribe((cart) => {
+              this.cartSubject.next(cart);
+            })
+        )
+        this.subSink.add(
+          this.http.post(`http://localhost:5000/api/wish/`, { id, products: [] }, newHTTPoptions).subscribe()
         )
         this.router.navigate(['']);
       })
@@ -489,4 +509,42 @@ export class RegisterService implements OnInit,OnDestroy {
 
     return this.ordersSubject.asObservable();
   }
+  getWishlistFromApi(userId:string) {
+       return   this.http.get<WishlistSchema>(`http://localhost:5000/api/wish/${userId}`, this.newHTTPoptions);
+
+  }
+
+
+
+  addProductToWishlist(productId: string) {
+    this.store.select('wishlist').pipe(take(1)).subscribe((wish: any) => {
+      const newWishlist = { ...wish, products: [productId, ...wish.products,] }
+      console.log(newWishlist.id,'new');
+      this.store.dispatch(addProduct(newWishlist))
+      const {loading,type,...newWishlistReq} = newWishlist
+      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, this.newHTTPoptions).subscribe((wishlistUpdate)=>{
+        console.log(wishlistUpdate);
+        this.wishlistSubject.next(wishlistUpdate)
+
+      })
+    })
+    return this.wishlistSubject.asObservable()
+  }
+  removeProductWishlist(productId:string){
+    this.store.select('wishlist').pipe(take(1)).subscribe((wish: any) => {
+      const newWishlist = { ...wish, products: wish.products.filter((pro:any)=>pro !== productId) }
+      this.store.dispatch(removeProduct(newWishlist))
+      const {loading,type,...newWishlistReq} = newWishlist
+      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, this.newHTTPoptions).subscribe((wishlistUpdate)=>{
+        console.log(wishlistUpdate);
+        this.wishlistSubject.next(wishlistUpdate)
+
+      })
+    })
+    return this.wishlistSubject.asObservable()
+  }
 }
+
+
+
+

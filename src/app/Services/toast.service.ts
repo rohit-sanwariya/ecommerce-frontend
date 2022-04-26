@@ -12,7 +12,7 @@ export class ToastService {
 
    }
    show(message:string,confirm:boolean,color:string){
-     console.log(color);
+
 
      this.subject.next({show:true,message,confirm,color});
    }

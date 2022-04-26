@@ -1,0 +1,39 @@
+<div class="container">
+  <app-announcement></app-announcement>
+  <app-navbar>
+  </app-navbar>
+  <main>
+    <div *ngIf="!hasProducts" class="order-summary-empty">
+      <div class="img-container">
+        <img src="../../../assets/img/emptyWishlist.webp" alt="">
+      </div>
+      <div class="text-container">
+        <h3>Hey, it Feels so light! </h3>
+        <h5>There is nothing in your Wishlist.
+          Lets Add some items. </h5>
+      </div>
+    </div>
+    <div class="card-container">
+      <div *ngFor="let product of (products$|async)" class="card">
+          <div  class="img-container">
+                <img [routerLink]="['','product-detail',product._id]" [src]="product.img" alt="">
+                <div (click)="removeProduct(product._id)" class="btn-container">
+                  <span class="material-icons">
+                    close
+
+                    </span>
+                </div>
+          </div>
+          <div [routerLink]="['','product-detail',product._id]" class="card-body">
+            <h5>{{product.title|slice:0:36}}</h5>
+          </div>
+          <div class="card-footer">
+            <button class="btn">Add To Cart</button>
+
+          </div>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

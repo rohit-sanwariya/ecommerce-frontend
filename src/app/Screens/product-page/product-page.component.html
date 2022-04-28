@@ -11,10 +11,10 @@
     </div>
     <div class="sort-products">
       <h3 class="filter-text">Sort Products:</h3>
-      <app-filter class="filter" [options]="sort"></app-filter>
+      <app-filter class="filter" (optionSelected)="setFilter($event)" [options]="sort"></app-filter>
     </div>
   </section>
-  <app-products></app-products>
+  <app-products [sortByPriceShow]="filterOption" ></app-products>
   <app-news-letter></app-news-letter>
   <app-footer></app-footer>
 

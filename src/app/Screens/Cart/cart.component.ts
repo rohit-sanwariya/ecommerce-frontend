@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
 import { CartSchema } from 'src/app/Interfaces/cart-schema';
 import { FetchService } from 'src/app/Services/Backend/fetch.service';
 import { RegisterService } from 'src/app/Services/register.service';
+import { WishlistSchema } from 'src/app/Store/Wishlist/wishlist.reducers';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +13,7 @@ import { RegisterService } from 'src/app/Services/register.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
+  wishlist$!:Observable<WishlistSchema>
   cartTotal$!:Observable<number>
   userCart$!: Observable<CartSchema>;
   userCart!: any;
@@ -22,12 +25,14 @@ export class CartComponent implements OnInit {
     private router: Router,
     private register: RegisterService,
     private productService: FetchService,
+    private store:Store<{wishlist:WishlistSchema}>
 
   ) {
 
   }
 
   ngOnInit(): void {
+    this.wishlist$ = this.store.select('wishlist')
 
     // if (this.router.url === '/cart' && !!this.userCart === false) {
       if (this.products.length === 0) {

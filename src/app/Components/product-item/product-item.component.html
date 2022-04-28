@@ -1,17 +1,21 @@
 <div class="card">
-  <img [src]="product.img" alt="">
-  <div class="card-body">
+  <img #image  [src]="product.img" alt="">
+  <div (click)="zoomMe(image)" class="card-body">
     <div class="circle">
       <span (click)="addToCart()" [routerLink]="['cart']" class="material-icons">
         shopping_cart
       </span>
     </div>
-    <div class="circle">
-      <span (click)="addToWishlist()" class="material-icons">
-        favorite
-      </span>
+    <div *ngIf="!loading" class="circle">
+      <i *ngIf="liked " (click)="addToWishlist()" class="fa-solid fa-heart"></i>
+        <i *ngIf="!liked " (click)="addToWishlist()" class="fa-regular fa-heart"></i>
     </div>
-    <div class="circle" [routerLink]="['product-detail',product._id]" >
+    <div *ngIf="loading" class="circle expanded">
+        <div class="small-circle small-circle-1"></div>
+        <div class="small-circle small-circle-2"></div>
+        <div class="small-circle small-circle-3"></div>
+    </div>
+    <div  class="circle" [routerLink]="['','product-detail',product._id]" (click)="loading=true" >
       <span class="material-icons">
         search
       </span>

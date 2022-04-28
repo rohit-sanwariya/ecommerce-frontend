@@ -77,7 +77,8 @@ const routes: Routes = [
   {
     path:'wishlist',
     pathMatch:'full',
-    component:WishlistComponent
+    component:WishlistComponent,
+    canActivate:[LoginGuard]
   },
   {
     path:'my',

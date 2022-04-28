@@ -11,6 +11,7 @@ import { FilterSchema } from 'src/app/Interfaces/filter-schema';
 
 
 export class ProductPageComponent implements OnInit {
+  filterOption:number = 0;
   colors:FilterSchema = {type:'filter',data:['Color','White',"Black","Red","Blue","Yellow","Green"]}
   size:FilterSchema = {type:'filter',data:['Size','XS',"S","M","L","XL"]}
   sort:FilterSchema = {type:'sort',data:['Newest','Price (asc)',"Price (desc)"]}
@@ -18,6 +19,12 @@ export class ProductPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  setFilter(event:any){
+    this.filterOption = event
+
+
   }
 
 }

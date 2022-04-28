@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProductSchema } from 'src/app/Interfaces/product-schema';
 import { FetchService } from 'src/app/Services/Backend/fetch.service';
 
@@ -9,7 +9,9 @@ import { FetchService } from 'src/app/Services/Backend/fetch.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
+
   products!:ProductSchema[]
+  @Input() sortByPriceShow:number = -1
   constructor(private productService:FetchService) { }
 
   ngOnInit(): void {

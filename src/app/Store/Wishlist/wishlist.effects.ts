@@ -14,7 +14,7 @@ export class wishListEffect {
     private registerService: RegisterService
   ) {
 
-console.log('effects working');
+
   }
 
   loadWishlist$ = this.action$.pipe(
@@ -30,7 +30,7 @@ console.log('effects working');
                 loading:false,
                 products:wishlist.products
             }
-            console.log('hello');
+
 
             return fetchWishlistApiSuccess(tempPayload)
 
@@ -41,7 +41,7 @@ console.log('effects working');
 
       )
     ),
-    
+
   )
 
 

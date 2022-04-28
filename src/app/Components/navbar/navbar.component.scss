@@ -86,6 +86,7 @@ header {
           }
         }
         div.user-details {
+          z-index: 999;
           box-shadow: 5px 10px 13px 1px #f1f1f1;
           display: none;
           position: absolute;

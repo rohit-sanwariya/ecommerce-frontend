@@ -12,7 +12,15 @@ export class LoginGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(sessionStorage.getItem('accessToken')){
+
+      const url = route.url
+      url.forEach(url=>{
+        console.log(url.path);
+
+      })
+      if(sessionStorage.getItem('accessToken')){
+
+
       return true;
     }
     else{

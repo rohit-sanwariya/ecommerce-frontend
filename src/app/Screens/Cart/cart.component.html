@@ -14,7 +14,7 @@
       </div>
       <div>
         <a [routerLink]="">Shopping Bag({{(userCart$|async)?.products?.length}})</a>
-        <a [routerLink]="">Your Wishlist(10)</a>
+        <a [routerLink]="">Your Wishlist ({{(wishlist$|async)?.products?.length }}) </a>
       </div>
       <div>
         <button [routerLink]="['','shipping-address']" class="btn">
@@ -76,7 +76,7 @@
               Estimated Shipping
             </div>
             <div class="right">
-              $5
+              ₹5
             </div>
           </div>
           <div class="shipping-discount">
@@ -84,7 +84,7 @@
               Shipping Discount
             </div>
             <div class="right">
-              -$5
+              -₹5
             </div>
           </div>
           <div class="total">

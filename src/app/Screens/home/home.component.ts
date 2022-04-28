@@ -29,11 +29,11 @@ export class HomeComponent implements OnInit {
     })
 
     this.store.select('wishlist').pipe(take(2)).subscribe((wishlistStore) => {
-      console.log(wishlistStore);
+
 
       if (wishlistStore.id) {
         this.registerService.getWishlistFromApi(wishlistStore.id).subscribe((wishlist) => {
-          
+
           const wishlistPL: WishlistSchema =
           {
                 id:wishlist.id,

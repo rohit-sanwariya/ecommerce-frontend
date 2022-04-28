@@ -232,7 +232,7 @@ export class RegisterService implements OnInit, OnDestroy {
               .put(
                 `${this.baseURL}/api/address/${userForm.id}`,
                 userForm,
-                this.newHTTPoptions
+
               )
               .subscribe((address: any) => {
                 this.addressSubject.next(address);
@@ -267,7 +267,7 @@ export class RegisterService implements OnInit, OnDestroy {
         .put(
           `${this.baseURL}/api/address/${address.id}`,
           address,
-          this.newHTTPoptions
+          
         )
         .subscribe((address: any) => {
           this.addressSubject.next(address);
@@ -356,10 +356,8 @@ export class RegisterService implements OnInit, OnDestroy {
       };
       this.subSink.add(
         this.http
-          .get(`${this.baseURL}/api/users/single`, newHTTPoptions)
+          .get(`${this.baseURL}/api/users/single`)
           .subscribe((user: any) => {
-
-
             this.currentUserSubject.next(user);
             this.user = user;
           })
@@ -378,8 +376,6 @@ export class RegisterService implements OnInit, OnDestroy {
     this.getUserWithAccessTokenFromApi();
     this.subSink.add(
       this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
-
-
         const id = user._id;
         if (!!id) {
           this.subSink.add(
@@ -519,11 +515,11 @@ export class RegisterService implements OnInit, OnDestroy {
   addProductToWishlist(productId: string) {
     this.store.select('wishlist').pipe(take(1)).subscribe((wish: any) => {
       const newWishlist = { ...wish, products: [productId, ...wish.products,] }
-      console.log(newWishlist.id,'new');
+
       this.store.dispatch(addProduct(newWishlist))
       const {loading,type,...newWishlistReq} = newWishlist
       this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, this.newHTTPoptions).subscribe((wishlistUpdate)=>{
-        console.log(wishlistUpdate);
+
         this.wishlistSubject.next(wishlistUpdate)
 
       })
@@ -536,7 +532,7 @@ export class RegisterService implements OnInit, OnDestroy {
       this.store.dispatch(removeProduct(newWishlist))
       const {loading,type,...newWishlistReq} = newWishlist
       this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, this.newHTTPoptions).subscribe((wishlistUpdate)=>{
-        console.log(wishlistUpdate);
+
         this.wishlistSubject.next(wishlistUpdate)
 
       })

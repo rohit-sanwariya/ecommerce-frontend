@@ -30,6 +30,7 @@ export class UserAddressListComponent implements OnInit {
       fullname:['',[Validators.required]],
       street:['',[Validators.required]],
       city:['',[Validators.required]],
+      state:['',[Validators.required]],
       zip:['',[Validators.required]],
       phone:['',[Validators.required]],
     })
@@ -56,6 +57,8 @@ export class UserAddressListComponent implements OnInit {
 
 
     if(this.addressForm.valid && Object.keys(this.address).length == 0){
+      console.log(user);
+
       this.registerService.addUserAddress(user)
     }
     else{

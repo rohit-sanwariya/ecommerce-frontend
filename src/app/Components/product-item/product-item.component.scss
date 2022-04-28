@@ -9,6 +9,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: 3;
   }
   .card-body{
     position: absolute;
@@ -21,7 +22,9 @@
     justify-content: center;
     opacity: 0;
     transition: all 1.5s ease;
+
     .circle{
+
       transition: all 500ms ease;
       border-radius: 100%;
       width: 3rem;
@@ -35,8 +38,30 @@
       span{
         color: #fff;
       }
+      i{
+        color: #fff;
+      }
       &:hover{
         transform: scale(1.1);
+      }
+    }
+    .circle.expanded{
+      width: 5rem;
+      border-radius: 2rem;
+      .small-circle{
+        width: .5rem;
+        height: .5rem;
+        border-radius: 100%;
+        background-color: #fff;
+        margin: 0 3px;
+
+      }
+      @for $var from 1 to 4 {
+        .small-circle-#{$var}{
+          animation: bounce 1s ease  infinite ;
+          animation-delay: $var * 0.5s;
+        }
+
       }
     }
   }
@@ -45,5 +70,17 @@
   }
   &:hover img{
     filter: blur(2px);
+  }
+}
+
+@keyframes bounce{
+  0%{
+    margin-top: -15px;
+  }
+  50%{
+    margin-top: 15px;
+  }
+  100%{
+    margin-top: 3px;
   }
 }

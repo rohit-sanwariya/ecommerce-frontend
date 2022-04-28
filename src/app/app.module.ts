@@ -40,6 +40,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { wishListEffect } from './Store/Wishlist/wishlist.effects';
+import { SortByPricePipe } from './Pipes/sort-by-price.pipe';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './Services/auth-interceptor.service';
 
 
 
@@ -58,7 +61,6 @@ import { wishListEffect } from './Store/Wishlist/wishlist.effects';
     GroupItemComponent,
     ProductsComponent,
     ProductItemComponent,
-
     NewsLetterComponent,
     ProductPageComponent,
     FilterComponent,
@@ -78,6 +80,7 @@ import { wishListEffect } from './Store/Wishlist/wishlist.effects';
     ConfirmScreenComponent,
     ReenterPasswordComponent,
     WishlistComponent,
+    SortByPricePipe,
 
   ],
   imports: [
@@ -104,7 +107,13 @@ import { wishListEffect } from './Store/Wishlist/wishlist.effects';
 
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptorService,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

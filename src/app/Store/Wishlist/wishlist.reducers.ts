@@ -31,13 +31,13 @@ export const wishListReducer = createReducer(
     }
   }),
   on(fetchWishlistApiSuccess, (state: WishlistSchema, payload: any) => {
-      console.log(payload);
+
     return {
       ...state, id: payload.id, _id: payload._id, products: payload.products, loading: false
     }
   }),
   on(addProduct, (state: any, payload: any) => {
-    console.log(payload);
+
 
     return {
       ...state,

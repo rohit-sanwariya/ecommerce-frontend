@@ -5,13 +5,16 @@ import {
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { log } from 'console';
+import { log, timeStamp } from 'console';
 
 import {
   BehaviorSubject,
   catchError,
+  concat,
+  concatMap,
   EMPTY,
   map,
+  mergeMap,
   Observable,
   of,
   Subscription,
@@ -22,8 +25,9 @@ import {
 import { CartSchema } from '../Interfaces/cart-schema';
 import { LoginUser } from '../Interfaces/login-user';
 import { NewUser } from '../Interfaces/new-user';
+import { OrdersStateSchema } from '../Interfaces/order-schema';
 import { ProductSchema } from '../Interfaces/product-schema';
-import { UserSchema } from '../Interfaces/user-schema';
+
 import { addProduct, fetchWishlistApi, removeProduct } from '../Store/Wishlist/wishlist.actions';
 import { initialState, WishlistSchema } from '../Store/Wishlist/wishlist.reducers';
 
@@ -63,7 +67,8 @@ export class RegisterService implements OnInit, OnDestroy {
     private http: HttpClient,
     private router: Router,
     private ProductService: AdminService,
-    private store: Store<{ wishlist: WishlistSchema }>
+    private store: Store<{ wishlist: WishlistSchema }>,
+
   ) {
     this.wishlist$ = this.store.select('wishlist')
 
@@ -82,12 +87,7 @@ export class RegisterService implements OnInit, OnDestroy {
       })
     );
   }
-  newHTTPoptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-    }),
-  };
+
 
   getCartProductIds() {
     // this.getCartDetails()
@@ -106,10 +106,35 @@ export class RegisterService implements OnInit, OnDestroy {
   }
 
   getOtpFromApi() {
-    return this.http.get(this.otpURL, this.newHTTPoptions);
+    return this.http.get(this.otpURL, );
   }
   setOrders(order: any) {
     this.ordersSubject.next(order);
+  }
+
+
+  getAllOrderFromApiByAdmin(){
+    return this.http.get(`${this.baseURL}/api/orders/`);
+  }
+
+  getCurrentIncomeByAdminFromAPI(){
+    return this.http.get(`${this.baseURL}/api/orders/income`);
+  }
+  getAllOrdersByAdmin(){
+
+    return concat(
+      this.getUserWithAccessTokenFromApi(),
+      this.getAllOrderFromApiByAdmin()
+    )
+
+  }
+  getCurrentIncomeByAdmin(){
+
+    return concat(
+      this.getUserWithAccessTokenFromApi(),
+      this.getCurrentIncomeByAdminFromAPI()
+    )
+
   }
   getOrder() {
     return this.ordersSubject.asObservable();
@@ -137,7 +162,7 @@ export class RegisterService implements OnInit, OnDestroy {
 
       const body = { newPassword: passwords.newPassword, ...user };
       this.subSink.add(this.http
-        .put(url, body, this.newHTTPoptions)
+        .put(url, body, )
         .pipe(
           catchError((err: any, caught: any) => {
             return of(err);
@@ -161,36 +186,36 @@ export class RegisterService implements OnInit, OnDestroy {
 
   }
 
-  calCartTotal() {
-    this.getCartProducts();
-    this.subSink.add(
-      this.cartSubject
-        .pipe(
-          take(1),
-          map((cart: any) => cart.products)
-        )
-        .subscribe((cartProducts: any) => {
-          const productsWithoutPrice = cartProducts;
+  // calCartTotal() {
+  //   this.getCartProducts();
+  //   this.subSink.add(
+  //     this.cartSubject
+  //       .pipe(
+  //         take(1),
+  //         map((cart: any) => cart.products)
+  //       )
+  //       .subscribe((cartProducts: any) => {
+  //         const productsWithoutPrice = cartProducts;
 
-          this.cartProducts.pipe(take(2)).subscribe((products: any) => {
-            const productsWithPrice = products;
-            if (productsWithPrice.length > 0 && productsWithoutPrice.length > 0) {
-              let cartTotal = 0;
-              productsWithPrice.forEach((withPrice: any) => {
-                const found = productsWithoutPrice.find(
-                  (p: any) => p.productId === withPrice._id
-                );
-                const quantity = found.quantity;
-                const price = withPrice.price;
-                cartTotal += quantity * price;
-              });
-              this.cartTotal.next(cartTotal);
-            }
-          });
-        })
-    )
-    return this.cartTotal.asObservable();
-  }
+  //         this.cartProducts.pipe(take(2)).subscribe((products: any) => {
+  //           const productsWithPrice = products;
+  //           if (productsWithPrice.length > 0 && productsWithoutPrice.length > 0) {
+  //             let cartTotal = 0;
+  //             productsWithPrice.forEach((withPrice: any) => {
+  //               const found = productsWithoutPrice.find(
+  //                 (p: any) => p.productId === withPrice._id
+  //               );
+  //               const quantity = found.quantity;
+  //               const price = withPrice.price;
+  //               cartTotal += quantity * price;
+  //             });
+  //             this.cartTotal.next(cartTotal);
+  //           }
+  //         });
+  //       })
+  //   )
+  //   return this.cartTotal.asObservable();
+  // }
 
   addUserAddress(userForm: any) {
     this.getUserWithAccessTokenFromApi();
@@ -208,7 +233,7 @@ export class RegisterService implements OnInit, OnDestroy {
               .post(
                 `${this.baseURL}/api/address/${body.id}`,
                 body,
-                this.newHTTPoptions
+
               )
               .subscribe((address: any) => {
                 this.addressSubject.next(address);
@@ -252,7 +277,7 @@ export class RegisterService implements OnInit, OnDestroy {
         .put(
           `${this.baseURL}/api/address/${userForm.id}`,
           userForm,
-          this.newHTTPoptions
+
         )
         .subscribe((address: any) => {
           this.addressSubject.next(address);
@@ -267,7 +292,7 @@ export class RegisterService implements OnInit, OnDestroy {
         .put(
           `${this.baseURL}/api/address/${address.id}`,
           address,
-          
+
         )
         .subscribe((address: any) => {
           this.addressSubject.next(address);
@@ -281,7 +306,7 @@ export class RegisterService implements OnInit, OnDestroy {
       this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
         if (Object.keys(user).length > 0) {
           this.http
-            .get(`${this.baseURL}/api/address/${user._id}`, this.newHTTPoptions)
+            .get(`${this.baseURL}/api/address/${user._id}`, )
             .subscribe({
               next: (address: any) => {
                 try {
@@ -318,7 +343,8 @@ export class RegisterService implements OnInit, OnDestroy {
     cart.products = [];
     this.subSink.add(
       this.http
-        .put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
+        .put(`${this.cartURL}/${this.user._id}`, cart,
+         )
         .subscribe((updatedCart) => {
           this.cartSubject.next(updatedCart);
           // window.location.reload()
@@ -329,7 +355,7 @@ export class RegisterService implements OnInit, OnDestroy {
   loginUser(user: LoginUser): Observable<boolean> {
     this.subSink.add(
       this.http
-        .post<LoginUser>(this.loginURL, user, this.httpOptions)
+        .post<LoginUser>(this.loginURL, user)
         .subscribe((res: any) => {
           this.currentUserSubject.next(res);
           this.loginSubject.next(res.isAdmin);
@@ -345,34 +371,26 @@ export class RegisterService implements OnInit, OnDestroy {
   }
 
   getUserWithAccessTokenFromApi() {
-    const token = sessionStorage.getItem('accessToken');
+    const currentUser$: Observable<any> = this.http
+      .get(`${this.baseURL}/api/users/single`)
+      if(sessionStorage.getItem('accessToken')){
 
-    if (token) {
-      const newHTTPoptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${token}`,
-        }),
-      };
-      this.subSink.add(
-        this.http
-          .get(`${this.baseURL}/api/users/single`)
-          .subscribe((user: any) => {
-            this.currentUserSubject.next(user);
-            this.user = user;
-          })
-      )
-    }
+
+
+currentUser$.subscribe((user: any) => {
+  this.currentUserSubject.next(user);
+  this.user = user;
+})
+      }
+
+      return currentUser$ ? currentUser$ : EMPTY;
+
+
   }
 
   getCartDetails() {
     const token = sessionStorage.getItem('accessToken');
-    const newHTTPoptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-      }),
-    };
+
     this.getUserWithAccessTokenFromApi();
     this.subSink.add(
       this.currentUserSubject.pipe(take(2)).subscribe((user: any) => {
@@ -380,7 +398,7 @@ export class RegisterService implements OnInit, OnDestroy {
         if (!!id) {
           this.subSink.add(
             this.http
-              .get<CartSchema>(`${this.cartURL}/find/${id}`, newHTTPoptions)
+              .get<CartSchema>(`${this.cartURL}/find/${id}`  )
               .subscribe((cart) => {
                 this.cartSubject.next(cart);
               })
@@ -391,33 +409,34 @@ export class RegisterService implements OnInit, OnDestroy {
     return this.cartSubject.asObservable() as Observable<CartSchema>;
   }
 
-  addProductToCart(product: ProductSchema, quantity: number, incrment: number) {
-    this.getCartDetails();
-    this.subSink.add(
-      this.cartSubject.pipe(take(1)).subscribe((cart: any) => {
-        if (Object.keys(cart).length !== 0) {
-          const found = cart.products.findIndex((productincart: any) => {
-            if (productincart.productId === product._id) {
-              return productincart;
-            }
-          });
-          if (found === -1) {
-            cart.products.push({ productId: product._id, quantity: 1 });
-          } else {
-            cart.products[found].quantity = quantity + incrment;
-          }
-          this.subSink.add(
-            this.http
-              .put(`${this.cartURL}/${this.user._id}`, cart, this.newHTTPoptions)
-              .subscribe((updatedCart) => {
-                this.cartSubject.next(updatedCart);
-                window.location.reload();
-              })
-          )
-        }
-      })
-    )
-  }
+  // addProductToCart(product: ProductSchema, quantity: number, incrment: number) {
+  //   this.getCartDetails();
+  //   this.subSink.add(
+  //     this.cartSubject.pipe(take(1)).subscribe((cart: any) => {
+  //       if (Object.keys(cart).length !== 0) {
+  //         const found = cart.products.findIndex((productincart: any) => {
+  //           if (productincart.productId === product._id) {
+  //             return productincart;
+  //           }
+  //         });
+  //         if (found === -1) {
+  //           cart.products.push({ productId: product._id, quantity: 1 });
+  //         } else {
+  //           cart.products[found].quantity = quantity + incrment;
+  //         }
+  //         this.subSink.add(
+  //           this.http
+  //             .put(`${this.cartURL}/${this.user._id}`,
+  //             cart, )
+  //             .subscribe((updatedCart) => {
+  //               this.cartSubject.next(updatedCart);
+  //               window.location.reload();
+  //             })
+  //         )
+  //       }
+  //     })
+  //   )
+  // }
   deleteProductFromCart(product: any) {
     this.subSink.add(
       this.cartSubject.pipe(take(2)).subscribe((cart: any) => {
@@ -432,7 +451,7 @@ export class RegisterService implements OnInit, OnDestroy {
               .put(
                 `${this.cartURL}/removeProduct/${this.user._id}`,
                 cart,
-                this.newHTTPoptions
+
               )
               .subscribe((updatedCart) => {
                 this.cartSubject.next(updatedCart);
@@ -455,38 +474,65 @@ export class RegisterService implements OnInit, OnDestroy {
     return this.http.put(
       `${this.baseURL}/api/users/${user._id}`,
       user,
-      this.newHTTPoptions
+
     )
   }
 
-  onUserRegister(newUser: NewUser) {
+  onNewUserRegister(newUser:NewUser){
     this.http
-      .post<NewUser>(this.registerURL, newUser, this.httpOptions)
-      .subscribe((data: any) => {
-        this.currentUserSubject.next(data);
-        sessionStorage.setItem('accessToken', data.accessToken);
-        const token = sessionStorage.getItem('accessToken');
-        const newHTTPoptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${token}`,
-          }),
-        };
-        this.getUserWithAccessTokenFromApi();
-        const id = data._id;
-        this.subSink.add(
-          this.http
-            .post(`${this.cartURL}`, { id }, newHTTPoptions)
-            .subscribe((cart) => {
-              this.cartSubject.next(cart);
-            })
+      .post<NewUser>(this.registerURL, newUser).pipe(
+        concatMap(
+          (newUserFromApi:any)=>{
+
+            sessionStorage.setItem('accessToken',newUserFromApi.accessToken)
+            return this.http
+            .post<CartSchema>(`${this.cartURL}`, { id:newUserFromApi._id })
+
+          }
+
+        ),
+        concatMap(
+          (cart:CartSchema)=>{
+            const id = cart.id
+
+            const token:string|null = sessionStorage.getItem('accessToken');
+            console.log(token);
+
+            const httpOptions = {
+              headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`,
+              }),
+            }
+            return this.http.post(`http://localhost:5000/api/wish/${id}`,
+            { id, products: [] },httpOptions)
+
+          }
         )
-        this.subSink.add(
-          this.http.post(`http://localhost:5000/api/wish/`, { id, products: [] }, newHTTPoptions).subscribe()
-        )
-        this.router.navigate(['']);
-      })
+      ).subscribe()
   }
+  // onUserRegister(newUser: NewUser) {
+  //   this.http
+  //     .post<NewUser>(this.registerURL, newUser)
+  //     .subscribe((data: any) => {
+  //       this.currentUserSubject.next(data);
+  //       sessionStorage.setItem('accessToken', data.accessToken);
+
+  //       const id = data._id;
+  //       this.subSink.add(
+  //         this.http
+  //           .post(`${this.cartURL}`, { id })
+  //           .subscribe((cart) => {
+  //             this.cartSubject.next(cart);
+  //           })
+  //       )
+  //       this.subSink.add(
+  //         this.http.post(`http://localhost:5000/api/wish/`,
+  //          { id, products: [] }).subscribe()
+  //       )
+  //       this.router.navigate(['']);
+  //     })
+  // }
 
   getUserOrders() {
     let user = {};
@@ -496,7 +542,7 @@ export class RegisterService implements OnInit, OnDestroy {
       this.subSink.add(this.http
         .get(
           `${this.baseURL}/api/orders/findAll/${user._id}`,
-          this.newHTTPoptions
+
         )
         .subscribe((orders: any) => {
           this.ordersSubject.next(orders);
@@ -505,11 +551,22 @@ export class RegisterService implements OnInit, OnDestroy {
 
     return this.ordersSubject.asObservable();
   }
-  getWishlistFromApi(userId:string) {
-       return   this.http.get<WishlistSchema>(`http://localhost:5000/api/wish/${userId}`, this.newHTTPoptions);
+  getWishlistFromApi(id:string) {
+      return concat(
+        this.getUserWithAccessTokenFromApi(),
+    this.http.get<WishlistSchema>(`http://localhost:5000/api/wish/${id}` )
+      )
 
   }
+  loadWishlist(){
+      return concat(
+        this.getUserWithAccessTokenFromApi(),
 
+      ).subscribe((user)=>{
+
+
+      })
+  }
 
 
   addProductToWishlist(productId: string) {
@@ -518,7 +575,7 @@ export class RegisterService implements OnInit, OnDestroy {
 
       this.store.dispatch(addProduct(newWishlist))
       const {loading,type,...newWishlistReq} = newWishlist
-      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, this.newHTTPoptions).subscribe((wishlistUpdate)=>{
+      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, ).subscribe((wishlistUpdate)=>{
 
         this.wishlistSubject.next(wishlistUpdate)
 
@@ -531,7 +588,7 @@ export class RegisterService implements OnInit, OnDestroy {
       const newWishlist = { ...wish, products: wish.products.filter((pro:any)=>pro !== productId) }
       this.store.dispatch(removeProduct(newWishlist))
       const {loading,type,...newWishlistReq} = newWishlist
-      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, this.newHTTPoptions).subscribe((wishlistUpdate)=>{
+      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, ).subscribe((wishlistUpdate)=>{
 
         this.wishlistSubject.next(wishlistUpdate)
 

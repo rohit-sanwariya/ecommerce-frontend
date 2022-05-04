@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  val=0;
+
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let clonesReq;
@@ -19,18 +19,14 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     }
     else{
-        clonesReq = req.clone()
+        clonesReq = req.clone(
+          {
+            setHeaders:{
+          'Content-Type': 'application/json',
+        }
+      }
+      );
     }
-    console.log(clonesReq);
-    console.log(req);
-
-
-
-console.log(this.val++);
-
-
-
-
     return next.handle(clonesReq);
   }
 

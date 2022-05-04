@@ -57,7 +57,7 @@ export class UserAddressListComponent implements OnInit {
 
 
     if(this.addressForm.valid && Object.keys(this.address).length == 0){
-      console.log(user);
+
 
       this.registerService.addUserAddress(user)
     }

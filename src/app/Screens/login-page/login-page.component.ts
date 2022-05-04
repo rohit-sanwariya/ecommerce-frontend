@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { catchError, of, Subscription } from 'rxjs';
 import { LoginService } from 'src/app/Services/login.service';
 import { RegisterService } from 'src/app/Services/register.service';
 import { ToastService } from 'src/app/Services/toast.service';
+import { loginStart } from 'src/app/Store/Login/login.actions';
+import { loginStateSchema } from 'src/app/Store/Login/login.reducers';
 
 @Component({
   selector: 'app-login-page',
@@ -17,6 +20,7 @@ export class LoginPageComponent implements OnInit,OnDestroy {
     private formBuilder:FormBuilder,
     private loginService:RegisterService,
     private toast:ToastService,
+    private store:Store<{login:loginStateSchema}>,
 
     ) { }
   ngOnDestroy(): void {
@@ -35,15 +39,18 @@ export class LoginPageComponent implements OnInit,OnDestroy {
     const user = this.loginForm.value;
 
     if(this.loginForm.valid){
-         this.subsink.add(
-          this.loginService.loginUser(user).pipe(catchError((err:any,caught:any)=>{
-            return of(err)
-          })).subscribe((err)=>{
-            const message:string = "Your Username or password is incorrect";
-            this.toast.show(message,false,'red')
+      this.store.dispatch(loginStart(user))
+      
+        //  this.subsink.add(
 
-          })
-         )
+        //   this.loginService.loginUser(user).pipe(catchError((err:any,caught:any)=>{
+        //     return of(err)
+        //   })).subscribe((err)=>{
+        //     const message:string = "Your Username or password is incorrect";
+        //     this.toast.show(message,false,'red')
+
+        //   })
+        //  )
     }
 
   }

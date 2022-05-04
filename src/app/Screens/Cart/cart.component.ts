@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
-import { CartSchema } from 'src/app/Interfaces/cart-schema';
-import { FetchService } from 'src/app/Services/Backend/fetch.service';
+import {  ProductsInCartSchema } from 'src/app/Interfaces/cart-product-schema';
+import { cartproduct, CartSchema } from 'src/app/Interfaces/cart-schema';
 import { RegisterService } from 'src/app/Services/register.service';
+import { fetchCartStart, incrementCartProductStart } from 'src/app/Store/Cart/cart.actions';
+import { selectProductsInCart, selectUserId } from 'src/app/Store/Cart/cart.selectors';
 import { WishlistSchema } from 'src/app/Store/Wishlist/wishlist.reducers';
 
 @Component({
@@ -13,6 +15,7 @@ import { WishlistSchema } from 'src/app/Store/Wishlist/wishlist.reducers';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
+  cartProducts$!:Observable<ProductsInCartSchema>
   wishlist$!:Observable<WishlistSchema>
   cartTotal$!:Observable<number>
   userCart$!: Observable<CartSchema>;
@@ -22,94 +25,77 @@ export class CartComponent implements OnInit {
   showCartSummary:boolean = false
 
   constructor(
-    private router: Router,
-    private register: RegisterService,
-    private productService: FetchService,
-    private store:Store<{wishlist:WishlistSchema}>
-
+    private wishlistStore:Store<{wishlist:WishlistSchema,}>,
+    private cartStore:Store<{cart:CartSchema}>,
+    private store:Store,
   ) {
 
   }
 
   ngOnInit(): void {
-    this.wishlist$ = this.store.select('wishlist')
+    this.wishlist$ = this.wishlistStore.select('wishlist')
+    this.userCart$ = this.cartStore.select('cart')
 
-    // if (this.router.url === '/cart' && !!this.userCart === false) {
-      if (this.products.length === 0) {
-        this.userCart$ = this.register.getCartDetails();
-      }
-    // }
-
-
-
-    this.userCart$.pipe(take(2)).subscribe((cart) => {
-      // if(Object.keys(this.userCart).length>0 && this.userCart.products.length>0){
-      //   this.register.getCartProductIds().pipe(take(1)).subscribe((ids)=>{
-      //     this.adminService.getProductsByIds(ids).pipe(take(2)).subscribe((productsWithPrice:any)=>{
-      //       if(productsWithPrice.length>0){
-      //       const mapper =  productsWithPrice.map((productsWithPrice: any)=>{
-      //           const cartproduct = this.userCart.products.find((p:any)=>productsWithPrice._id === p.productId)
-      //           productsWithPrice['quantity'] = cartproduct.quantity;
-      //         productsWithPrice['productTotal'] = Math.round(cartproduct.quantity * productsWithPrice.price);
-      //         return productsWithPrice
-      //         })
-
-      //         this.userCart.products = mapper
-      //         this.newproducts = mapper
-      //       }
-      //     })
-      //   })
-      //       }
-
-      this.userCart = cart;
-      this.products = [];
-      if (this.userCart.products && this.userCart.products.length > 0) {
-        cart.products.forEach((cartproduct: any) => {
-          this.productService
-            .getProduct(cartproduct.productId)
-            .pipe(take(cart.products.length + 1))
-            .subscribe((product: any) => {
-              this.showCartSummary = true
-              if (
-                Object.keys(product).length !== 0 &&
-                product._id === cartproduct.productId
-              ) {
-                product['quantity'] = cartproduct.quantity;
-                product['productTotal'] = Math.round(cartproduct.quantity * product.price);
-                this.products.push(product);
-                this.products = Array.from(new Set(this.products));
-                this.cartTotal +=  product['productTotal']
-                this.products.sort();
-              }
-            });
-        });
-      }
-    });
-
-    this.userCart$.subscribe((cart: any) => {
-      this.cartTotal = 0;
-
-      if (Object.keys(cart).length > 0) {
-this.cartTotal$ = this.register.calCartTotal()
-
-      }
-    });
-  }
-
-  incrmentProductInCart(product: any) {
-    this.register.addProductToCart(product, product.quantity, 1);
-  }
-
-  caltotal(){
-    this.register.calCartTotal()
+    this.cartProducts$ = this.store.select(selectProductsInCart)
+    this.store.select(selectUserId).subscribe((userId)=>{
+      console.log(userId);
+      this.cartStore.dispatch(fetchCartStart(userId))
+    })
 
   }
-  decrementProductInCart(product: any) {
-    if (product.quantity <= 1) {
 
-      this.register.deleteProductFromCart(product);
+  incrmentProductInCart(productPlus: any) {
 
-    }
-    this.register.addProductToCart(product, product.quantity, -1);
+  this.cartStore.select('cart').pipe(take(1)).subscribe((cart:CartSchema)=>{
+    let productToBeIncrmented:cartproduct = cart.products.find((product:cartproduct)=>product.productId === productPlus.productId)!
+
+    const newCart = {...cart,products:cart.products.map(
+      (cartproduct:cartproduct)=>{
+        if(cartproduct.productId===productToBeIncrmented.productId){
+          return {...productToBeIncrmented,quantity:productToBeIncrmented.quantity+1}
+        }
+        else{
+          return cartproduct
+        }
+      }
+    )}
+
+    console.log(newCart);
+
+    this.cartStore.dispatch(incrementCartProductStart(newCart))
+
+  })
+  }
+
+
+  decrementProductInCart(productMinus: any) {
+console.log('dec');
+
+    this.cartStore.select('cart').pipe(take(1)).subscribe((cart:CartSchema)=>{
+     if(productMinus.quantity>1){
+      let productToBeIncrmented:cartproduct = cart.products.find((product:cartproduct)=>product.productId === productMinus.productId)!
+
+      const newCart = {...cart,products:cart.products.map(
+        (cartproduct:cartproduct)=>{
+          if(cartproduct.productId===productToBeIncrmented.productId){
+            return {...productToBeIncrmented,quantity:productToBeIncrmented.quantity-1}
+          }
+          else{
+            return cartproduct
+          }
+        }
+      )}
+      console.log(newCart);
+     this.cartStore.dispatch(incrementCartProductStart(newCart))
+
+     }
+     else{
+      let productToBeRemoved:any = cart.products.filter((product:cartproduct)=>product.productId === productMinus.productId)!
+      console.log(productToBeRemoved);
+
+     }
+    })
+
+
   }
 }

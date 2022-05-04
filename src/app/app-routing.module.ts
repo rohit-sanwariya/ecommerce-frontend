@@ -12,6 +12,7 @@ import { UserUpdateMyDasboardFormComponent } from './Components/user-update-my-d
 import { UserUpdateComponent } from './Components/user-update/user-update.component';
 import { WishlistComponent } from './Components/wishlist/wishlist.component';
 import { UserUpdateFormComponent } from './dashboard/Components/User/user-update-form/user-update-form.component';
+import { AdminGuard } from './Guards/admin.guard';
 import { ConfirmScreenGuard } from './Guards/confirm-screen.guard';
 import { LoginGuard } from './Guards/login.guard';
 
@@ -126,7 +127,8 @@ const routes: Routes = [
   },
   {
     path:'admin',
-    loadChildren:()=>import('./dashboard/dashboard.module').then(module=>module.DashboardModule)
+    loadChildren:()=>import('./dashboard/dashboard.module').then(module=>module.DashboardModule),
+    
   }
 ];
 

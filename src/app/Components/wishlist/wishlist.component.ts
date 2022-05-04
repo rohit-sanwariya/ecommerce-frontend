@@ -29,6 +29,7 @@ export class WishlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.registerService.loadWishlist()
     this.registerService.getCurrentUser().subscribe((user: any) => {
       if (Object.keys(user).length > 0) {
         this.store.dispatch(fetchWishlistApi({ userId: user._id }))
@@ -40,7 +41,6 @@ export class WishlistComponent implements OnInit {
 
       if (wishlistStore.id) {
         this.registerService.getWishlistFromApi(wishlistStore.id).subscribe((wishlist) => {
-
           const wishlistPL: WishlistSchema =
           {
             id: wishlist.id,
@@ -49,7 +49,7 @@ export class WishlistComponent implements OnInit {
             products: wishlist.products
           }
           this.store.dispatch(fetchWishlistApiSuccess(wishlistPL))
-          const ids: string[] = wishlist.products.map((item) => item.toString())
+          const ids: string[] = wishlist.products.map((item:string) => item.toString())
           if (ids.length > 0) {
             this.products$ = this.productService.getProductsByIds(ids)
             this.hasProducts = true
@@ -58,10 +58,6 @@ export class WishlistComponent implements OnInit {
             this.hasProducts = false
           }
         })
-
-
-
-
       }
     })
   }

@@ -28,25 +28,25 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.store.select('wishlist').pipe(take(2)).subscribe((wishlistStore) => {
+    // this.store.select('wishlist').pipe(take(2)).subscribe((wishlistStore) => {
 
 
-      if (wishlistStore.id) {
-        this.registerService.getWishlistFromApi(wishlistStore.id).subscribe((wishlist) => {
+    //   if (wishlistStore.id) {
+    //     this.registerService.getWishlistFromApi(wishlistStore.id).subscribe((wishlist) => {
 
-          const wishlistPL: WishlistSchema =
-          {
-                id:wishlist.id,
-                _id:wishlist._id,
-                loading:false,
-                products:wishlist.products
-          }
-          this.store.dispatch(fetchWishlistApiSuccess(wishlistPL))
+    //       const wishlistPL: WishlistSchema =
+    //       {
+    //             id:wishlist.id,
+    //             _id:wishlist._id,
+    //             loading:false,
+    //             products:wishlist.products
+    //       }
+    //       // this.store.dispatch(fetchWishlistApiSuccess(wishlistPL))
 
-        })
+    //     })
 
-      }
-    })
+    //   }
+    // })
   }
 
 }

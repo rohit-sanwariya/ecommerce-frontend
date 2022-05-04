@@ -1,49 +1,34 @@
-import { TemplateLiteral } from "@angular/compiler";
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, EMPTY, exhaustMap, map, mergeMap, of, switchMap, tap } from "rxjs";
-
-import { RegisterService } from "src/app/Services/register.service";
-import { addProduct, fetchWishlistApi, fetchWishlistApiSuccess } from "./wishlist.actions";
-import { WishlistSchema } from "./wishlist.reducers";
+import { catchError, EMPTY, map, mergeMap, tap } from "rxjs";
+import { StoreService } from "src/app/Services/store.service";
+import {fetchWishlistApi, fetchWishlistApiSuccess} from './wishlist.actions'
 
 @Injectable()
-export class wishListEffect {
-  constructor(
-    private action$: Actions,
-    private registerService: RegisterService
-  ) {
+export class wishListEffect{
+  loadWishlist$ = createEffect(()=> this.actions$.pipe(
+    ofType(fetchWishlistApi),
+    mergeMap(
+      (user)=>this.service.getWishlist(user.userId).pipe(
+        
+        map(
+          (wishlist)=> {
 
+
+            return fetchWishlistApiSuccess(wishlist)
+          }
+        ),
+        catchError(()=>EMPTY)
+      )
+      )
+  ))
+
+  constructor(
+    private actions$:Actions,
+    private service:StoreService
+  ){
 
   }
-
-  loadWishlist$ = this.action$.pipe(
-
-    ofType(fetchWishlistApi), map(
-      (action:any) => this.registerService.getWishlistFromApi(action.userId)
-      .pipe(
-        map(wishlist=>
-           {
-              const tempPayload = {
-                _id:wishlist._id,
-                id:wishlist.id,
-                loading:false,
-                products:wishlist.products
-            }
-
-
-            return fetchWishlistApiSuccess(tempPayload)
-
-
-        }
-        ),
-          catchError((err:any) => of(err))
-
-      )
-    ),
-
-  )
-
 
 
 }

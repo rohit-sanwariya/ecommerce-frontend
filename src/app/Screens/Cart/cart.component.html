@@ -1,7 +1,7 @@
 <div class="container">
   <app-navbar></app-navbar>
   <app-announcement></app-announcement>
-  <section class="cart-container">
+  <section *ngIf="(userCart$|async)?.products?.length" class="cart-container">
     <div class="cart-title">
       <h2>Your Bag.</h2>
     </div>
@@ -25,20 +25,20 @@
 
     <section class="cart-details">
 
-      <div *ngFor="let product of products" class="cart-item-list">
+      <div *ngFor="let product of (cartProducts$|async)!.productDetail" class="cart-item-list">
         <div class="cart-item">
           <div class="img-container">
-            <img class="link" [routerLink]="['','product-detail',product._id]" [src]="product.img" alt="">
+            <img class="link" [routerLink]="['','product-detail',product.productId]" [src]="product.img" alt="">
           </div>
           <div class="item-detail-container">
             <div class="cart-detail">
               <div class="product-name">
                 <span class="bold">Product:</span>
-                <p class="link" [routerLink]="['','product-detail',product._id]">{{product.title|slice:0:20}}</p>
+                <p class="link" [routerLink]="['','product-detail',product.productId]">{{product.title|slice:0:20}}</p>
               </div>
               <div class="product-id">
                 <span class="bold">ID:</span>
-                <p>{{product._id}}</p>
+                <p>{{product.productId}}</p>
               </div>
               <div class="color"><span class="bold">Color</span>
                 <p>{{product.color}}</p>
@@ -64,7 +64,7 @@
 
 
       </div>
-      <div *ngIf="showCartSummary" class="order-summary card">
+      <div *ngIf="(userCart$|async)?.products?.length"  class="order-summary card">
         <h2 class="card-title">
           Order Summary
         </h2>
@@ -92,12 +92,12 @@
               Total
             </div>
             <div class="right">
-              ₹{{cartTotal$|async| number: '1.0-0'}}
+              ₹{{(cartProducts$|async)!.cartTotal| number: '1.0-0'}}
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="!showCartSummary" class="order-summary-empty">
+      <div *ngIf="!(userCart$|async)?.products?.length"  class="order-summary-empty">
         <div class="img-container">
           <img src="../../../assets/img/emptybag.webp" alt="">
         </div>

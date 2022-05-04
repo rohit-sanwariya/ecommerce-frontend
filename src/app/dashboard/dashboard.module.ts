@@ -13,7 +13,11 @@ import { UserContainerComponent } from './Components/User/user-container/user-co
 import { UserFromRegisterComponent } from './Components/User/user-from-register/user-from-register.component';
 import { UserListComponent } from './Components/User/user-list/user-list.component';
 import { UserUpdateFormComponent } from './Components/User/user-update-form/user-update-form.component';
-
+import { HomeMainComponent } from './Components/home-main/home-main.component';
+import { AdminHomeMainCardComponent } from './Components/admin-home-main-card/admin-home-main-card.component';
+import { AdminHomeMainChartComponent } from './Components/admin-home-main-chart/admin-home-main-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+ 
 
 
 @NgModule({
@@ -29,12 +33,16 @@ import { UserUpdateFormComponent } from './Components/User/user-update-form/user
              UserContainerComponent,
              UserFromRegisterComponent,
              UserListComponent,
-             UserUpdateFormComponent
+             UserUpdateFormComponent,
+             HomeMainComponent,
+             AdminHomeMainCardComponent,
+             AdminHomeMainChartComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
+    NgChartsModule
   ]
 })
 export class DashboardModule { }

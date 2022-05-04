@@ -1,11 +1,11 @@
 export interface CartSchema {
   _id:string;
   id:string;
-  products:Array<product>
+  products:Array<cartproduct>
 
 }
 
-interface product{
+export interface cartproduct{
   productId:string,
   quantity:number
 }

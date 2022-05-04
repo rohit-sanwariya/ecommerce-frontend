@@ -41,7 +41,7 @@ export class RegistrationPageComponent implements OnInit {
        }
 
 
-       this.registerService.onUserRegister(newUser)
+       this.registerService.onNewUserRegister(newUser)
      }
      else{
 

@@ -43,6 +43,16 @@ import { wishListEffect } from './Store/Wishlist/wishlist.effects';
 import { SortByPricePipe } from './Pipes/sort-by-price.pipe';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './Services/auth-interceptor.service';
+import ordersReducer from './dashboard/Store/Orders/orders.reducers';
+import { NgChartsModule } from 'ng2-charts';
+import { loginReducer } from './Store/Login/login.reducers';
+import { LoginEffects } from './Store/Login/login.effects';
+import { UserEffects } from './Store/User/user.effects';
+import { userReducer } from './Store/User/user.reducers';
+import { CartEffects } from './Store/Cart/cart.effects';
+import { cartReducer } from './Store/Cart/cart.reducers';
+import { proudctsReducer } from './Store/Products/products.reducers';
+import { ProductsEffects } from './Store/Products/products.effects';
 
 
 
@@ -93,19 +103,38 @@ import { AuthInterceptorService } from './Services/auth-interceptor.service';
     PaymentModule,
     LoginModule,
     SharedModule,
+    NgChartsModule,
     StoreModule.forRoot({
-      wishlist: wishListReducer
+      wishlist: wishListReducer,
+      orders: ordersReducer,
+      login:loginReducer,
+      user:userReducer,
+      cart:cartReducer,
+      products:proudctsReducer,
     }, {}),
+   
     StoreDevtoolsModule.instrument(
       {
         maxAge: 25,
         logOnly: environment.production
       }
     ),
-    EffectsModule.forRoot([wishListEffect]),
-    EffectsModule.forFeature([wishListEffect]),
-
-
+    EffectsModule.forRoot(
+      [
+        LoginEffects,
+        UserEffects,
+        wishListEffect,
+        CartEffects,
+        ProductsEffects
+      ]
+      ),
+    EffectsModule.forFeature([
+      LoginEffects,
+      UserEffects,
+      wishListEffect,
+      CartEffects,
+      ProductsEffects
+    ]),
   ],
   providers: [
     {

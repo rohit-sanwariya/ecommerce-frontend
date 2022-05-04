@@ -1,0 +1,11 @@
+<div class="container">
+  <section class="top">
+
+    <app-admin-home-main-card [orderTotal]="allOrdersTotal" [title]="'Revenue'" [footerText]="'Compared to last month'"></app-admin-home-main-card>
+    <app-admin-home-main-card [orderTotal]="allOrdersTotal"  [title]="'Sales'" [footerText]="'Compared to last month'"></app-admin-home-main-card>
+    <app-admin-home-main-card [orderTotal]="allOrdersTotal" [title]="'Cost'" [footerText]="'Compared to last month'"></app-admin-home-main-card>
+  </section>
+  <section class="chart">
+    <app-admin-home-main-chart></app-admin-home-main-chart>
+  </section>
+</div>

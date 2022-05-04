@@ -3,5 +3,7 @@ export interface UserSchema {
   username:string;
   email:string;
   password:string;
-  isAdmin:boolean
+  isAdmin:boolean;
+  lastName:string;
+  firstName:string;
 }

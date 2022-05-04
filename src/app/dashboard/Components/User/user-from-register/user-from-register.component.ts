@@ -41,7 +41,7 @@ export class UserFromRegisterComponent implements OnInit {
         email: user.email,
         isAdmin: user.tac
       }
-      this.registerService.onUserRegister(newUser)
+      this.registerService.onNewUserRegister(newUser)
     }
 
   }

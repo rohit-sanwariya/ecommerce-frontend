@@ -11,12 +11,17 @@ import { UserListComponent } from './Components/User/user-list/user-list.compone
 import { UserUpdateFormComponent } from './Components/User/user-update-form/user-update-form.component';
 import { AdminHomeComponent } from './Screens/admin-home/admin-home.component';
 import { AdminLoginComponent } from './Screens/admin-login/admin-login.component';
-
+import { HomeMainComponent } from './Components/home-main/home-main.component';
+import { AdminGuard } from '../Guards/admin.guard';
 const routes: Routes = [
   { path: '', component: AdminLoginComponent },
   {
-    path: 'dashboard', component: AdminHomeComponent, canActivate: [LoginGuard],
+    path: 'dashboard', component: AdminHomeComponent,
+    canActivate:[AdminGuard],
     children: [
+      {
+        path:'',component:HomeMainComponent,
+      },
       {
         path: 'products', component: ProductContainerComponent,
         children: [

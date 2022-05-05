@@ -51,13 +51,13 @@ export class ProductItemComponent implements OnInit {
   addToCart() {
     // [routerLink]="['cart']"
     this.loading = true
-    // console.log(this.product);
+    //
     this.cartStore.select('cart').pipe(take(1)).subscribe((cart:CartSchema)=>{
       const isProductInCartAlready = cart.products.findIndex((cp:cartproduct)=>cp.productId===this.product._id);
       if(isProductInCartAlready === -1){
         const newProductInCart = { productId: this.product._id, quantity: 1 }
       const newCart = {...cart,products:[...cart.products,newProductInCart]}
-      console.log(newCart);
+
       this.cartStore.dispatch(incrementCartProductStart(newCart))
 
 

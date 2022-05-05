@@ -3,7 +3,7 @@
   <app-navbar>
   </app-navbar>
   <main>
-    <div *ngIf="!hasProducts" class="order-summary-empty">
+    <div *ngIf="(products$|async).length==0" class="order-summary-empty">
       <div class="img-container">
         <img src="../../../assets/img/emptyWishlist.webp" alt="">
       </div>
@@ -14,17 +14,19 @@
       </div>
     </div>
     <div class="card-container">
+
       <div *ngFor="let product of (products$|async)" class="card">
+ 
           <div  class="img-container">
-                <img [routerLink]="['','product-detail',product._id]" [src]="product.img" alt="">
-                <div (click)="removeProduct(product._id)" class="btn-container">
+                <img [routerLink]="['','product-detail',product.productId]" [src]="product.img" alt="">
+                <div (click)="removeProduct(product.productId)" class="btn-container">
                   <span class="material-icons">
                     close
 
                     </span>
                 </div>
           </div>
-          <div [routerLink]="['','product-detail',product._id]" class="card-body">
+          <div [routerLink]="['','product-detail',product.productId]" class="card-body">
             <h5>{{product.title|slice:0:36}}</h5>
           </div>
           <div class="card-footer">

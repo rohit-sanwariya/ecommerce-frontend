@@ -27,13 +27,13 @@ export class StoreService {
     return this.http.get<WishlistSchema>(`http://localhost:5000/api/wish/${id}`)
   }
 
-  incrmentProductInCart(cart:CartSchema){
+  incrmentProductInCart(cart: CartSchema) {
     const id = cart.id
+    const {type,loading,error,updatedAt,createdAt,...newCart}:any = {...cart}
 
-console.log(cart);
 
 
-    return this.http.put(`${this.cartURL}/${id}`,cart)
+    return this.http.put(`${this.cartURL}/${id}`, newCart)
   }
 
   getCartDetails(id: string) {
@@ -42,6 +42,10 @@ console.log(cart);
 
   getProducts() {
     return this.http.get<ProductSchema[]>(`${this.baseURL}/api/products/`);
+  }
+
+  removeProductFromWishlist(newWishlist:WishlistSchema){
+    return this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlist.id}`,newWishlist )
   }
 
 

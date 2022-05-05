@@ -38,7 +38,7 @@ export class CartComponent implements OnInit {
 
     this.cartProducts$ = this.store.select(selectProductsInCart)
     this.store.select(selectUserId).subscribe((userId)=>{
-      console.log(userId);
+
       this.cartStore.dispatch(fetchCartStart(userId))
     })
 
@@ -60,7 +60,7 @@ export class CartComponent implements OnInit {
       }
     )}
 
-    console.log(newCart);
+
 
     this.cartStore.dispatch(incrementCartProductStart(newCart))
 
@@ -69,7 +69,7 @@ export class CartComponent implements OnInit {
 
 
   decrementProductInCart(productMinus: any) {
-console.log('dec');
+
 
     this.cartStore.select('cart').pipe(take(1)).subscribe((cart:CartSchema)=>{
      if(productMinus.quantity>1){
@@ -85,13 +85,15 @@ console.log('dec');
           }
         }
       )}
-      console.log(newCart);
+
      this.cartStore.dispatch(incrementCartProductStart(newCart))
 
      }
      else{
-      let productToBeRemoved:any = cart.products.filter((product:cartproduct)=>product.productId === productMinus.productId)!
-      console.log(productToBeRemoved);
+      let productToBeRemoved:any = cart.products.filter((product:cartproduct)=>product.productId !== productMinus.productId)!
+
+     const newCartDelete = {...cart,products:productToBeRemoved}
+     this.cartStore.dispatch(incrementCartProductStart(newCartDelete))
 
      }
     })

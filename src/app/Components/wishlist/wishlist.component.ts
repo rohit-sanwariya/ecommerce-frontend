@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
-import { AdminService } from 'src/app/Services/admin.service';
 import { RegisterService } from 'src/app/Services/register.service';
-import { fetchWishlistApi, fetchWishlistApiSuccess } from 'src/app/Store/Wishlist/wishlist.actions';
-import { WishlistSchema } from 'src/app/Store/Wishlist/wishlist.reducers';
+import { selectWishlistProuduct } from 'src/app/Store/Cart/cart.selectors';
+import {   updateProductWishlistStart } from 'src/app/Store/Wishlist/wishlist.actions';
+import { WishlistProduct, WishlistSchema } from 'src/app/Store/Wishlist/wishlist.reducers';
 
 @Component({
   selector: 'app-wishlist',
@@ -18,55 +18,44 @@ export class WishlistComponent implements OnInit {
   products$!: Observable<any>
   constructor
     (
-      private productService: AdminService,
       private registerService: RegisterService,
       private location: Location,
-      private store: Store<{ wishlist: WishlistSchema }>
+      private wishlistStore: Store<{ wishlist: WishlistSchema }>
     ) {
 
-    this.wishlist$ = this.store.select('wishlist')
+    this.wishlist$ = this.wishlistStore.select('wishlist')
 
   }
 
   ngOnInit(): void {
-    this.registerService.loadWishlist()
-    this.registerService.getCurrentUser().subscribe((user: any) => {
-      if (Object.keys(user).length > 0) {
-        this.store.dispatch(fetchWishlistApi({ userId: user._id }))
-      }
-    })
-
-    this.store.select('wishlist').pipe(take(2)).subscribe((wishlistStore) => {
 
 
-      if (wishlistStore.id) {
-        this.registerService.getWishlistFromApi(wishlistStore.id).subscribe((wishlist) => {
-          const wishlistPL: WishlistSchema =
-          {
-            id: wishlist.id,
-            _id: wishlist._id,
-            loading: false,
-            products: wishlist.products
-          }
-          this.store.dispatch(fetchWishlistApiSuccess(wishlistPL))
-          const ids: string[] = wishlist.products.map((item:string) => item.toString())
-          if (ids.length > 0) {
-            this.products$ = this.productService.getProductsByIds(ids)
-            this.hasProducts = true
-          }
-          else {
-            this.hasProducts = false
-          }
-        })
-      }
-    })
+    this.products$ = this.wishlistStore.select(selectWishlistProuduct)
+
+
   }
 
 
   removeProduct(productId: string) {
-    this.registerService.removeProductWishlist(productId).subscribe((updatedWishlist: any) => {
-      this.location.historyGo(0)
-    })
+    console.log(productId);
+
+    this.wishlistStore.select('wishlist').pipe(take(1)).subscribe((wishlist:WishlistSchema) => {
+
+     const newWishlist = {...wishlist,products:wishlist.products.filter(
+       (wp:WishlistProduct)=>{
+         console.log(wp);
+
+         return wp.toString() !== productId
+        }
+       )
+      }
+      console.log(newWishlist);
+
+     this.wishlistStore.dispatch(updateProductWishlistStart(newWishlist))
+
+    }
+
+    )
 
   }
 

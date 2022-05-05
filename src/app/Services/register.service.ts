@@ -25,10 +25,8 @@ import {
 import { CartSchema } from '../Interfaces/cart-schema';
 import { LoginUser } from '../Interfaces/login-user';
 import { NewUser } from '../Interfaces/new-user';
-import { OrdersStateSchema } from '../Interfaces/order-schema';
-import { ProductSchema } from '../Interfaces/product-schema';
 
-import { addProduct, fetchWishlistApi, removeProduct } from '../Store/Wishlist/wishlist.actions';
+import { addProduct, updateProductWishlistStart  } from '../Store/Wishlist/wishlist.actions';
 import { initialState, WishlistSchema } from '../Store/Wishlist/wishlist.reducers';
 
 import { AdminService } from './admin.service';
@@ -496,7 +494,7 @@ currentUser$.subscribe((user: any) => {
             const id = cart.id
 
             const token:string|null = sessionStorage.getItem('accessToken');
-            console.log(token);
+
 
             const httpOptions = {
               headers: new HttpHeaders({
@@ -586,9 +584,9 @@ currentUser$.subscribe((user: any) => {
   removeProductWishlist(productId:string){
     this.store.select('wishlist').pipe(take(1)).subscribe((wish: any) => {
       const newWishlist = { ...wish, products: wish.products.filter((pro:any)=>pro !== productId) }
-      this.store.dispatch(removeProduct(newWishlist))
+      this.store.dispatch(updateProductWishlistStart(newWishlist))
       const {loading,type,...newWishlistReq} = newWishlist
-      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq, ).subscribe((wishlistUpdate)=>{
+      this.http.put<WishlistSchema>(`http://localhost:5000/api/wish/${newWishlistReq.id}`,newWishlistReq ).subscribe((wishlistUpdate)=>{
 
         this.wishlistSubject.next(wishlistUpdate)
 

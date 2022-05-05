@@ -1,6 +1,6 @@
 import { Action, on, createReducer } from "@ngrx/store";
 
-import { addProduct, removeProduct, emptyWishlist, fetchWishlistApi, fetchWishlistApiSuccess } from "./wishlist.actions";
+import { addProduct,fetchWishlistApi, fetchWishlistApiSuccess, updateProductWishlistStart, updateProductWishlistSuccess } from "./wishlist.actions";
 
 
 
@@ -44,10 +44,14 @@ export const wishListReducer = createReducer(
       ...payload
     }
   }),
-  on(removeProduct,(state:any,payload:any)=>{
+  on(updateProductWishlistStart,(state:any,payload:any)=>{
     return {
-      ...state,
-      ...payload
+      ...payload,loading:true
+    }
+  }),
+  on(updateProductWishlistSuccess,(state:any,payload:any)=>{
+    return {
+      ...payload,loading:false
     }
   })
 )

@@ -29,14 +29,15 @@ export const cartReducer= createReducer(
    }
  }),
  on(incrementCartProductStart,(state:any,payload:any)=>{
-  console.log(payload);
-  console.log(state);
+
 
    return {
      ...payload,loading:true
    }
  }),
  on(incrementCartProductSuccess,(state:stateSchema,payload:any)=>{
+
+
       return {
         ...payload,loading:false
    }

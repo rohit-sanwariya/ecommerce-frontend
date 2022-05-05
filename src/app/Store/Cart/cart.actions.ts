@@ -27,4 +27,14 @@ export const incrementCartProductFailed = createAction(
 
   )
 
+export const deleteProductStart = createAction(
+  '[Cart] Delete Product Start'
+)
+export const deleteProductSuccess = createAction(
+  '[Cart] Delete Product Success'
+)
+export const deleteProductFailed = createAction(
+  '[Cart] Delete Product Failed'
+)
+
 

@@ -2,13 +2,16 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { CartProductSchema } from "src/app/Interfaces/cart-product-schema";
 import {  cartproduct, CartSchema } from "src/app/Interfaces/cart-schema";
 import { ProductSchema } from "src/app/Interfaces/product-schema";
-import { productsInterface, ProductStateSchema } from "../Products/products.reducers";
+import { WishlistProductView } from "src/app/Interfaces/wishlist-product-view";
+import {   ProductStateSchema } from "../Products/products.reducers";
 import { CurrentUserSchema } from "../User/user.reducers";
+import { WishlistProduct, WishlistSchema } from "../Wishlist/wishlist.reducers";
 
 
 
 export const selectCartFeature = createFeatureSelector<CartSchema>('cart')
 export const selectProductFeature = createFeatureSelector<ProductStateSchema>('products')
+export const selectWishlistFeature = createFeatureSelector<WishlistSchema>('wishlist')
 
 export const selectFeatureCartProductsId = createSelector(
   (state:any):CartSchema=> state['cart'],
@@ -70,6 +73,27 @@ export const selectUserId = createSelector(
   (state:CurrentUserSchema)=>state._id
 )
 
-// export const selectProductsInWishlist = createSelector(
+export const selectWishlistProuduct = createSelector(
+  selectWishlistFeature,
+  selectProductFeature,
+  (wishlist:WishlistSchema,products:any)=>{
 
-// )
+let productWishlist:WishlistProductView[] = []
+    if(wishlist.products !== undefined){
+      productWishlist =  wishlist.products.map((wp:WishlistProduct)=>{
+        const found:ProductSchema = products.products.find((productA:ProductSchema)=>productA._id===wp.toString())
+        return {
+          img:found.img,
+          productId:found._id,
+          title:found.title,
+
+        }
+       })
+    }
+return [  ...productWishlist]
+
+
+  }
+)
+
+

@@ -16,10 +16,17 @@ export const fetchWishlistApiSuccess = createAction(
   (payload)=>payload
 
 );
-export const removeProduct = createAction(
-  '[Wishlist Component] Remove Product',
+export const updateProductWishlistStart = createAction(
+  '[Wishlist Component] Update Product Start',
   (payload:any)=>payload
 );
-export const emptyWishlist = createAction(
-  '[Wishlist Component] Clear Wishlist'
+
+export const updateProductWishlistSuccess = createAction(
+  '[Wishlist Component] Update Product Success',
+  (payload:any)=>payload
 );
+
+export const updateProductWishlistFailed = createAction(
+  '[Wishlist Component] Update Product Failed',
+);
+

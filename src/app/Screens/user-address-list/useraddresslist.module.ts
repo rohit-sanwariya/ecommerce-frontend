@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { UseraddresslistRoutingModule } from './useraddresslist-routing.module';
 import { UserAddressListComponent } from './user-address-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { addressReducer } from 'src/app/Store/Address/address.reducers';
 
 @NgModule({
   declarations: [UserAddressListComponent],
@@ -11,7 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     UseraddresslistRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature('address', addressReducer)
+
   ]
 })
 export class UseraddresslistModule { }

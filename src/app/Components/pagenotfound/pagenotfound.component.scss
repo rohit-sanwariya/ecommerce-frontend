@@ -1,0 +1,25 @@
+.container{
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  .card{
+    h1{
+      font-size: 55vh;
+      font-weight: 900;
+      color: var(--secondary);
+      margin: 0;
+    }
+    button.btn{
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      padding: .5rem 2rem;
+      font-size: 1.2rem;
+      color: #fff;
+      background-color: #242424;
+      letter-spacing: 2px;
+      span.highlight{
+        color: var(--secondary);
+      }
+    }
+  }
+}

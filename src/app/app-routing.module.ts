@@ -4,6 +4,7 @@ import { ConfirmScreenComponent } from './Components/confirm-screen/confirm-scre
 import { DashboardUserAddressComponent } from './Components/dashboard-user-address/dashboard-user-address.component';
 import { LegalComponent } from './Components/legal/legal.component';
 import { MantraCashComponent } from './Components/mantra-cash/mantra-cash.component';
+import { PagenotfoundComponent } from './Components/pagenotfound/pagenotfound.component';
 import { PasswordAssitanceComponent } from './Components/password-assistance/password-assistance.component';
 import { PaymentSuccessComponent } from './Components/payment-success/payment-success.component';
 import { PaymentComponent } from './Components/payment/payment.component';
@@ -128,8 +129,10 @@ const routes: Routes = [
   {
     path:'admin',
     loadChildren:()=>import('./dashboard/dashboard.module').then(module=>module.DashboardModule),
-    
-  }
+
+  },
+  { path: '**', pathMatch: 'full',
+  component: PagenotfoundComponent },
 ];
 
 @NgModule({

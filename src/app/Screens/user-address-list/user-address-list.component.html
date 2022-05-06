@@ -7,7 +7,6 @@
         <li>
           <a routerLink="/shipping-address">
             Sign In
-
           </a>
         </li>
         <li>
@@ -32,7 +31,7 @@
     </nav>
   </header>
 
-  <main *ngIf="address.length===0 || showForm">
+  <main *ngIf="((address$|async) && (address$|async)!.addresses.length==0) || showForm">
   <div class="heading-container">
     <h3 class="heading">
       {{false?'Select a delivery address':'
@@ -44,7 +43,6 @@
   </div>
   <div class="address-form-container">
     <form [formGroup]="addressForm" (ngSubmit)="addUserAddress()" >
-
      <div class="form-control">
       <div class="dropdown">
         <label for="country">Country/Region</label>
@@ -101,13 +99,13 @@
     </form>
   </div>
 </main>
- <main class="address-container" *ngIf="address.length !==0 && showForm==false">
+ <main class="address-container" *ngIf="(address$|async)!.addresses!.length>0  && showForm==false">
 <div class="heading">
   <h3>Select a delivery address</h3>
   <p class="message">Is the address you'd like to use displayed below? If so, click the corresponding "Deliver to this address" button. Or you can enter a new delivery address. </p>
 </div>
-<div class="card-container">
-  <div *ngFor="let add of address.addresses" class="address-card">
+<div *ngIf="(address$|async)" class="card-container">
+  <div *ngFor="let add of (address$|async)!.addresses" class="address-card">
 
     <h3 class="fullname">
         {{add.fullname|uppercase}}

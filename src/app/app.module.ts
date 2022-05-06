@@ -53,6 +53,9 @@ import { CartEffects } from './Store/Cart/cart.effects';
 import { cartReducer } from './Store/Cart/cart.reducers';
 import { proudctsReducer } from './Store/Products/products.reducers';
 import { ProductsEffects } from './Store/Products/products.effects';
+import { PagenotfoundComponent } from './Components/pagenotfound/pagenotfound.component';
+import { addressReducer } from './Store/Address/address.reducers';
+import { AddressEffects } from './Store/Address/address.effects';
 
 
 
@@ -91,6 +94,7 @@ import { ProductsEffects } from './Store/Products/products.effects';
     ReenterPasswordComponent,
     WishlistComponent,
     SortByPricePipe,
+    PagenotfoundComponent,
 
   ],
   imports: [
@@ -111,8 +115,8 @@ import { ProductsEffects } from './Store/Products/products.effects';
       user:userReducer,
       cart:cartReducer,
       products:proudctsReducer,
-    }, {}),
-   
+      address:addressReducer
+    }),
     StoreDevtoolsModule.instrument(
       {
         maxAge: 25,
@@ -125,7 +129,8 @@ import { ProductsEffects } from './Store/Products/products.effects';
         UserEffects,
         wishListEffect,
         CartEffects,
-        ProductsEffects
+        ProductsEffects,
+        AddressEffects
       ]
       ),
     EffectsModule.forFeature([

@@ -37,19 +37,17 @@ export class WishlistComponent implements OnInit {
 
 
   removeProduct(productId: string) {
-    console.log(productId);
+
 
     this.wishlistStore.select('wishlist').pipe(take(1)).subscribe((wishlist:WishlistSchema) => {
 
      const newWishlist = {...wishlist,products:wishlist.products.filter(
        (wp:WishlistProduct)=>{
-         console.log(wp);
-
          return wp.toString() !== productId
         }
        )
       }
-      console.log(newWishlist);
+
 
      this.wishlistStore.dispatch(updateProductWishlistStart(newWishlist))
 
